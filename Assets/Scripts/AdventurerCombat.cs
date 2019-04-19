@@ -1,0 +1,56 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AdventurerCombat : MonoBehaviour
+{
+    private AdventurerState state;
+    private Animator anim;
+    private float attackColdoown;
+    public float attackSpeed;
+    public Transform attackPoint;
+    public float attackRange;
+    //private ActivateMelee meleeWeapon;
+
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+        state = GetComponent<AdventurerState>();
+       // meleeWeapon = GetComponentInChildren<ActivateMelee>();
+    }
+
+    private void Update()
+    {
+        attackColdoown -= Time.deltaTime;
+    }
+
+    public void DoAttack()
+    {
+        if (attackColdoown <= 0)
+        {
+            StartCoroutine("Attack");
+            attackColdoown = 1f / attackSpeed;
+        }
+    }
+
+    IEnumerator Attack()
+    {
+        state.isAttacking = true;
+        anim.SetTrigger("IsAttack");
+       // meleeWeapon.coll.enabled = true;
+        var attack = Physics.OverlapBox(attackPoint.position, new Vector3(attackRange, attackRange, attackRange), Quaternion.identity , LayerMask.GetMask("Enemy"));
+        foreach(var enemy in attack)
+        {
+            enemy.GetComponent<IDamage>().TakeDamage(1f);
+        }
+        yield return new WaitForSeconds(2f);
+        state.isAttacking = false;
+       // meleeWeapon.coll.enabled = false;
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(attackPoint.position, new Vector3(attackRange, attackRange, attackRange));
+    }
+
+}
