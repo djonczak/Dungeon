@@ -6,7 +6,7 @@ public class AdventurerCombat : MonoBehaviour
 {
     private AdventurerState state;
     private Animator anim;
-    private float attackColdoown;
+    private float attackCooldown;
     public float attackSpeed;
     public Transform attackPoint;
     public float attackRange;
@@ -21,15 +21,15 @@ public class AdventurerCombat : MonoBehaviour
 
     private void Update()
     {
-        attackColdoown -= Time.deltaTime;
+        attackCooldown -= Time.deltaTime;
     }
 
     public void DoAttack()
     {
-        if (attackColdoown <= 0)
+        if (attackCooldown <= 0)
         {
             StartCoroutine("Attack");
-            attackColdoown = 1f / attackSpeed;
+            attackCooldown = 1f / attackSpeed;
         }
     }
 

@@ -5,18 +5,23 @@ using UnityEngine;
 public class AdventurerController : MonoBehaviour
 {
     private AdventurerCombat adventurerCombat;
+    private AdventurerState state;
 
     private void Start()
     {
         adventurerCombat = GetComponent<AdventurerCombat>();
+        state = GetComponent<AdventurerState>();
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("AttackButton"))
+        if (state.isAlive == true)
         {
-            Debug.Log("Zaatakował");
-            adventurerCombat.DoAttack();
+            if (Input.GetButtonDown("AttackButton"))
+            {
+                Debug.Log("Zaatakował");
+                adventurerCombat.DoAttack();
+            }
         }
     }
 }

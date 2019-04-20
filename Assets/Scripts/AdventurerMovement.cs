@@ -21,14 +21,22 @@ public class AdventurerMovement : MonoBehaviour
    
     void FixedUpdate()
     {
+        if (state.isAlive == true)
+        {
+            Move();
+        }
+    }
+
+    private void Move()
+    {
         Vector3 rotationPosition = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
         if (rotationPosition.magnitude > deadZone && state.isAttacking == false)
         {
             float angle = Vector3.Angle(Vector3.back, rotationPosition);
             angle = (rotationPosition.x > 0) ? angle : angle * -1;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,angle,0), 1f);
-            if(currentSpeed <= moveSpeed)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), 1f);
+            if (currentSpeed <= moveSpeed)
             {
                 currentSpeed += Time.deltaTime * acceleration;
             }
