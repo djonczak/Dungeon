@@ -24,18 +24,13 @@ public class AdventurerCombat : MonoBehaviour
         attackCooldown -= Time.deltaTime;
     }
 
-    public void LightAttack()
+    public void DoAttack()
     {
         if (attackCooldown <= 0)
         {
             StartCoroutine("Attack");
             attackCooldown = 1f / attackSpeed;
         }
-    }
-
-    public void HeavyAttack()
-    {
-
     }
 
     IEnumerator Attack()
