@@ -18,10 +18,19 @@ public class SkeletonEnemy : LivingCreature, IDamage
     public float attackSpeed;
     public Transform meleePoint;
 
+    private Color normal;
+    private Color damageColor = Color.red;
+    private Renderer meshRenderer;
+    public bool isDamaged;
+    private bool canColor;
+    float t = 0f;
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         skeleton = GetComponent<NavMeshAgent>();
+        meshRenderer = GetComponentInChildren<Renderer>();
+        normal = meshRenderer.material.color;
 
         currentHP = amountHP;
         skeleton.speed = movementSpeed;
@@ -48,6 +57,20 @@ public class SkeletonEnemy : LivingCreature, IDamage
                 anim.SetBool("IsWalk", true);
                 DoAttack();
             }
+
+            DamageColor();
+        }
+    }
+
+    private void DamageColor()
+    {
+        if (canColor == true)
+        {
+            t += Time.deltaTime / 1.5f;
+            if (isDamaged == true)
+            {
+                meshRenderer.material.color = Color.Lerp(damageColor, normal, t);
+            }
         }
     }
 
@@ -65,7 +88,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
                 {
                     if (player.GetComponent<AdventurerState>().isAlive == true)
                     {
-                        player.GetComponent<IDamage>().TakeDamage(2f);
+                        player.GetComponent<IDamage>().TakeDamage(attackDamage);
                     }
                 }
                 attackCooldown = 1f / attackSpeed;
@@ -80,12 +103,24 @@ public class SkeletonEnemy : LivingCreature, IDamage
         {
             Die();
         }
+        StartCoroutine("Damaged");
     }
 
     void Die()
     {
         isAlive = false;
+        GetComponent<Collider>().enabled = false;
         anim.SetTrigger("IsDead");
+    }
+
+    private IEnumerator Damaged()
+    {
+        canColor = true;
+        isDamaged = true;
+        yield return new WaitForSeconds(1.4f);
+        isDamaged = false;
+        t = 0f;
+        canColor = false;
     }
 
     private void OnDrawGizmos()

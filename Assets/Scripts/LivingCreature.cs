@@ -6,4 +6,5 @@ public class LivingCreature : MonoBehaviour
 {
     public string creatureName;
     public float amountHP;
+    public float attackDamage;
 }

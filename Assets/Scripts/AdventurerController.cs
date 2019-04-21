@@ -19,7 +19,6 @@ public class AdventurerController : MonoBehaviour
         {
             if (Input.GetButtonDown("AttackButton"))
             {
-                Debug.Log("Zaatakował");
                 adventurerCombat.DoAttack();
             }
         }
