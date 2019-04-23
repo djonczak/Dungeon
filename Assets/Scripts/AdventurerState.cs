@@ -18,7 +18,8 @@ public class AdventurerState : LivingCreature, IDamage
     public void TakeDamage(float amount)
     {
         currentHP -= amount;
-        Debug.Log("AdventrerHP: " + currentHP);
+        
+     // Debug.Log("AdventrerHP: " + currentHP);
         if(currentHP <= 0)
         {
             Die();

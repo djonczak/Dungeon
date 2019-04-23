@@ -19,7 +19,7 @@ public class AdventurerController : MonoBehaviour
         {
             if (Input.GetButtonDown("AttackButton"))
             {
-                adventurerCombat.DoAttack();
+                adventurerCombat.LightAttack();
             }
         }
     }

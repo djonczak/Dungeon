@@ -33,11 +33,6 @@ public class AdventurerCombat : MonoBehaviour
         }
     }
 
-    public void HeavyAttack()
-    {
-
-    }
-
     IEnumerator Attack()
     {
         state.isAttacking = true;

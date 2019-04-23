@@ -11,6 +11,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
     private float currentHP;
     private bool isAlive = true;
     private Transform target;
+    private bool canAttack = true;
 
     public float eyesRange;
     public float meleeRange;
@@ -21,7 +22,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
     private Color normal;
     private Color damageColor = Color.red;
     private Renderer meshRenderer;
-    public bool isDamaged;
+    private bool isDamaged;
     private bool canColor;
     float t = 0f;
 
@@ -55,6 +56,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
                 skeleton.SetDestination(target.position);
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsWalk", true);
+
                 DoAttack();
             }
 
@@ -77,21 +79,20 @@ public class SkeletonEnemy : LivingCreature, IDamage
     private void DoAttack()
     {
         attackCooldown -= Time.deltaTime;
-        var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
-        if (sphere.Length > 0)
+        var distance = Vector3.Distance(transform.position, target.position);
+        if (distance <= 2.8f)
         {
-            if (attackCooldown <= 0)
+            anim.SetBool("IsIdle", true);
+            anim.SetBool("IsWalk", false);
+            skeleton.isStopped = true;
+            if (attackCooldown <= 0 && canAttack == true)
             {
-                anim.SetTrigger("IsAttack");
-                Debug.Log("Atakuje mnie");
-                foreach (var player in sphere)
-                {
-                    if (player.GetComponent<AdventurerState>().isAlive == true)
-                    {
-                        player.GetComponent<IDamage>().TakeDamage(attackDamage);
-                    }
-                }
+                StartCoroutine("Attack");
                 attackCooldown = 1f / attackSpeed;
+            }
+            else
+            {
+                skeleton.isStopped = false;
             }
         }
     }
@@ -121,6 +122,27 @@ public class SkeletonEnemy : LivingCreature, IDamage
         isDamaged = false;
         t = 0f;
         canColor = false;
+    }
+
+    private IEnumerator Attack()
+    {
+        canAttack = false;
+
+        anim.SetTrigger("IsAttack");
+        yield return new WaitForSeconds(0.6f);
+        var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
+        if (sphere.Length > 0)
+        {
+            foreach (var player in sphere)
+            {
+                if (player.GetComponent<AdventurerState>().isAlive == true)
+                {
+                    player.GetComponent<IDamage>().TakeDamage(attackDamage);
+                }
+            }
+        }
+        yield return new WaitForSeconds(0.2f);
+        canAttack = true;
     }
 
     private void OnDrawGizmos()
