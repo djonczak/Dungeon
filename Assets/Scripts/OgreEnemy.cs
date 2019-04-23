@@ -64,16 +64,17 @@ public class OgreEnemy : LivingCreature, IDamage
 
             if (target != null)
             {
-                ogr.SetDestination(target.position);
-                anim.SetBool("IsIdle", false);
-                if (phase == HPState.Full)
-                {
-                    anim.SetBool("IsWalk", true);
-                }
-                else
-                {
-                    anim.SetBool(runAnimation, true);
-                }
+                    ogr.SetDestination(target.position);
+                    anim.SetBool("IsIdle", false);
+                    if (phase == HPState.Full)
+                    {
+                        anim.SetBool("IsWalk", true);
+                    }
+                    else
+                    {
+                        anim.SetBool(runAnimation, true);
+                    }
+     
                 DoAttack();
             }
 
@@ -95,39 +96,25 @@ public class OgreEnemy : LivingCreature, IDamage
 
     private void DoAttack()
     {
-        if (canAttack == true)
+        attackCooldown -= Time.deltaTime;
+        var distance = Vector3.Distance(transform.position, target.position);
+        if (distance <= 4.5f)
         {
-            attackCooldown -= Time.deltaTime;
-            var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
-            if (sphere.Length > 0)
+            anim.SetBool("IsIdle", true);
+            anim.SetBool("IsWalk", false);
+            anim.SetBool(runAnimation, false);
+            ogr.isStopped = true;
+            if (attackCooldown <= 0 && canAttack == true)
             {
-                if (attackCooldown <= 0)
-                {
-                    var randomAttack = Random.Range(1, 3);
-                    Debug.Log(randomAttack);
-                    if (randomAttack == 1)
-                    {
-                        anim.SetTrigger("SwingAttack");
-                    }
-                    if (randomAttack == 2)
-                    {
-                        anim.SetTrigger("Punch1");
-                    }
-                    if (randomAttack == 3)
-                    {
-                        anim.SetTrigger("Punch2");
-                    }
-                    foreach (var player in sphere)
-                    {
-                        if (player.GetComponent<AdventurerState>().isAlive == true)
-                        {
-                            player.GetComponent<IDamage>().TakeDamage(attackDamage);
-                        }
-                    }
-                    attackCooldown = 1f / attackSpeed;
-                }
+                StartCoroutine("Attack");
+                attackCooldown = 1f / attackSpeed;
+            }
+            else
+            {
+                ogr.isStopped = false;
             }
         }
+ 
     }
 
     public void TakeDamage(float amount)
@@ -168,6 +155,40 @@ public class OgreEnemy : LivingCreature, IDamage
         attackSpeed = secondPhaseAttackSpeed;
         canAttack = true;
         doneRoar = true;
+    }
+
+    private IEnumerator Attack()
+    {
+        canAttack = false;
+        var randomAttack = Random.Range(1, 3);
+        Debug.Log(randomAttack);
+        if (randomAttack == 1)
+        {
+            anim.SetTrigger("SwingAttack");
+        }
+        if (randomAttack == 2)
+        {
+            anim.SetTrigger("Punch1");
+        }
+        if (randomAttack == 3)
+        {
+            anim.SetTrigger("Punch2");
+        }
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.4f);
+        var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
+        if (sphere.Length > 0)
+        {
+            foreach (var player in sphere)
+            {
+                if (player.GetComponent<AdventurerState>().isAlive == true)
+                {
+                    player.GetComponent<IDamage>().TakeDamage(attackDamage);
+                }
+            }
+        }
+        yield return new WaitForSeconds(0.2f);
+        canAttack = true;
     }
 
     private void CheckHPState()

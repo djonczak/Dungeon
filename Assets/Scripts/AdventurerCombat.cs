@@ -24,7 +24,7 @@ public class AdventurerCombat : MonoBehaviour
         attackCooldown -= Time.deltaTime;
     }
 
-    public void DoAttack()
+    public void LightAttack()
     {
         if (attackCooldown <= 0)
         {
