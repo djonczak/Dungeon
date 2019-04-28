@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cff19851145f43447a7c13b696579b1d
+guid: 205d1409182756841bedbe0cb1510b5e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     100002: //RootNode
     400000: default
     400002: //RootNode
-    2100000: palette
+    2100000: defaultMat
     2300000: default
     3300000: default
     4300000: default
@@ -42,7 +42,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.97
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
