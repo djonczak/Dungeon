@@ -38,7 +38,7 @@ public class AdventurerMovement : MonoBehaviour
         {
             Vector3 rotationPosition = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
-            if (rotationPosition.magnitude > deadZone && state.isAttacking == false)
+            if (rotationPosition.magnitude > deadZone && state.isAttacking == false && isDashing == false)
             {
                 float angle = Vector3.Angle(Vector3.back, rotationPosition);
                 angle = (rotationPosition.x > 0) ? angle : angle * -1;
@@ -51,6 +51,13 @@ public class AdventurerMovement : MonoBehaviour
                 body.MovePosition(transform.position + characterMove);
                 anim.SetBool("IsRun", true);
                 anim.SetBool("IsIdle", false);
+            }
+
+            if(state.isAttacking == true && rotationPosition.magnitude > deadZone)
+            {
+                float angle = Vector3.Angle(Vector3.back, rotationPosition);
+                angle = (rotationPosition.x > 0) ? angle : angle * -1;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), 1f);
             }
 
             if (rotationPosition.magnitude < deadZone)
@@ -83,17 +90,21 @@ public class AdventurerMovement : MonoBehaviour
 
         if(isDashing == true)
         {
-            var dashMove = dashPosition * 10f * Time.deltaTime;
+            var dashMove = dashPosition * 14f * Time.deltaTime;
             body.MovePosition(transform.position + dashMove);
-            StartCoroutine("DashCooldown", 1f);
+            if (canDash == true)
+            {
+                StartCoroutine("DashCooldown", 1f);
+            }
         }
 
     }
 
     private IEnumerator DashCooldown(float time)
     {
+        anim.SetTrigger("IsDodge");
         canDash = false;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         isDashing = false;
         yield return new WaitForSeconds(time);
         canDash = true;

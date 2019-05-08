@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2362265258c09dd44998b3d0612ee5e7
+guid: c4414b4094b147e4282099d9432b2182
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -55,7 +55,7 @@ ModelImporter:
     400046: mixamorig:Spine1
     400048: mixamorig:Spine2
     400050: //RootNode
-    7400000: Standing Dodge Backward
+    7400000: Stable Sword Inward Slash
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -75,7 +75,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 1
+    importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
@@ -86,10 +86,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Standing Dodge Backward
+      name: Stable Sword Inward Slash
       takeName: mixamo.com
-      firstFrame: 0
-      lastFrame: 49
+      firstFrame: 20
+      lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

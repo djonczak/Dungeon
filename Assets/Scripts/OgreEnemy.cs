@@ -37,6 +37,9 @@ public class OgreEnemy : LivingCreature, IDamage
     private bool isDamaged;
     private bool canColor;
     float t = 0f;
+    private int lastAttack;
+    private int randomAttack;
+    private bool isInvincible;
 
     private void Start()
     {
@@ -86,7 +89,7 @@ public class OgreEnemy : LivingCreature, IDamage
     {
         if (canColor == true)
         {
-            t += Time.deltaTime / 1.5f;
+            t += Time.deltaTime / 1f;
             if (isDamaged == true)
             {
                 meshRenderer.material.color = Color.Lerp(damageColor, normal, t);
@@ -119,19 +122,23 @@ public class OgreEnemy : LivingCreature, IDamage
 
     public void TakeDamage(float amount)
     {
-        currentHP -= amount;
-        if (currentHP <= 0)
+        if (isInvincible == false)
         {
-            Die();
+            currentHP -= amount;
+            if (currentHP <= 0)
+            {
+                Die();
+            }
+            CheckHPState();
+            StartCoroutine("Damaged");
         }
-        CheckHPState();
-        StartCoroutine("Damaged");
     }
 
     private void Die()
     {
         isAlive = false;
         GetComponent<Collider>().enabled = false;
+        meshRenderer.material.color = normal;
         anim.SetTrigger("IsDead");
     }
 
@@ -147,10 +154,12 @@ public class OgreEnemy : LivingCreature, IDamage
 
     private IEnumerator Roar()
     {
+        isInvincible = true;
         anim.SetTrigger("IsSecondPhase");
         canAttack = false;
         ogr.speed = 0f;
         yield return new WaitForSeconds(5f);
+        isInvincible = false;
         ogr.speed = runSpeed;
         attackSpeed = secondPhaseAttackSpeed;
         canAttack = true;
@@ -160,7 +169,11 @@ public class OgreEnemy : LivingCreature, IDamage
     private IEnumerator Attack()
     {
         canAttack = false;
-        var randomAttack = Random.Range(1, 3);
+        while (lastAttack == randomAttack)
+        {
+            randomAttack = Random.Range(1, 4);
+        }
+        lastAttack = randomAttack;
         Debug.Log(randomAttack);
         if (randomAttack == 1)
         {
@@ -174,8 +187,7 @@ public class OgreEnemy : LivingCreature, IDamage
         {
             anim.SetTrigger("Punch2");
         }
-        yield return new WaitForSeconds(0.1f);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
         if (sphere.Length > 0)
         {

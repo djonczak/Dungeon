@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureName: Ogre Boss
-  amountHP: 20
+  amountHP: 22
   attackDamage: 1
   eyesRange: 9
   meleeRange: 4.26
@@ -199,6 +199,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ogr
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: d1279557c819d0b428155e636b0f6384, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 081bb341adf9441459cc910d7e916f70, type: 2}
     - target: {fileID: 400050, guid: d1279557c819d0b428155e636b0f6384, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -247,10 +251,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e38630da845af2a46b406d0b09ef987c, type: 2}
-    - target: {fileID: 13700000, guid: d1279557c819d0b428155e636b0f6384, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 081bb341adf9441459cc910d7e916f70, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1279557c819d0b428155e636b0f6384, type: 3}
 --- !u!4 &3725533854493826866 stripped
