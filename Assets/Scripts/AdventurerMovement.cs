@@ -14,7 +14,7 @@ public class AdventurerMovement : MonoBehaviour
     private AdventurerState state;
     private bool isDashing;
     private bool canDash = true;
-    private Vector3 dashPosition;
+    private Vector3 rotationPosition;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class AdventurerMovement : MonoBehaviour
     {
         if (isDashing == false)
         {
-            Vector3 rotationPosition = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            rotationPosition = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
             if (rotationPosition.magnitude > deadZone && state.isAttacking == false && isDashing == false)
             {
@@ -75,12 +75,7 @@ public class AdventurerMovement : MonoBehaviour
 
     private void Dash()
     {
-        if (canDash == true)
-        {
-            dashPosition = new Vector3(Input.GetAxis("DashX"), 0f, Input.GetAxis("DashY"));
-        }
-
-        if (dashPosition.magnitude > 1f && state.isAttacking == false)
+        if (Input.GetButtonDown("Dash") && state.isAttacking == false)
         {
             if (canDash == true)
             {
@@ -90,7 +85,7 @@ public class AdventurerMovement : MonoBehaviour
 
         if(isDashing == true)
         {
-            var dashMove = dashPosition * 14f * Time.deltaTime;
+            var dashMove = rotationPosition * 14f * Time.deltaTime;
             body.MovePosition(transform.position + dashMove);
             if (canDash == true)
             {

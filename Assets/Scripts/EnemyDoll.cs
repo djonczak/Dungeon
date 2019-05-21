@@ -32,7 +32,7 @@ public class EnemyDoll : LivingCreature ,IDamage
                 {
                     if (player.GetComponent<AdventurerState>().isAlive == true)
                     {
-                        player.GetComponent<IDamage>().TakeDamage(1f);
+                        player.GetComponent<IDamage>().TakeDamage(1f,transform.position);
                     }
                 }
                 attackCooldown = 1f / attackSpeed;
@@ -40,7 +40,7 @@ public class EnemyDoll : LivingCreature ,IDamage
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, Vector3 position)
     {
         currentHP -= amount;
         Debug.Log(currentHP);

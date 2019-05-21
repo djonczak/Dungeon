@@ -35,4 +35,16 @@ public class AdventurerCameraController : MonoBehaviour
         Vector3 math = target.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cameraDistance + offset));
         transform.position = Vector3.Lerp(transform.position, target.position + math, smooth * Time.deltaTime);
     }
+
+    public IEnumerator CameraShake()
+    {
+        var timer = 0f;
+        while (timer < 0.1f)
+        {
+            transform.position = Vector3.Lerp(transform.position, transform.position + Random.insideUnitSphere * 0.5f, smooth);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        timer = 0f;
+    }
 }

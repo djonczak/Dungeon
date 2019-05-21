@@ -19,7 +19,7 @@ public class ActivateMelee : MonoBehaviour
         if(other.tag == "Enemy")
         {
             Debug.Log(other.name + " " + "dealt " + "damage.");
-            other.GetComponent<IDamage>().TakeDamage(damage);
+            //other.GetComponent<IDamage>().TakeDamage(damage);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class OgreEnemy : LivingCreature, IDamage
 {
@@ -29,6 +30,8 @@ public class OgreEnemy : LivingCreature, IDamage
     public float attackSpeed;
     public Transform meleePoint;
     public float secondPhaseAttackSpeed;
+    public Image HPBar;
+    public GameObject HPDisplay;
 
     //Changing color on damage
     private Color normal;
@@ -50,6 +53,12 @@ public class OgreEnemy : LivingCreature, IDamage
         currentHP = amountHP;
         ogr.speed = walkSpeed;
         anim.SetBool("IsIdle", true);
+
+    }
+
+    void LateUpdate()
+    {
+        HPDisplay.transform.rotation = Quaternion.identity;
     }
 
     void Update()
@@ -67,6 +76,8 @@ public class OgreEnemy : LivingCreature, IDamage
 
             if (target != null)
             {
+                if (target.GetComponent<AdventurerState>().isAlive == true)
+                {
                     ogr.SetDestination(target.position);
                     anim.SetBool("IsIdle", false);
                     if (phase == HPState.Full)
@@ -77,8 +88,9 @@ public class OgreEnemy : LivingCreature, IDamage
                     {
                         anim.SetBool(runAnimation, true);
                     }
-     
-                DoAttack();
+
+                    DoAttack();
+                }
             }
 
             DamageColor();
@@ -89,7 +101,7 @@ public class OgreEnemy : LivingCreature, IDamage
     {
         if (canColor == true)
         {
-            t += Time.deltaTime / 1f;
+            t += Time.deltaTime / 0.5f;
             if (isDamaged == true)
             {
                 meshRenderer.material.color = Color.Lerp(damageColor, normal, t);
@@ -120,11 +132,12 @@ public class OgreEnemy : LivingCreature, IDamage
  
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, Vector3 position)
     {
         if (isInvincible == false)
         {
             currentHP -= amount;
+            HPBar.fillAmount = currentHP / amountHP;
             if (currentHP <= 0)
             {
                 Die();
@@ -136,17 +149,20 @@ public class OgreEnemy : LivingCreature, IDamage
 
     private void Die()
     {
+        StopCoroutine("Attack");
         isAlive = false;
         GetComponent<Collider>().enabled = false;
         meshRenderer.material.color = normal;
         anim.SetTrigger("IsDead");
+        HPDisplay.SetActive(false);
+        this.enabled = false;
     }
 
     private IEnumerator Damaged()
     {
         canColor = true;
         isDamaged = true;
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(0.5f);
         isDamaged = false;
         t = 0f;
         canColor = false;
@@ -168,6 +184,7 @@ public class OgreEnemy : LivingCreature, IDamage
 
     private IEnumerator Attack()
     {
+        Debug.Log("Atakuje");
         canAttack = false;
         while (lastAttack == randomAttack)
         {
@@ -187,7 +204,11 @@ public class OgreEnemy : LivingCreature, IDamage
         {
             anim.SetTrigger("Punch2");
         }
-        yield return new WaitForSeconds(0.5f);
+        if (isAlive == false)
+        {
+            StopCoroutine("Attack");
+        }
+        yield return new WaitForSeconds(0.7f);
         var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
         if (sphere.Length > 0)
         {
@@ -195,7 +216,7 @@ public class OgreEnemy : LivingCreature, IDamage
             {
                 if (player.GetComponent<AdventurerState>().isAlive == true)
                 {
-                    player.GetComponent<IDamage>().TakeDamage(attackDamage);
+                    player.GetComponent<IDamage>().TakeDamage(attackDamage, new Vector3(0f,0f,0f));
                 }
             }
         }
