@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class ActivateMelee : MonoBehaviour
 {
-    public float damage;
+    private AdventurerState state;
 
     public Collider coll;
-
+    
     private void Start()
     {
         coll = GetComponent<Collider>();
         coll.enabled = false;
+        state = GetComponent<AdventurerState>();
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Enemy")
-        {
-            Debug.Log(other.name + " " + "dealt " + "damage.");
-            //other.GetComponent<IDamage>().TakeDamage(damage);
-        }
+    private void OnTriggerEnter(Collider other)
+    {     
+        Debug.Log(other);
+        //other.GetComponentInChildren<IDamage>().TakeDamage(state.attackDamage, transform.position);
     }
 }

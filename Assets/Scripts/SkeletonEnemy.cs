@@ -24,7 +24,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
     private Color normal;
     private Color damageColor = Color.red;
     private Renderer meshRenderer;
-    private bool isDamaged;
+    private bool isDamaged = false;
     private bool canColor;
     float t = 0f;
     public Image HPBar;
@@ -109,15 +109,17 @@ public class SkeletonEnemy : LivingCreature, IDamage
 
     public void TakeDamage(float amount, Vector3 position)
     {
-        currentHP -= amount;
-        HPBar.fillAmount = currentHP / amountHP;
-        if(currentHP <= 0)
+        if (isDamaged == false)
         {
-            Die();
+            currentHP -= amount;
+            HPBar.fillAmount = currentHP / amountHP;
+            if (currentHP <= 0)
+            {
+                Die();
+            }
+            StartCoroutine("Damaged");
+            KnockBack(position);
         }
-        StartCoroutine("Damaged");
-        KnockBack(position);
-
     }
 
     void Die()
@@ -125,6 +127,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
         StopCoroutine("Attack");
         isAlive = false;
         GetComponent<Collider>().enabled = false;
+        skeleton.isStopped = true;
         anim.SetTrigger("IsDead");
         HPDisplay.SetActive(false);
         this.enabled = false;
@@ -162,10 +165,7 @@ public class SkeletonEnemy : LivingCreature, IDamage
         {
             foreach (var player in sphere)
             {
-                if (player.GetComponent<AdventurerState>().isAlive == true)
-                {
-                    player.GetComponent<IDamage>().TakeDamage(attackDamage, new Vector3(0f,0f,0f));
-                }
+               player.GetComponent<IDamage>().TakeDamage(attackDamage, new Vector3(0f,0f,0f));
             }
         }
         yield return new WaitForSeconds(0.2f);
