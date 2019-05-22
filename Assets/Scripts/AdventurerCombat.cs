@@ -9,7 +9,7 @@ public class AdventurerCombat : MonoBehaviour
     public Transform attackPoint;
     public float attackRange;
     public float lastAttackRange;
-    private ActivateMelee meleeWeapon;
+
     private AdventurerState state;
     private Animator anim;
     private float attackCooldown;
@@ -24,7 +24,6 @@ public class AdventurerCombat : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         state = GetComponent<AdventurerState>();
         weaponTrail = GetComponentInChildren<ParticleSystem>();
-        meleeWeapon = GetComponentInChildren<ActivateMelee>();
         oldAttackRange = attackRange;
     }
 
@@ -54,16 +53,7 @@ public class AdventurerCombat : MonoBehaviour
         {
             attackRange = lastAttackRange;
         }
-        yield return new WaitForSeconds(0.3f);
-        meleeWeapon.coll.enabled = true;
-        //var attack = Physics.OverlapBox(attackPoint.position, new Vector3(attackRange, attackRange, attackRange), Quaternion.identity , LayerMask.GetMask("Enemy"));
-        //foreach(var enemy in attack)
-        //{
-           // enemy.GetComponent<IDamage>().TakeDamage(state.attackDamage, transform.position);
-       // }
-        yield return new WaitForSeconds(0.4f);
-        meleeWeapon.coll.enabled = false;
-        Debug.Log("Kończy atak " + comboMeter);
+        yield return new WaitForSeconds(0.7f);
         nexAttack = true;
         StartCoroutine("ComboBreaker");
         if (comboMeter == 4)
@@ -80,7 +70,7 @@ public class AdventurerCombat : MonoBehaviour
         anim.SetBool("IsIdle", false);
         yield return new WaitForSeconds(0.7f);
         anim.SetBool("IsStance", false);
-        anim.SetBool("IsIdle", true);
+        //anim.SetBool("IsIdle", true);
         state.isAttacking = false;
         Debug.Log("Reset comba");
         comboMeter = 0;

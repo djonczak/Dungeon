@@ -136,14 +136,17 @@ public class OgreEnemy : LivingCreature, IDamage
     {
         if (isInvincible == false)
         {
-            currentHP -= amount;
-            HPBar.fillAmount = currentHP / amountHP;
-            if (currentHP <= 0)
+            if (isDamaged == false)
             {
-                Die();
+                currentHP -= amount;
+                HPBar.fillAmount = currentHP / amountHP;
+                if (currentHP <= 0)
+                {
+                    Die();
+                }
+                CheckHPState();
+                StartCoroutine("Damaged");
             }
-            CheckHPState();
-            StartCoroutine("Damaged");
         }
     }
 
@@ -152,6 +155,7 @@ public class OgreEnemy : LivingCreature, IDamage
         StopCoroutine("Attack");
         isAlive = false;
         GetComponent<Collider>().enabled = false;
+        ogr.isStopped = true;
         meshRenderer.material.color = normal;
         anim.SetTrigger("IsDead");
         HPDisplay.SetActive(false);
