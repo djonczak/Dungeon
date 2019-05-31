@@ -24,11 +24,9 @@ public class OgreEnemy : LivingCreature, IDamage
     private bool canAttack = true;
 
     public float eyesRange;
-    public float meleeRange;
     public float walkSpeed;
     public float runSpeed;
     public float attackSpeed;
-    public Transform meleePoint;
     public float secondPhaseAttackSpeed;
     public Image HPBar;
     public GameObject HPDisplay;
@@ -188,14 +186,12 @@ public class OgreEnemy : LivingCreature, IDamage
 
     private IEnumerator Attack()
     {
-        Debug.Log("Atakuje");
         canAttack = false;
         while (lastAttack == randomAttack)
         {
             randomAttack = Random.Range(1, 4);
         }
         lastAttack = randomAttack;
-        Debug.Log(randomAttack);
         if (randomAttack == 1)
         {
             anim.SetTrigger("SwingAttack");
@@ -212,19 +208,7 @@ public class OgreEnemy : LivingCreature, IDamage
         {
             StopCoroutine("Attack");
         }
-        yield return new WaitForSeconds(0.7f);
-        var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
-        if (sphere.Length > 0)
-        {
-            foreach (var player in sphere)
-            {
-                if (player.GetComponent<AdventurerState>().isAlive == true)
-                {
-                    player.GetComponent<IDamage>().TakeDamage(attackDamage, new Vector3(0f,0f,0f));
-                }
-            }
-        }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.9f);
         canAttack = true;
     }
 
@@ -249,7 +233,5 @@ public class OgreEnemy : LivingCreature, IDamage
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, eyesRange);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange));
     }
 }

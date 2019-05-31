@@ -11,6 +11,7 @@ public class AdventurerState : LivingCreature, IDamage
     private Animator anim;
     public Image bloodOverlay;
     public Image HPBar;
+    public Renderer bodyColor;
 
     private Color alphaColor = new Color(0f, 0f, 0f, 0f);
     private Color normalColor;
@@ -23,6 +24,7 @@ public class AdventurerState : LivingCreature, IDamage
         currentHP = amountHP;
         normalColor = bloodOverlay.color;
         bloodOverlay.color = alphaColor;
+        bodyColor.material.EnableKeyword("_EMISSION");
     }
 
     void Update()
@@ -31,19 +33,24 @@ public class AdventurerState : LivingCreature, IDamage
         {
             t += Time.deltaTime / 1f;
             bloodOverlay.color = Color.Lerp(normalColor, alphaColor, t);
+            var damageColor = Color.Lerp(Color.white, alphaColor, t);
+            bodyColor.material.SetColor("_EmissionColor", damageColor);
         }
     }
 
     public void TakeDamage(float amount, Vector3 position)
     {
-        currentHP -= amount;
-        HPBar.fillAmount = currentHP / amountHP;
-        StartCoroutine("DamageEffect");
-        AdventurerCameraController.instance.StartCoroutine("CameraShake");
-       if(currentHP <= 0)
+        if (isDamaged == false)
         {
-            StopCoroutine("DamageEffect");
-            Die();
+            currentHP -= amount;
+            HPBar.fillAmount = currentHP / amountHP;
+            StartCoroutine("DamageEffect");
+            AdventurerCameraController.instance.StartCoroutine("CameraShake");
+            if (currentHP <= 0)
+            {
+                StopCoroutine("DamageEffect");
+                Die();
+            }
         }
     }
 

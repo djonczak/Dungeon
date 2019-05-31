@@ -21,6 +21,16 @@ public class AdventurerController : MonoBehaviour
             {
                 adventurerCombat.LightAttack();
             }
+
+            if (Input.GetButtonDown("SpinAttackButton"))
+            {
+                adventurerCombat.SpinAttackCooldown();
+            }
+
+            if (Input.GetButtonDown("FurryButton"))
+            {
+                adventurerCombat.ActivateFury();
+            }
         }
     }
 }

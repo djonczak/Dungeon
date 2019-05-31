@@ -1,65 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5500271647158877254
-GameObject:
+--- !u!65 &8325301136100777808
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5500271647158877249}
-  m_Layer: 0
-  m_Name: Eye
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5500271647158877249
-Transform:
+  m_GameObject: {fileID: 5500271646322516800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9061506719130027129
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5500271647158877254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.85, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5500271646322425650}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5500271647205256037
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5500271647205256036}
-  m_Layer: 10
-  m_Name: MeleePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5500271647205256036
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5500271647205256037}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.76, z: 0.73}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5500271647571543580}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 5500271646322516800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb785a96656decd478a9d97db3fbcfb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5500271647571543581
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +57,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5500271646322425650}
-  - {fileID: 5500271647205256036}
   - {fileID: 8057306699671558031}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -126,10 +90,8 @@ MonoBehaviour:
   amountHP: 5
   attackDamage: 1
   eyesRange: 13.2
-  meleeRange: 2
   movementSpeed: 2
   attackSpeed: 0.5
-  meleePoint: {fileID: 5500271647205256036}
   HPBar: {fileID: 9104678714668962977}
   HPDisplay: {fileID: 4759489510609362429}
 --- !u!195 &5500271647571543576
@@ -241,6 +203,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5500271646322550144}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5500271646322516800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100032, guid: 42cd9d29bbb14694dabf258eae08cce6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5500271646322550144}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6787176611069015582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -291,7 +259,7 @@ PrefabInstance:
     - target: {fileID: 3594339708963381649, guid: 0672b8704735c204fa47ed42c0765986,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3594339708963381649, guid: 0672b8704735c204fa47ed42c0765986,
         type: 3}

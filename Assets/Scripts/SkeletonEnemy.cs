@@ -16,10 +16,8 @@ public class SkeletonEnemy : LivingCreature, IDamage
     private Rigidbody body;
 
     public float eyesRange;
-    public float meleeRange;
     public float movementSpeed;
     public float attackSpeed;
-    public Transform meleePoint;
 
     private Color normal;
     private Color damageColor = Color.red;
@@ -63,7 +61,10 @@ public class SkeletonEnemy : LivingCreature, IDamage
 
             if (target != null)
             {
+                if (canAttack == true)
+                {
                     skeleton.SetDestination(target.position);
+                }
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsWalk", true);
 
@@ -159,24 +160,14 @@ public class SkeletonEnemy : LivingCreature, IDamage
         {
             StopCoroutine("Attack");
         }
-        yield return new WaitForSeconds(0.6f);
-        var sphere = Physics.OverlapBox(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange), Quaternion.identity, LayerMask.GetMask("Player"));
-        if (sphere.Length > 0)
-        {
-            foreach (var player in sphere)
-            {
-               player.GetComponent<IDamage>().TakeDamage(attackDamage, new Vector3(0f,0f,0f));
-            }
-        }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.8f);
         canAttack = true;
     }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, eyesRange);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(meleePoint.position, new Vector3(meleeRange, meleeRange, meleeRange));
     }
 }
