@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Bolt
+  - DamageText
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Player
   - Enemy
   - Equipment
-  - 
+  - Bolt
   - 
   - 
   - 

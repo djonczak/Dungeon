@@ -5,7 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/AdventurerTest.unity
+  - enabled: 0
+    path: Assets/Scenes/Dungeon.unity
     guid: fe067748f1b9be3428dc3cae0ca50abd
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/CombatTest.unity
+    guid: 7e3dca774a556c94f8ce04380535c364
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: f3c91ca8be0dd2f4eb4200d5b1f55077,
+      type: 2}
