@@ -7,6 +7,12 @@ TagManager:
   - Enemy
   - Bolt
   - DamageText
+  - Imp
+  - Ogre
+  - Skeleton
+  - Mug
+  - Keg
+  - Trey
   layers:
   - Default
   - TransparentFX
@@ -21,7 +27,7 @@ TagManager:
   - Enemy
   - Equipment
   - Bolt
-  - 
+  - Ground
   - 
   - 
   - 

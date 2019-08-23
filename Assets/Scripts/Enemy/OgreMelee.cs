@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class OgreMelee : MonoBehaviour
 {
-    private OgreEnemy ogreStats;
+    private OgreHealth ogreStats;
     private float damage;
 
     void Start()
     {
-        ogreStats = GetComponentInParent<OgreEnemy>();
+        ogreStats = GetComponentInParent<OgreHealth>();
         damage = ogreStats.attackDamage;
     }
 

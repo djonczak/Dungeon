@@ -16,6 +16,8 @@ MonoBehaviour:
   - DualShockGamepad
   - XInputController
   - SwitchProControllerHID
+  - Keyboard
+  - Mouse
   m_UpdateMode: 2
   m_TimesliceEvents: 0
   m_CompensateForScreenOrientation: 1

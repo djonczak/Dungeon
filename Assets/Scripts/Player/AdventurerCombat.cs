@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class AdventurerCombat : MonoBehaviour
 {
     [SerializeField] private float boltDamage;
-    [SerializeField] private float boltSpeed;
-    public float cooldownSpin;
+    [SerializeField] private float boltSpeed = 180;
     public Image furyBar;
     public GameObject[] weaponList;
     public Transform crossbowBarrel;
@@ -22,13 +21,13 @@ public class AdventurerCombat : MonoBehaviour
     public ParticleSystem furryEffect;
     private bool canUseFury;
     private bool isUsingFury;
-    [SerializeField] private AudioSource sound;
-    public AudioClip[] fightSound;
+    private SoundManager sound;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         state = GetComponent<AdventurerState>();
+        sound = GetComponent<SoundManager>();
         state.isMelee = true;
         weaponList[1].SetActive(false);
     }
@@ -48,6 +47,7 @@ public class AdventurerCombat : MonoBehaviour
         Debug.Log("Zmiana");
         if (nexAttack == true)
         {
+            sound.ChangeSound();
             if (state.isMelee)
             {
                 weaponList[0].SetActive(true);
@@ -69,7 +69,6 @@ public class AdventurerCombat : MonoBehaviour
             comboMeter = 0;
         }
         nexAttack = true;
-        Debug.Log("Może działa");
     }
 
     public void Attack()
@@ -80,8 +79,8 @@ public class AdventurerCombat : MonoBehaviour
         }
         else
         {
+            sound.RangeSound();
             CrossbowAttack();
-            Debug.Log("Crosbow Attack");
         }
     }
 
@@ -111,11 +110,6 @@ public class AdventurerCombat : MonoBehaviour
         }
     }
 
-    public void SpinAttackCooldown()
-    {
-         StartCoroutine("SpinAttack");
-    }
-
     public void FuryMeter()
     {
         if(currentFuryMeter < furyMaxMeter  && isUsingFury == false)
@@ -135,12 +129,6 @@ public class AdventurerCombat : MonoBehaviour
         {
             StartCoroutine("Fury", 8f);
         }
-    }
-
-    private IEnumerator SpinAttack()
-    {
-        anim.SetTrigger("SpinAttack");
-        yield return new WaitForSeconds(1.10f);
     }
 
     private IEnumerator Fury(float time)

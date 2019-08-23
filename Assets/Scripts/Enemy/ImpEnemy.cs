@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ImpEnemy : MonoBehaviour, IDamage
+public class ImpEnemy : LivingCreature, IDamage
 {
-    public float movementSpeed;
-    public float eyesRange;
     public float explosionTimer;
     public float explosionRange;
-    public float explosionDamage;
 
-    private NavMeshAgent imp;
     private ParticleSystem explosion;
     private Renderer bodyColor;
     private Animator anim;
-    private Transform target;
     private bool isExplosion = false;
     private Color normalColor = new Color(0f, 0f, 0f, 0f);
     private bool isTicking = false;
@@ -23,41 +18,25 @@ public class ImpEnemy : MonoBehaviour, IDamage
 
     void Start()
     {
-        imp = GetComponent<NavMeshAgent>();
         explosion = GetComponentInChildren<ParticleSystem>();
         bodyColor = GetComponentInChildren<Renderer>();
         anim = GetComponentInChildren<Animator>();
-        imp.speed = movementSpeed;
+        currentHP = maxHP;
     }
 
     void Update()
     {
-        if(isExplosion == false)
-        { 
-            if (target == null)
+        if (isExplosion == false)
+        {
+            if (anim.GetBehaviour<AIFollow>().target != null)
             {
-                var sphereVision = Physics.OverlapSphere(transform.position, eyesRange, LayerMask.GetMask("Player"));
-                if (sphereVision.Length > 0)
+                ColorFlick();
+                if (isTicking == false)
                 {
-                    target = sphereVision[0].transform;
+                    StartCoroutine("ExplosionTimer", explosionTimer);
+                    isTicking = true;
                 }
             }
-
-            if (target != null)
-            {
-                if (target.GetComponent<AdventurerState>().isAlive == true)
-                {
-                    imp.SetDestination(target.position);
-                    anim.SetTrigger("IsRun");
-                    ColorFlick();
-                    if(isTicking == false)
-                    {
-                        StartCoroutine("ExplosionTimer", explosionTimer);
-                        isTicking = true;
-                    }
-                }
-            }
-
         }
     }
 
@@ -69,36 +48,57 @@ public class ImpEnemy : MonoBehaviour, IDamage
 
     public void TakeDamage(float amount, Vector3 direction)
     {
+        currentHP -= amount;
         KnockBack(direction);
+        if(currentHP <= 0)
+        {
+            bodyColor.material.SetColor("_EmissionColor", normalColor);
+            isExplosion = true;
+            anim.SetTrigger("IsDead");
+            GetComponent<BoxCollider>().enabled = false;
+            GetComponent<NavMeshAgent>().isStopped = true;
+            GetComponent<NavMeshAgent>().enabled = false;
+            if (EnemyWaveSpawner.instance.enabled == true)
+            {
+                EnemyWaveSpawner.instance.currentEnemy--;
+                EnemyWaveSpawner.instance.CheckWave();
+            }
+            StopAllCoroutines();
+            anim.GetBehaviour<AIFollow>().isAlive = false;
+        }
     }
 
-    public void KnockBack(Vector3 position)
+
+    private void KnockBack(Vector3 position)
     {
         var direction = (transform.position - position).normalized;
 
-        GetComponent<Rigidbody>().AddForce(direction * 650f);
-       // imp.speed = 0f;
+        GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity + direction * 22f, ForceMode.Impulse);
     }
 
     private IEnumerator ExplosionTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        imp.speed = 0f;
         GetComponentInChildren<Renderer>().enabled = false;
+        GetComponent<NavMeshAgent>().enabled = false;
         explosion.Play();
         var damagable = Physics.OverlapSphere(transform.position, explosionRange, LayerMask.GetMask("Player"));
         if (damagable.Length > 0)
         {
-            damagable[0].GetComponent<IDamage>().TakeDamage(explosionDamage, transform.position);
+            damagable[0].GetComponent<IDamage>().TakeDamage(attackDamage, transform.position);
         }
         yield return new WaitForSeconds(1f);
+        if (EnemyWaveSpawner.instance.enabled == true)
+        {
+            EnemyWaveSpawner.instance.currentEnemy--;
+            EnemyWaveSpawner.instance.CheckWave();
+        }
+        anim.GetBehaviour<AIFollow>().isAlive = false;
         gameObject.SetActive(false);
     } 
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, eyesRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRange);
     }

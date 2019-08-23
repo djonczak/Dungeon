@@ -9,27 +9,174 @@ public class InkeeperControlls : MonoBehaviour
 
     private InputController controls;
     public Vector2 move;
-    [SerializeField] private Rigidbody rb;
+    private Rigidbody rb;
     private Vector3 rotationPosition;
+    public Transform itemToPick;
+    private float holdTime;
+    private bool canFill;
+    private Transform beerKeg;
+
+    InkeeperInventory inventory;
+
+    public TavernHUD hud;
 
     private void FixedUpdate()
     {
         Movement();
+        FillMug();
+    }
+
+    private void FillMug()
+    {
+        if (canFill)
+        {
+            if (inventory.isUsingTray)
+            {
+                for (int i = 0; i < inventory.trey.GetComponent<Trey>().mugs.Count; i++)
+                {
+                    if (beerKeg.GetComponent<BeerKeg>().minAmount > 0)
+                    {
+                        hud.canFill = canFill;
+                        holdTime = controls.InKeeper.Fill.ReadValue<float>();
+                        if (holdTime == 1)
+                        {
+                            inventory.trey.GetComponent<Trey>().mugs[i].GetComponent<Mug>().FillMug(beerKeg.GetComponent<BeerKeg>());
+                            hud.CloseFillCircle();
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < inventory.mugs.Count; i++)
+                {
+                    if (beerKeg.GetComponent<BeerKeg>().minAmount > 0)
+                    {
+                        hud.canFill = canFill;
+                        holdTime = controls.InKeeper.Fill.ReadValue<float>();
+                        if (holdTime == 1)
+                        {
+                            inventory.mugs[i].GetComponent<Mug>().FillMug(beerKeg.GetComponent<BeerKeg>());
+                            hud.CloseFillCircle();
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void Movement()
     {
-        Vector3 movement = new Vector3(move.x, 0f, move.y);
-        var moveVelocity = movement * walkSpeed;
-        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0f, move.y)), 0.15f);
+        if (move.magnitude > 0.25f)
+        {
+            Vector3 movement = new Vector3(move.x, 0f, move.y);
+            var moveVelocity = movement * walkSpeed;
+            rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0f, move.y)), 0.15f);
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 
     private void Awake()
     {
         controls = new InputController();
+        // TODO: Getting vector2 from left stick to move player
         controls.InKeeper.Movement.performed += input => move = input.ReadValue<Vector2>();
         controls.InKeeper.Movement.canceled += input => move = Vector2.zero;
+
+        // TODO: Picking object
+        controls.InKeeper.PickUpItem.performed += input => PickItem();
+
+        // TODO: Filling mugs near beer keg
+        controls.InKeeper.Fill.started += input => hud.ShowFillCircle();
+        controls.InKeeper.Fill.canceled += input => hud.CloseFillCircle();
+
+        // TODO: drop plate or mug
+        controls.InKeeper.DropItem.performed += input => DropItem();
+
+    }
+
+    private void Start()
+    {
+        inventory = GetComponent<InkeeperInventory>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void PickItem()
+    {
+        if (itemToPick != null)
+        {
+            inventory.PickItem(itemToPick);
+            itemToPick = null;
+            hud.CloseMessage();
+        }
+    }
+
+    public void DropItem()
+    {
+        inventory.DropItem();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Mug")
+        {
+            Debug.Log("Kufel");
+            if (itemToPick == null && inventory.canCarry == true)
+            {
+                itemToPick = other.transform;
+                other.GetComponent<InteractableItem>().OnInteract();
+                hud.ShowMessage(other.GetComponent<InteractableItem>().interactText);
+            }
+        }
+
+        if (other.tag == "Keg")
+        {
+            Debug.Log("Beczka");
+            if (other.GetComponent<BeerKeg>().minAmount > 0)
+            {
+                beerKeg = other.transform;
+                canFill = true;
+            }
+        }
+
+        if(other.tag == "Trey")
+        {
+            Debug.Log("Tacka");
+            if (itemToPick == null)
+            {
+                other.GetComponent<InteractableItem>().OnInteract();
+                itemToPick = other.transform;
+                hud.ShowMessage(other.GetComponent<InteractableItem>().interactText);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Keg")
+        {
+            hud.CloseFillCircle();
+            canFill = false;
+            beerKeg = null;
+        }
+
+        if (itemToPick != null && itemToPick.name == other.name)
+        {
+            itemToPick = null;
+            hud.CloseMessage();
+        }
     }
 
     private void OnEnable()

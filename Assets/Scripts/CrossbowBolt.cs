@@ -6,6 +6,7 @@ public class CrossbowBolt : MonoBehaviour
 {
     public float damage;
     private GameObject poolerParent;
+    private AudioSource sound;
 
     private void OnEnable()
     {
@@ -19,17 +20,21 @@ public class CrossbowBolt : MonoBehaviour
     private void Start()
     {
         poolerParent = this.transform.parent.gameObject;
+        sound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.gameObject.layer == 10)
         {
             other.GetComponent<IDamage>().TakeDamage(damage, transform.position);
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            transform.parent = other.transform;
-            GetComponent<Rigidbody>().isKinematic = true;
-            GetComponent<BoxCollider>().enabled = false;
+            if (other.tag != "Imp")
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                transform.parent = other.transform;
+              //  GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<BoxCollider>().enabled = false;
+            }
         }
         else
         {
@@ -37,11 +42,12 @@ public class CrossbowBolt : MonoBehaviour
             GetComponent<BoxCollider>().isTrigger = false;
             GetComponent<Rigidbody>().useGravity = true;
         }
+        sound.PlayOneShot(sound.clip, 0.5f);
         Invoke("DisableObject", 15f);
         gameObject.layer = 12;
     }
 
-    void DisableObject()
+    public void DisableObject()
     {
         transform.parent = poolerParent.transform;
         this.gameObject.SetActive(false);

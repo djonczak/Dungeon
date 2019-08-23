@@ -26,11 +26,8 @@ public class AdventurerMovement : MonoBehaviour
    
     void FixedUpdate()
     {
-        if (state.isAlive == true)
-        {
-            Move();
-            Rotate();
-        }
+         Move();
+         Rotate();
     }
 
     private void Move()
@@ -42,7 +39,8 @@ public class AdventurerMovement : MonoBehaviour
             rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
             float angle = Vector3.Angle(Vector3.forward, move);
             angle = (move.x > 0) ? angle : angle * -1;
-            transform.rotation = Quaternion.Euler(0, angle, 0);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), 1f);
             if (isAiming == false)
             {
                 anim.SetFloat("VelNormal", Mathf.Abs(move.magnitude));

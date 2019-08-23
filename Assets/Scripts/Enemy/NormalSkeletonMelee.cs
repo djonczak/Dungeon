@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class NormalSkeletonMelee : MonoBehaviour
 {
-    private SkeletonEnemy skeleton;
+    private SkeletonHealth skeleton;
     private float damage;
 
     void Start()
     {
-        skeleton = GetComponentInParent<SkeletonEnemy>();
+        skeleton = GetComponentInParent<SkeletonHealth>();
         damage = skeleton.attackDamage;
     }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LivingCreature : MonoBehaviour
 {
-    public string creatureName;
-    public float amountHP;
+    public float maxHP;
+    public float currentHP;
     public float attackDamage;
+    public float goldAmount;
 }
