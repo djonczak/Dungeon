@@ -18,7 +18,7 @@ public class Trey : InteractableItem
 
     public void PlaceMug(Transform mug)
     {
-        mug.transform.position = new Vector3(mugPlace[inTrey].transform.position.x,0, mugPlace[inTrey].transform.position.z);
+        mug.transform.position = new Vector3(mugPlace[inTrey].transform.position.x, 0f, mugPlace[inTrey].transform.position.z);
         mug.transform.rotation = mugPlace[inTrey].transform.rotation;
         mug.GetComponent<Rigidbody>().isKinematic = true;
         mug.GetComponent<Collider>().enabled = false;
@@ -45,5 +45,30 @@ public class Trey : InteractableItem
         }
         inTrey = 0;
         mugs.Clear();
+    }
+
+    public void GiveGuest(Guest guest)
+    {
+        for (int i = 0; i < mugs.Count; i++)
+        {
+            if(mugs[i].GetComponent<Mug>().isFull == true)
+            {
+                inTrey--;
+                mugs[i].parent = null;
+                guest.TakeBear(mugs[i].GetComponent<Mug>());
+                mugs.Remove(mugs[i]);
+                break;
+            }
+        }
+        inventory.canCarry = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        foreach(Transform place in mugPlace)
+        {
+            Gizmos.DrawWireSphere(place.position, 0.2f);
+        }
     }
 }

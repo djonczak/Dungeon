@@ -32,7 +32,7 @@ public class CrossbowBolt : MonoBehaviour
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 transform.parent = other.transform;
-              //  GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<Rigidbody>().isKinematic = true;
                 GetComponent<BoxCollider>().enabled = false;
             }
         }
@@ -42,8 +42,8 @@ public class CrossbowBolt : MonoBehaviour
             GetComponent<BoxCollider>().isTrigger = false;
             GetComponent<Rigidbody>().useGravity = true;
         }
-        sound.PlayOneShot(sound.clip, 0.5f);
-        Invoke("DisableObject", 15f);
+        sound.PlayOneShot(sound.clip, 0.1f);
+        Invoke("DisableObject", 13f);
         gameObject.layer = 12;
     }
 

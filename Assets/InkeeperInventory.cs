@@ -6,7 +6,7 @@ public class InteractableItem : MonoBehaviour
 {
     public string itemName;
 
-    public string interactText = "Press F to pickup the item";
+    public string interactText;
 
     public virtual void OnInteract(){}
 }
@@ -23,7 +23,7 @@ public class InkeeperInventory : MonoBehaviour
 
     public void PickItem(Transform item)
     {
-        if(item.tag == "Mug")
+        if (item.tag == "Mug")
         {
             if (canCarry == true)
             {
@@ -31,11 +31,11 @@ public class InkeeperInventory : MonoBehaviour
             }
         }
 
-        if(item.tag == "Trey")
+        if (item.tag == "Trey")
         {
             if (item.GetComponent<Trey>().inTrey == 4 && inHand > -1)
             {
-           
+
             }
             else
             {
@@ -52,13 +52,13 @@ public class InkeeperInventory : MonoBehaviour
         }
         else
         {
-            if(mugs.Count != 0)
+            if (mugs.Count != 0)
             {
                 DropMug();
             }
         }
     }
- 
+
     private void PickTrey(Transform item)
     {
         trey = item.gameObject;
@@ -70,22 +70,22 @@ public class InkeeperInventory : MonoBehaviour
         trey.GetComponent<Trey>().inventory = this;
         isUsingTray = true;
         canCarry = true;
-        if (mugs.Capacity != 0)
+        if (mugs.Count != 0)
         {
-           for(int j = 0; j < mugs.Count; j++)
-           {
+            for (int j = 0; j < mugs.Count; j++)
+            {
                 if (trey.GetComponent<Trey>().inTrey < 4)
                 {
                     trey.GetComponent<Trey>().PlaceMug(mugs[j]);
                     mugs.Remove(mugs[j]);
+                    inHand--;
                 }
                 else
                 {
                     DropMug();
                     break;
                 }
-           }
-           inHand = -1;
+            }
         }
     }
 
@@ -125,7 +125,7 @@ public class InkeeperInventory : MonoBehaviour
         {
             trey.GetComponent<Trey>().PlaceMug(mug);
         }
-        if(trey.GetComponent<Trey>().inTrey == 4)
+        if (trey.GetComponent<Trey>().inTrey == 4)
         {
             canCarry = false;
         }
@@ -136,15 +136,15 @@ public class InkeeperInventory : MonoBehaviour
         if (inHand == 0)
         {
             mug.transform.parent = handsPoint[0].transform;
-            mug.transform.position = new Vector3(handsPoint[0].position.x,0f, handsPoint[0].position.z);
+            mug.transform.position = new Vector3(handsPoint[0].position.x - 1.4f, handsPoint[0].position.y + 1f, handsPoint[0].position.z);
             mug.transform.rotation = handsPoint[0].rotation;
             mug.GetComponent<Collider>().enabled = false;
             mug.GetComponent<Rigidbody>().isKinematic = true;
         }
-        if(inHand == 1)
+        if (inHand == 1)
         {
             mug.transform.parent = handsPoint[1].transform;
-            mug.transform.position = new Vector3(handsPoint[1].position.x, 0f, handsPoint[1].position.z);
+            mug.transform.position = new Vector3(handsPoint[1].position.x, handsPoint[1].position.y, handsPoint[1].position.z);
             mug.transform.rotation = handsPoint[1].rotation;
             mug.GetComponent<Collider>().enabled = false;
             mug.GetComponent<Rigidbody>().isKinematic = true;
@@ -161,5 +161,31 @@ public class InkeeperInventory : MonoBehaviour
         inHand--;
         mugs.Remove(mug);
         canCarry = true;
+    }
+
+    public void GiveGuest(Guest guest)
+    {
+        for (int i = 0; i < mugs.Count; i++)
+        {
+            if (mugs[i].GetComponent<Mug>().isFull == true)
+            {
+                inHand--;
+                mugs[i].parent = null;
+                guest.TakeBear(mugs[i].GetComponent<Mug>());
+                mugs.Remove(mugs[i]);
+                break;
+            }
+        }
+    }
+
+    // private void 
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        foreach (Transform place in handsPoint)
+        {
+            Gizmos.DrawWireSphere(place.position, 0.2f);
+        }
     }
 }

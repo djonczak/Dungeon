@@ -41,6 +41,14 @@ public class Mug : InteractableItem
         }
     }
 
+    public void DirtyMug()
+    {
+        isFull = false;
+        isDirty = true;
+        fullMug.gameObject.SetActive(false);
+        emptyMug.gameObject.SetActive(true);
+    }
+
     public void CleanMug()
     {
 

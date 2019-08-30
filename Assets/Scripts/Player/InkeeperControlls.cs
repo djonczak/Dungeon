@@ -15,6 +15,7 @@ public class InkeeperControlls : MonoBehaviour
     private float holdTime;
     private bool canFill;
     private Transform beerKeg;
+    private Animator anim;
 
     InkeeperInventory inventory;
 
@@ -81,10 +82,32 @@ public class InkeeperControlls : MonoBehaviour
             var moveVelocity = movement * walkSpeed;
             rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(move.x, 0f, move.y)), 0.15f);
+            if (inventory.isUsingTray == true || inventory.mugs.Count != 0)
+            {
+                anim.SetBool("IsWalkingTrey", true);
+            }
+            else
+            {
+                anim.SetBool("IsWalking", true);
+            }
+            anim.SetBool("IsIdle", false);
+            anim.SetBool("IsIdleTrey", false);
         }
         else
         {
             rb.velocity = Vector3.zero;
+            if (inventory.isUsingTray == true || inventory.mugs.Count != 0)
+            {
+                anim.SetBool("IsIdleTrey", true);
+                anim.SetBool("IsIdle", false);
+            }
+            else
+            {
+                anim.SetBool("IsIdle", true);
+                anim.SetBool("IsIdleTrey", false);
+            }
+            anim.SetBool("IsWalking", false);
+            anim.SetBool("IsWalkingTrey", false);
         }
     }
 
@@ -111,6 +134,7 @@ public class InkeeperControlls : MonoBehaviour
     {
         inventory = GetComponent<InkeeperInventory>();
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     public void PickItem()
