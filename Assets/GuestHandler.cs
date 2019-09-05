@@ -9,11 +9,15 @@ public class GuestHandler : MonoBehaviour
     public List<Guest> citizenList = new List<Guest>();
     public static GuestHandler instance = null;
 
-    public bool isOpened;
+    [SerializeField] private bool isOpened;
+    [SerializeField] private float tavernWorkTime = 1000;
 
-    void Awake()
+    private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
         //List<Vector3> waitingQuePositionList = new List<Vector3>();
         //float positionSize = 5f;
         //for(int i = 0; i < 5; i++)
@@ -21,17 +25,23 @@ public class GuestHandler : MonoBehaviour
         //    waitingQuePositionList.Add(firstPosition.transform.position + new Vector3(0, 0, 1) * positionSize * i);
         //}
         waitingQueue.Queue();
-        waitingQueue.OnGuestArrive += WaitingQueue_OnGuestArrive; 
-        InvokeRepeating("AddGuest", 2f, 5f);
-        
     }
 
-    private void WaitingQueue_OnGuestArrive(object sender, System.EventArgs e)
+    public void OpenTavern()
     {
-        Debug.Log("Dodano gościa");
+        isOpened = true;
+        InvokeRepeating("AddGuest", 2f, 5f);
+        Invoke("CloseTaver", tavernWorkTime);
     }
 
-    public void AddGuest()
+    public void CloseTaver()
+    {
+        CancelInvoke("AddGuest");
+        Debug.Log("Zamknięte");
+        waitingQueue.CloseInn();
+    }
+
+    private void AddGuest()
     {
         if (citizenList.Count != 0 && isOpened == true) 
         {
@@ -40,4 +50,6 @@ public class GuestHandler : MonoBehaviour
             citizenList.Remove(guest);
         }
     }   
+
+
 }

@@ -7,4 +7,5 @@ public class AdventurerState : MonoBehaviour
     public bool isMelee;
     public float attackDamage;
 
+    public AdventurerData playerData;
 }

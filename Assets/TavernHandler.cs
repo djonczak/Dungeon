@@ -16,6 +16,7 @@ public class TavernHandler : MonoBehaviour
     private void Start()
     {
         waitingQueue.OnGuestArrive += WaitingQueue_OnGuestArrive;
+        waitingQueue.CloseTavern += WaitingQueue_CloseTavern;
     }
 
     public void TryToSendGuest()
@@ -40,6 +41,16 @@ public class TavernHandler : MonoBehaviour
     {
         TryToSendGuest();
         Debug.Log("Jest wolne miejsce");
+    }
+
+    private void WaitingQueue_CloseTavern(object sender, System.EventArgs e)
+    {
+        Debug.Log("Zamykamy tawerne");
+        foreach(Seat seat in placesToSit)
+        {
+            seat.Close();
+        }
+
     }
 
     public Seat GetEmptySeat()

@@ -12,15 +12,17 @@ public class Mug : InteractableItem
     public Transform emptyMug;
     public Transform fullMug;
 
-    public override void OnInteract()
+    private Transform parent;
+
+    public override void ShowInfo()
     {
         itemName = "Mug";
         interactText = "Press E/X/A/B to pick up " + itemName;
-      //  base.OnInteract();
     }
 
     private void Start()
     {
+        parent = transform.parent;
         emptyMug.gameObject.SetActive(true);
         fullMug.gameObject.SetActive(false);
     }
@@ -43,6 +45,7 @@ public class Mug : InteractableItem
 
     public void DirtyMug()
     {
+        transform.parent = parent;
         isFull = false;
         isDirty = true;
         fullMug.gameObject.SetActive(false);

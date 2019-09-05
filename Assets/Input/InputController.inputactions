@@ -38,12 +38,20 @@
                     "interactions": "Press"
                 },
                 {
-                    "name": "PutOnTable",
+                    "name": "InteractablePress",
                     "type": "Button",
                     "id": "e15a38b5-bda6-48b6-8913-05f70bc6f1ea",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press(behavior=1)"
+                },
+                {
+                    "name": "InteractableHold",
+                    "type": "Button",
+                    "id": "724583e3-60c3-4430-8274-37d1b2ce8a43",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold(duration=4)"
                 }
             ],
             "bindings": [
@@ -274,7 +282,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PutOnTable",
+                    "action": "InteractablePress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -285,7 +293,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PutOnTable",
+                    "action": "InteractablePress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -296,7 +304,62 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PutOnTable",
+                    "action": "InteractablePress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e40624d1-9126-4b3a-b3f7-49aa8cd6cb7f",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractablePress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f10a0ce4-12d2-4125-ab7c-7fbc7c5f673d",
+                    "path": "<XInputController>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a4e04858-0b0a-48a2-a3cc-1910f76b7e96",
+                    "path": "<SwitchProControllerHID>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e86039f4-b704-48b1-8c5c-fdd5c91cbce3",
+                    "path": "<DualShockGamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd5c7880-801e-4ebe-b463-59dda434d5aa",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

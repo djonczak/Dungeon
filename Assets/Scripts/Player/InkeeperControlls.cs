@@ -12,7 +12,8 @@ public class InkeeperControlls : MonoBehaviour
     private Rigidbody rb;
     private Vector3 rotationPosition;
     public Transform itemToPick;
-    private float holdTime;
+    private float holdTime = 0f;
+    private InteractableItem itemInteract;
     private bool canFill;
     private Transform beerKeg;
     private Animator anim;
@@ -25,6 +26,8 @@ public class InkeeperControlls : MonoBehaviour
     {
         Movement();
         FillMug();
+
+        Interact();
     }
 
     private void FillMug()
@@ -47,7 +50,7 @@ public class InkeeperControlls : MonoBehaviour
                     }
                     else
                     {
-                        break;
+                        return;
                     }
                 }
             }
@@ -67,7 +70,7 @@ public class InkeeperControlls : MonoBehaviour
                     }
                     else
                     {
-                        break;
+                       return;
                     }
                 }
             }
@@ -111,6 +114,18 @@ public class InkeeperControlls : MonoBehaviour
         }
     }
 
+    private void Interact()
+    {
+        if (itemInteract != null)
+        {
+            holdTime = controls.InKeeper.Fill.ReadValue<float>();
+            if (holdTime == 1)
+            {
+                InteractHold();
+            }
+        }
+    }
+
     private void Awake()
     {
         controls = new InputController();
@@ -125,8 +140,12 @@ public class InkeeperControlls : MonoBehaviour
         controls.InKeeper.Fill.started += input => hud.ShowFillCircle();
         controls.InKeeper.Fill.canceled += input => hud.CloseFillCircle();
 
-        // TODO: drop plate or mug
+        // TODO: Drop plate or mug
         controls.InKeeper.DropItem.performed += input => DropItem();
+
+        // TODO: Interact with object
+        controls.InKeeper.InteractablePress.performed += input => InteractPress();
+
 
     }
 
@@ -137,7 +156,7 @@ public class InkeeperControlls : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void PickItem()
+    private void PickItem()
     {
         if (itemToPick != null)
         {
@@ -147,27 +166,41 @@ public class InkeeperControlls : MonoBehaviour
         }
     }
 
-    public void DropItem()
+    private void DropItem()
     {
         inventory.DropItem();
+    }
+
+    private void InteractPress()
+    {
+        if (itemInteract != null)
+        {
+            itemInteract.OnInteractPress();
+        }
+    }
+
+    private void InteractHold()
+    {
+        if (itemInteract != null)
+        {
+            itemInteract.OnInteractHold();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Mug")
         {
-            Debug.Log("Kufel");
             if (itemToPick == null && inventory.canCarry == true)
             {
                 itemToPick = other.transform;
-                other.GetComponent<InteractableItem>().OnInteract();
+                other.GetComponent<InteractableItem>().ShowInfo();
                 hud.ShowMessage(other.GetComponent<InteractableItem>().interactText);
             }
         }
 
         if (other.tag == "Keg")
         {
-            Debug.Log("Beczka");
             if (other.GetComponent<BeerKeg>().minAmount > 0)
             {
                 beerKeg = other.transform;
@@ -177,12 +210,22 @@ public class InkeeperControlls : MonoBehaviour
 
         if(other.tag == "Trey")
         {
-            Debug.Log("Tacka");
             if (itemToPick == null)
             {
-                other.GetComponent<InteractableItem>().OnInteract();
+                other.GetComponent<InteractableItem>().ShowInfo();
                 itemToPick = other.transform;
                 hud.ShowMessage(other.GetComponent<InteractableItem>().interactText);
+            }
+        }
+
+        if(other.tag == "Interactable")
+        {
+            var interact = other.GetComponent<InteractableItem>();
+            if(interact != null)
+            {
+                interact.ShowInfo();
+                itemInteract = interact;
+                hud.ShowMessage(interact.interactText);
             }
         }
     }
@@ -200,6 +243,12 @@ public class InkeeperControlls : MonoBehaviour
         {
             itemToPick = null;
             hud.CloseMessage();
+        }
+
+        if (other.tag == "Interactable")
+        {
+            hud.CloseMessage();
+            itemInteract = null;
         }
     }
 

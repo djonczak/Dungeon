@@ -12,6 +12,7 @@ public class Guest : MonoBehaviour
 
     public TavernHandler tavern;
     private Transform mug;
+    private bool canOrder;
     public SphereCollider coll;
 
     private void Start()
@@ -33,6 +34,7 @@ public class Guest : MonoBehaviour
         Debug.Log("Może zamówić");
         coll.enabled = true;
         Invoke("Unhandled", 30f);
+        canOrder = true;
     }
 
     // TODO: Takes drink and starts to gossips
@@ -63,21 +65,30 @@ public class Guest : MonoBehaviour
 
     // TODO: Waiting for drink, if didn't get then go out of tavern
 
-    private void Unhandled()
+    public void Unhandled()
     {
+        //if(mug != null)
+        //{
+        //    mug.parent = null;
+        //    mug.GetComponent<Collider>().enabled = true;
+        //    mug.GetComponent<Rigidbody>().isKinematic = false;
+        //    mug.GetComponent<Mug>().DirtyMug();
+        //    mug = null;
+        //}
         tavern.unhandledGuestAmount++;
+        canOrder = false;
         ExitTavern();
     }
 
     // TODO: Exit tavern and go towards exit point then cleans variables for next time
 
-    public void ExitTavern()
+    private void ExitTavern()
     {
         Debug.Log("Wychodzi");
         tavern.TryToSendGuest();
-        tavern = null;
         seat.EmptySeat();
         seat = null;
+        tavern = null;
         MoveTo(GuestHandler.instance.exitPoint.position);
     }
 
@@ -85,7 +96,7 @@ public class Guest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && mug == null && canOrder == true)
         {
             InkeeperInventory inventory = other.GetComponent<InkeeperInventory>();
             if(inventory != null)
@@ -117,7 +128,7 @@ public class Guest : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(handPosition.position, 1f);
+        Gizmos.DrawWireSphere(handPosition.position, 0.3f);
     }
 
 }

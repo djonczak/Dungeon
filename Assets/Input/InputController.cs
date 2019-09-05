@@ -50,12 +50,20 @@ public class InputController : IInputActionCollection
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""PutOnTable"",
+                    ""name"": ""InteractablePress"",
                     ""type"": ""Button"",
                     ""id"": ""e15a38b5-bda6-48b6-8913-05f70bc6f1ea"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press""
+                    ""interactions"": ""Press(behavior=1)""
+                },
+                {
+                    ""name"": ""InteractableHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""724583e3-60c3-4430-8274-37d1b2ce8a43"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=4)""
                 }
             ],
             ""bindings"": [
@@ -286,7 +294,7 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PutOnTable"",
+                    ""action"": ""InteractablePress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -297,7 +305,7 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PutOnTable"",
+                    ""action"": ""InteractablePress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -308,7 +316,62 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PutOnTable"",
+                    ""action"": ""InteractablePress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e40624d1-9126-4b3a-b3f7-49aa8cd6cb7f"",
+                    ""path"": ""<Keyboard>/#(E)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractablePress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f10a0ce4-12d2-4125-ab7c-7fbc7c5f673d"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4e04858-0b0a-48a2-a3cc-1910f76b7e96"",
+                    ""path"": ""<SwitchProControllerHID>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e86039f4-b704-48b1-8c5c-fdd5c91cbce3"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd5c7880-801e-4ebe-b463-59dda434d5aa"",
+                    ""path"": ""<Keyboard>/#(E)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -632,7 +695,8 @@ public class InputController : IInputActionCollection
         m_InKeeper_PickUpItem = m_InKeeper.GetAction("PickUpItem");
         m_InKeeper_Fill = m_InKeeper.GetAction("Fill");
         m_InKeeper_DropItem = m_InKeeper.GetAction("DropItem");
-        m_InKeeper_PutOnTable = m_InKeeper.GetAction("PutOnTable");
+        m_InKeeper_InteractablePress = m_InKeeper.GetAction("InteractablePress");
+        m_InKeeper_InteractableHold = m_InKeeper.GetAction("InteractableHold");
         // Adventurer
         m_Adventurer = asset.GetActionMap("Adventurer");
         m_Adventurer_Movement = m_Adventurer.GetAction("Movement");
@@ -695,7 +759,8 @@ public class InputController : IInputActionCollection
     private readonly InputAction m_InKeeper_PickUpItem;
     private readonly InputAction m_InKeeper_Fill;
     private readonly InputAction m_InKeeper_DropItem;
-    private readonly InputAction m_InKeeper_PutOnTable;
+    private readonly InputAction m_InKeeper_InteractablePress;
+    private readonly InputAction m_InKeeper_InteractableHold;
     public struct InKeeperActions
     {
         private InputController m_Wrapper;
@@ -704,7 +769,8 @@ public class InputController : IInputActionCollection
         public InputAction @PickUpItem => m_Wrapper.m_InKeeper_PickUpItem;
         public InputAction @Fill => m_Wrapper.m_InKeeper_Fill;
         public InputAction @DropItem => m_Wrapper.m_InKeeper_DropItem;
-        public InputAction @PutOnTable => m_Wrapper.m_InKeeper_PutOnTable;
+        public InputAction @InteractablePress => m_Wrapper.m_InKeeper_InteractablePress;
+        public InputAction @InteractableHold => m_Wrapper.m_InKeeper_InteractableHold;
         public InputActionMap Get() { return m_Wrapper.m_InKeeper; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -726,9 +792,12 @@ public class InputController : IInputActionCollection
                 DropItem.started -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnDropItem;
                 DropItem.performed -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnDropItem;
                 DropItem.canceled -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnDropItem;
-                PutOnTable.started -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnPutOnTable;
-                PutOnTable.performed -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnPutOnTable;
-                PutOnTable.canceled -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnPutOnTable;
+                InteractablePress.started -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnInteractablePress;
+                InteractablePress.performed -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnInteractablePress;
+                InteractablePress.canceled -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnInteractablePress;
+                InteractableHold.started -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnInteractableHold;
+                InteractableHold.performed -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnInteractableHold;
+                InteractableHold.canceled -= m_Wrapper.m_InKeeperActionsCallbackInterface.OnInteractableHold;
             }
             m_Wrapper.m_InKeeperActionsCallbackInterface = instance;
             if (instance != null)
@@ -745,9 +814,12 @@ public class InputController : IInputActionCollection
                 DropItem.started += instance.OnDropItem;
                 DropItem.performed += instance.OnDropItem;
                 DropItem.canceled += instance.OnDropItem;
-                PutOnTable.started += instance.OnPutOnTable;
-                PutOnTable.performed += instance.OnPutOnTable;
-                PutOnTable.canceled += instance.OnPutOnTable;
+                InteractablePress.started += instance.OnInteractablePress;
+                InteractablePress.performed += instance.OnInteractablePress;
+                InteractablePress.canceled += instance.OnInteractablePress;
+                InteractableHold.started += instance.OnInteractableHold;
+                InteractableHold.performed += instance.OnInteractableHold;
+                InteractableHold.canceled += instance.OnInteractableHold;
             }
         }
     }
@@ -848,7 +920,8 @@ public class InputController : IInputActionCollection
         void OnPickUpItem(InputAction.CallbackContext context);
         void OnFill(InputAction.CallbackContext context);
         void OnDropItem(InputAction.CallbackContext context);
-        void OnPutOnTable(InputAction.CallbackContext context);
+        void OnInteractablePress(InputAction.CallbackContext context);
+        void OnInteractableHold(InputAction.CallbackContext context);
     }
     public interface IAdventurerActions
     {

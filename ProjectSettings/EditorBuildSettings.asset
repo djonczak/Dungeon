@@ -8,12 +8,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Dungeon.unity
     guid: fe067748f1b9be3428dc3cae0ca50abd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 9c92671fc98bcdc4396315c4028d73b8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CombatTest.unity
     guid: 7e3dca774a556c94f8ce04380535c364
+  - enabled: 1
+    path: Assets/Scenes/Tavern.unity
+    guid: a2803f278e0b35245b26e66cc90378d5
+  - enabled: 1
+    path: Assets/Scenes/CityHUB.unity
+    guid: 5bcea371df1e6f449b5bd413cd5891dd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f3c91ca8be0dd2f4eb4200d5b1f55077,
       type: 2}

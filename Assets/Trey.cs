@@ -8,17 +8,21 @@ public class Trey : InteractableItem
     public InkeeperInventory inventory;
     public List<Transform> mugs = new List<Transform>();
     public int inTrey = 0;
+    [SerializeField] private Transform parent;
 
-    public override void OnInteract()
+    public override void ShowInfo()
     {
-        itemName = "Trey";
         interactText = "Press E/X/A/B to pick up " + itemName;
-        //  base.OnInteract();
+    }
+
+    private void Start()
+    {
+        parent = transform.parent;
     }
 
     public void PlaceMug(Transform mug)
     {
-        mug.transform.position = new Vector3(mugPlace[inTrey].transform.position.x, 0f, mugPlace[inTrey].transform.position.z);
+        mug.transform.position = new Vector3(mugPlace[inTrey].transform.position.x, mugPlace[inTrey].transform.position.y, mugPlace[inTrey].transform.position.z);
         mug.transform.rotation = mugPlace[inTrey].transform.rotation;
         mug.GetComponent<Rigidbody>().isKinematic = true;
         mug.GetComponent<Collider>().enabled = false;
@@ -41,7 +45,7 @@ public class Trey : InteractableItem
         {
             mug.GetComponent<Collider>().enabled = true;
             mug.GetComponent<Rigidbody>().isKinematic = false;
-            mug.parent = null;
+            mug.parent = parent;
         }
         inTrey = 0;
         mugs.Clear();
@@ -57,7 +61,7 @@ public class Trey : InteractableItem
                 mugs[i].parent = null;
                 guest.TakeBear(mugs[i].GetComponent<Mug>());
                 mugs.Remove(mugs[i]);
-                break;
+                return;
             }
         }
         inventory.canCarry = true;

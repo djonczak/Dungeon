@@ -2,15 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableItem : MonoBehaviour
-{
-    public string itemName;
-
-    public string interactText;
-
-    public virtual void OnInteract(){}
-}
-
 public class InkeeperInventory : MonoBehaviour
 {
     public bool isUsingTray;
@@ -70,6 +61,7 @@ public class InkeeperInventory : MonoBehaviour
         trey.GetComponent<Trey>().inventory = this;
         isUsingTray = true;
         canCarry = true;
+
         if (mugs.Count != 0)
         {
             for (int j = 0; j < mugs.Count; j++)
@@ -77,15 +69,14 @@ public class InkeeperInventory : MonoBehaviour
                 if (trey.GetComponent<Trey>().inTrey < 4)
                 {
                     trey.GetComponent<Trey>().PlaceMug(mugs[j]);
-                    mugs.Remove(mugs[j]);
                     inHand--;
                 }
                 else
                 {
                     DropMug();
-                    break;
                 }
             }
+            mugs.Clear();
         }
     }
 
@@ -136,7 +127,7 @@ public class InkeeperInventory : MonoBehaviour
         if (inHand == 0)
         {
             mug.transform.parent = handsPoint[0].transform;
-            mug.transform.position = new Vector3(handsPoint[0].position.x - 1.4f, handsPoint[0].position.y + 1f, handsPoint[0].position.z);
+            mug.transform.position = new Vector3(handsPoint[0].position.x, handsPoint[0].position.y, handsPoint[0].position.z);
             mug.transform.rotation = handsPoint[0].rotation;
             mug.GetComponent<Collider>().enabled = false;
             mug.GetComponent<Rigidbody>().isKinematic = true;
@@ -173,12 +164,10 @@ public class InkeeperInventory : MonoBehaviour
                 mugs[i].parent = null;
                 guest.TakeBear(mugs[i].GetComponent<Mug>());
                 mugs.Remove(mugs[i]);
-                break;
+                return;
             }
         }
     }
-
-    // private void 
 
     private void OnDrawGizmos()
     {

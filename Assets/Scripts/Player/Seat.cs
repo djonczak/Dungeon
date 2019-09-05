@@ -28,6 +28,15 @@ public class Seat : MonoBehaviour
         guest = null;
     }
 
+    public void Close()
+    {
+        if (guest != null)
+        {
+            guest.Unhandled();
+            guest = null;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (guest != null)

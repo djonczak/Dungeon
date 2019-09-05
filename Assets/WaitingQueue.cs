@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaitingQueue : MonoBehaviour
 {
     public event EventHandler OnGuestArrive;
+    public event EventHandler CloseTavern;
 
     //private List<Vector3> positionList;
     public List<Guest> guestList;
@@ -45,6 +46,14 @@ public class WaitingQueue : MonoBehaviour
             Guest guest = guestList[0];
             guestList.RemoveAt(0);
             return guest;
+        }
+    }
+
+    public void CloseInn()
+    {
+        if (CloseTavern != null)
+        {
+            CloseTavern(this, EventArgs.Empty);
         }
     }
 
