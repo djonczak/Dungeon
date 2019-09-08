@@ -16,4 +16,4 @@ MonoBehaviour:
   weaponType: 0
   weaponDamage: 5
   weaponCriticalChance: 0
-  cost: 100
+  goldCost: 0

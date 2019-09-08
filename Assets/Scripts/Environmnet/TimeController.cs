@@ -15,6 +15,7 @@ public class TimeController : Subject
     private void Start()
     {
         currentTimeOfDay = PlayerPrefs.GetFloat("DayTime");
+
         if (isInsideBuilding == false)
         {
             sunInitalIntensify = sun.intensity;
@@ -60,7 +61,7 @@ public class TimeController : Subject
                 Notify(this, NotificationType.Night);
             }
         }
-        else if(currentTimeOfDay <= 0.25f)
+        else if(currentTimeOfDay <= 0.24f)
         {
             intesityMultiplier = Mathf.Clamp01((currentTimeOfDay - 0.23f) * (1 / 0.02f));
             if (observers.Count != 0)
@@ -70,10 +71,6 @@ public class TimeController : Subject
         }
         else if(currentTimeOfDay >= 0.73f)
         {
-            if (observers.Count != 0)
-            {
-                Notify(this, NotificationType.Day);
-            }
             intesityMultiplier = Mathf.Clamp01(1 - (currentTimeOfDay - 0.73f) * (1 / 0.02f));
         }
 

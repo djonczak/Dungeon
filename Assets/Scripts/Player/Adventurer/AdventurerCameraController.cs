@@ -9,7 +9,6 @@ public class AdventurerCameraController : MonoBehaviour
     public float cameraDistance;
     public float offset;
     public Transform target;
-    //public Transform spawnPoint;
     public static AdventurerCameraController instance;
 
     private void Awake()
@@ -22,7 +21,6 @@ public class AdventurerCameraController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        ///transform.position = new Vector3(spawnPoint.position.x, this.transform.position.y, spawnPoint.position.z - 15f);
     }
 
     private void FixedUpdate()
@@ -33,7 +31,7 @@ public class AdventurerCameraController : MonoBehaviour
     private void CameraFollow()
     {
         Vector3 math = target.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cameraDistance + offset));
-        transform.position = Vector3.Lerp(transform.position, target.position + math, smooth * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, target.position + math, smooth * Time.fixedDeltaTime);
     }
 
     public IEnumerator CameraShake()

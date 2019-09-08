@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07269088367cc63439e42894889cf401, type: 3}
+  m_Name: FindArtefact
+  m_EditorClassIdentifier: 
+  isUnlocked: 0
+  unlockAmount: 0
+  title: Mystical light
+  description: 
+  goldExperience: 0
+  missionType: 0
+  location: 1
+  missionState:
+    missionType: 0
+    Complete: 0
+    requiredAmount: 0
+    currentAmount: 0

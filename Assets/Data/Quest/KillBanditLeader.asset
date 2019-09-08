@@ -9,12 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 439744736c54ccd4f970b2ac810f54af, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: 07269088367cc63439e42894889cf401, type: 3}
+  m_Name: KillBanditLeader
   m_EditorClassIdentifier: 
-  meleeWeapon: {fileID: 11400000, guid: 0d97d08f003e00f4bae6743de904f5f1, type: 2}
-  rangeWeapon: {fileID: 11400000, guid: 9e5f590ecce38cb4baadbe533179252b, type: 2}
+  isUnlocked: 0
+  unlockAmount: 0
+  title: 
+  description: 
   goldAmount: 0
-  smallPotion: 0
-  mediumPotion: 0
-  BigPotion: 0
+  missionType: 0
+  location: 2
+  missionState:
+    missionType: 0
+    targetID: 0
+    Complete: 0
+    requiredAmount: 1
+    currentAmount: 0

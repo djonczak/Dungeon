@@ -80,11 +80,7 @@ public class SkeletonHealth : LivingCreature, IDamage
 
     void Die()
     {
-        if (EnemyWaveSpawner.instance.enabled == true)
-        {
-            EnemyWaveSpawner.instance.currentEnemy--;
-            EnemyWaveSpawner.instance.CheckWave();
-        }
+        DeathEvent.EnemyDied(id);
         isAlive = false;
         GetComponent<Collider>().enabled = false;
         anim.SetTrigger("IsDead");
