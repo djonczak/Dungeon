@@ -13,6 +13,8 @@ public class AdventurerMovement : MonoBehaviour
     public Vector2 movePosition;
     public Vector2 rotationPosition;
 
+    private bool isGrounded;
+
     [SerializeField] private GameObject circle;
 
     private bool isAiming;
@@ -22,6 +24,7 @@ public class AdventurerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         state = GetComponent<AdventurerState>();
+        rb.freezeRotation = true;
     }
    
     void FixedUpdate()
@@ -34,7 +37,7 @@ public class AdventurerMovement : MonoBehaviour
     {
         if (movePosition.magnitude > 0.25f)
         {
-            Vector3 move = new Vector3(movePosition.x, 0F, movePosition.y);
+            Vector3 move = new Vector3(movePosition.x, rb.velocity.y, movePosition.y);
             var moveVelocity = move * runSpeed;
             rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
             float angle = Vector3.Angle(Vector3.forward, move);
@@ -48,7 +51,7 @@ public class AdventurerMovement : MonoBehaviour
         }
         else
         {
-             rb.velocity = Vector3.zero;
+             rb.velocity = new Vector3(0f,rb.velocity.y,0f);
              anim.SetFloat("VelNormal", Mathf.Abs(movePosition.magnitude));
         }
     }

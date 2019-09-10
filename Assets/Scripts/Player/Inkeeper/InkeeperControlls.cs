@@ -88,10 +88,12 @@ public class InkeeperControlls : MonoBehaviour
             if (inventory.isUsingTray == true || inventory.mugs.Count != 0)
             {
                 anim.SetBool("IsWalkingTrey", true);
+                anim.SetBool("IsWalking", false);
             }
             else
             {
                 anim.SetBool("IsWalking", true);
+                anim.SetBool("IsWalkingTrey", false);
             }
             anim.SetBool("IsIdle", false);
             anim.SetBool("IsIdleTrey", false);

@@ -8,4 +8,5 @@ public class AdventurerState : MonoBehaviour
     public float attackDamage;
 
     public AdventurerData playerData;
+
 }

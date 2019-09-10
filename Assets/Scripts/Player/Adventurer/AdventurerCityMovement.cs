@@ -6,7 +6,7 @@ public class AdventurerCityMovement : MonoBehaviour
 {
 
     public float walkSpeed;
-    public TavernHUD hud;
+    public AdventurerHUD hud;
 
     private InputController controls;
     private Vector2 move;

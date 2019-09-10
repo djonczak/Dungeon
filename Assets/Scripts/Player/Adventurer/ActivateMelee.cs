@@ -25,7 +25,7 @@ public class ActivateMelee : MonoBehaviour
             var meter = GetComponentInParent<AdventurerCombat>();
             if(meter != null)
             {
-               meter.FuryMeter();
+           //    meter.FuryMeter();
             }
         }
     }

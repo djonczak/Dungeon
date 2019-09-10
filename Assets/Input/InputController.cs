@@ -412,6 +412,14 @@ public class InputController : IInputActionCollection
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Interactable"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee74c68f-88b6-4436-8268-0f661e7eda1c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -539,7 +547,7 @@ public class InputController : IInputActionCollection
                 {
                     ""name"": """",
                     ""id"": ""21d75525-fcfc-445e-b3bb-b205b039f32e"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""path"": ""<Mouse>/twist"",
                     ""interactions"": """",
                     ""processors"": ""CompensateRotation"",
                     ""groups"": """",
@@ -634,6 +642,50 @@ public class InputController : IInputActionCollection
                     ""action"": ""SwitchWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90244b2d-2b8c-47a3-83eb-17907d331cc4"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35d65330-51b0-4013-9b59-19c52309573a"",
+                    ""path"": ""<Keyboard>/#(E)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e904b2e-0995-4bdb-aa64-2e3561a7fb94"",
+                    ""path"": ""<SwitchProControllerHID>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddaee80a-7db8-4dcd-b221-be814beab458"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -703,6 +755,7 @@ public class InputController : IInputActionCollection
         m_Adventurer_Rotate = m_Adventurer.GetAction("Rotate");
         m_Adventurer_Attack = m_Adventurer.GetAction("Attack");
         m_Adventurer_SwitchWeapon = m_Adventurer.GetAction("SwitchWeapon");
+        m_Adventurer_Interactable = m_Adventurer.GetAction("Interactable");
         // UI
         m_UI = asset.GetActionMap("UI");
         m_UI_Submit = m_UI.GetAction("Submit");
@@ -832,6 +885,7 @@ public class InputController : IInputActionCollection
     private readonly InputAction m_Adventurer_Rotate;
     private readonly InputAction m_Adventurer_Attack;
     private readonly InputAction m_Adventurer_SwitchWeapon;
+    private readonly InputAction m_Adventurer_Interactable;
     public struct AdventurerActions
     {
         private InputController m_Wrapper;
@@ -840,6 +894,7 @@ public class InputController : IInputActionCollection
         public InputAction @Rotate => m_Wrapper.m_Adventurer_Rotate;
         public InputAction @Attack => m_Wrapper.m_Adventurer_Attack;
         public InputAction @SwitchWeapon => m_Wrapper.m_Adventurer_SwitchWeapon;
+        public InputAction @Interactable => m_Wrapper.m_Adventurer_Interactable;
         public InputActionMap Get() { return m_Wrapper.m_Adventurer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -861,6 +916,9 @@ public class InputController : IInputActionCollection
                 SwitchWeapon.started -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnSwitchWeapon;
                 SwitchWeapon.performed -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnSwitchWeapon;
                 SwitchWeapon.canceled -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnSwitchWeapon;
+                Interactable.started -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractable;
+                Interactable.performed -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractable;
+                Interactable.canceled -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractable;
             }
             m_Wrapper.m_AdventurerActionsCallbackInterface = instance;
             if (instance != null)
@@ -877,6 +935,9 @@ public class InputController : IInputActionCollection
                 SwitchWeapon.started += instance.OnSwitchWeapon;
                 SwitchWeapon.performed += instance.OnSwitchWeapon;
                 SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                Interactable.started += instance.OnInteractable;
+                Interactable.performed += instance.OnInteractable;
+                Interactable.canceled += instance.OnInteractable;
             }
         }
     }
@@ -929,6 +990,7 @@ public class InputController : IInputActionCollection
         void OnRotate(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnInteractable(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

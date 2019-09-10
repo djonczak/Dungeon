@@ -101,6 +101,28 @@ public class TimeController : Subject
         }
     }
 
+    public void SwitchLights()
+    {
+        isInsideBuilding = !isInsideBuilding;
+
+        if (isInsideBuilding == true)
+        {
+            sun.enabled = false;
+            foreach (Light source in lightOutSide)
+            {
+                source.enabled = true;
+            }
+        }
+        else
+        {
+            sun.enabled = true;
+            foreach (Light source in lightOutSide)
+            {
+                source.enabled = false;
+            }
+        }
+    }
+
     private void OnDisable()
     {
         PlayerPrefs.SetFloat("DayTime", currentTimeOfDay);

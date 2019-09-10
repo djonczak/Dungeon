@@ -31,20 +31,25 @@ public class CrossbowBolt : MonoBehaviour
             if (other.tag != "Imp")
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
-                transform.parent = other.transform;
+                var spine = other.transform.GetChild(0).gameObject;
+                transform.parent = spine.transform;
                 GetComponent<Rigidbody>().isKinematic = true;
                 GetComponent<BoxCollider>().enabled = false;
             }
+            sound.PlayOneShot(sound.clip, 0.1f);
+            Invoke("DisableObject", 13f);
+            gameObject.layer = 12;
         }
-        else
+
+        if (other.gameObject.layer == 14)
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<BoxCollider>().isTrigger = false;
             GetComponent<Rigidbody>().useGravity = true;
+            sound.PlayOneShot(sound.clip, 0.1f);
+            Invoke("DisableObject", 13f);
+            gameObject.layer = 12;
         }
-        sound.PlayOneShot(sound.clip, 0.1f);
-        Invoke("DisableObject", 13f);
-        gameObject.layer = 12;
     }
 
     public void DisableObject()

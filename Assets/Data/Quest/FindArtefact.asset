@@ -16,11 +16,12 @@ MonoBehaviour:
   unlockAmount: 0
   title: Mystical light
   description: 
-  goldExperience: 0
+  goldAmount: 0
   missionType: 0
   location: 1
   missionState:
-    missionType: 0
-    Complete: 0
+    targetID: 0
+    complete: 1
     requiredAmount: 0
     currentAmount: 0
+    text: 

@@ -96,11 +96,6 @@ public class OgreHealth : LivingCreature, IDamage
 
     private void Die()
     {
-        if (EnemyWaveSpawner.instance.enabled == true)
-        {
-            EnemyWaveSpawner.instance.currentEnemy--;
-            EnemyWaveSpawner.instance.CheckWave();
-        }
         isAlive = false;
         GetComponent<Collider>().enabled = false;
         anim.SetTrigger("IsDead");

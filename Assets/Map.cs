@@ -53,7 +53,6 @@ public class Map : MonoBehaviour
         mapCamera.SetActive(true);
         canvas.SetActive(true);
         timeController.enabled = false;
-        canColor = true;
         StartCoroutine("FogDisperse");
         foreach(GameObject subject in objectToDeactivate)
         {
@@ -63,6 +62,8 @@ public class Map : MonoBehaviour
 
     private IEnumerator FogDisperse()
     {
+        yield return new WaitForSeconds(0.5f);
+        canColor = true;
         yield return new WaitForSeconds(1.5f);
         canColor = false;
         t = 0f;
@@ -89,6 +90,7 @@ public class Map : MonoBehaviour
 
     private IEnumerator FogDisperseCity()
     {
+        yield return new WaitForSeconds(0.5f);
         foreach (GameObject subject in objectToDeactivate)
         {
             subject.SetActive(true);

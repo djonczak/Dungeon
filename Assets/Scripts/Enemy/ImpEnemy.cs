@@ -52,19 +52,14 @@ public class ImpEnemy : LivingCreature, IDamage
         KnockBack(direction);
         if(currentHP <= 0)
         {
+            anim.GetBehaviour<AIFollow>().isAlive = false;
             bodyColor.material.SetColor("_EmissionColor", normalColor);
             isExplosion = true;
             anim.SetTrigger("IsDead");
             GetComponent<BoxCollider>().enabled = false;
             GetComponent<NavMeshAgent>().isStopped = true;
             GetComponent<NavMeshAgent>().enabled = false;
-            if (EnemyWaveSpawner.instance.enabled == true)
-            {
-                EnemyWaveSpawner.instance.currentEnemy--;
-                EnemyWaveSpawner.instance.CheckWave();
-            }
             StopAllCoroutines();
-            anim.GetBehaviour<AIFollow>().isAlive = false;
         }
     }
 
@@ -79,8 +74,9 @@ public class ImpEnemy : LivingCreature, IDamage
     private IEnumerator ExplosionTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        GetComponentInChildren<Renderer>().enabled = false;
         GetComponent<NavMeshAgent>().enabled = false;
+        anim.GetBehaviour<AIFollow>().isAlive = false;
+        GetComponentInChildren<Renderer>().enabled = false;
         explosion.Play();
         var damagable = Physics.OverlapSphere(transform.position, explosionRange, LayerMask.GetMask("Player"));
         if (damagable.Length > 0)
@@ -88,12 +84,6 @@ public class ImpEnemy : LivingCreature, IDamage
             damagable[0].GetComponent<IDamage>().TakeDamage(attackDamage, transform.position);
         }
         yield return new WaitForSeconds(1f);
-        if (EnemyWaveSpawner.instance.enabled == true)
-        {
-            EnemyWaveSpawner.instance.currentEnemy--;
-            EnemyWaveSpawner.instance.CheckWave();
-        }
-        anim.GetBehaviour<AIFollow>().isAlive = false;
         gameObject.SetActive(false);
     } 
 

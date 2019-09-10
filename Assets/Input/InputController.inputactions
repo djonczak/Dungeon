@@ -400,6 +400,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Interactable",
+                    "type": "Button",
+                    "id": "ee74c68f-88b6-4436-8268-0f661e7eda1c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -527,7 +535,7 @@
                 {
                     "name": "",
                     "id": "21d75525-fcfc-445e-b3bb-b205b039f32e",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/twist",
                     "interactions": "",
                     "processors": "CompensateRotation",
                     "groups": "",
@@ -620,6 +628,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90244b2d-2b8c-47a3-83eb-17907d331cc4",
+                    "path": "<DualShockGamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interactable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35d65330-51b0-4013-9b59-19c52309573a",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interactable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e904b2e-0995-4bdb-aa64-2e3561a7fb94",
+                    "path": "<SwitchProControllerHID>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interactable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddaee80a-7db8-4dcd-b221-be814beab458",
+                    "path": "<XInputController>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interactable",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Dungeon.unity
+    path: Assets/Scenes/ForsakenCastle.unity
     guid: fe067748f1b9be3428dc3cae0ca50abd
   - enabled: 0
     path: Assets/Scenes/MainMenu.unity

@@ -8,7 +8,10 @@ public class AdventurerController : MonoBehaviour
     [SerializeField] private AdventurerState state;
     [SerializeField] private AdventurerMovement adventurerMovement;
 
+    public AdventurerHUD hud;
+
     private InputController controls;
+    private GameObject interactableItem;
 
     private void Start()
     {
@@ -32,6 +35,36 @@ public class AdventurerController : MonoBehaviour
         //Combat
         controls.Adventurer.Attack.performed += input => adventurerCombat.Attack();
         controls.Adventurer.SwitchWeapon.performed += input => adventurerCombat.SwitchWeapon();
+
+        //Interact
+        controls.Adventurer.Interactable.performed += input => Interact(); 
+    }
+
+    private void Interact()
+    {
+        if(interactableItem != null)
+        {
+            interactableItem.GetComponent<InteractableItem>().OnInteractPress();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Interactable")
+        {
+            interactableItem = other.gameObject;
+            interactableItem.GetComponent<InteractableItem>().ShowInfo();
+            hud.ShowMessage(interactableItem.GetComponent<InteractableItem>().interactText);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Interactable")
+        {
+            interactableItem = null;
+            hud.CloseMessage();
+        }
     }
 
     private void OnEnable()
