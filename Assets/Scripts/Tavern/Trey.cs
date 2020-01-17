@@ -4,29 +4,36 @@ using UnityEngine;
 
 public class Trey : InteractableItem
 {
-    public Transform[] mugPlace;
-    public InkeeperInventory inventory;
+    [SerializeField] private List<Transform> mugSlot = new List<Transform>();
+    private InkeeperInventory keeperInventory;
     public List<Transform> mugs = new List<Transform>();
     public int inTrey = 0;
+
     [SerializeField] private Transform parent;
 
     public override void ShowInfo()
     {
         interactText = "Press E/X/A/B to pick up " + itemName;
+        HUDEvent.ShowMessage(interactText);
     }
 
     private void Start()
     {
         parent = transform.parent;
+        foreach(Transform child in transform)
+        {
+            mugSlot.Add(child);
+        }
+        keeperInventory = PlayerExtension.GetPlayerObject().GetComponent<InkeeperInventory>();
     }
 
     public void PlaceMug(Transform mug)
     {
-        mug.transform.position = new Vector3(mugPlace[inTrey].transform.position.x, mugPlace[inTrey].transform.position.y, mugPlace[inTrey].transform.position.z);
-        mug.transform.rotation = mugPlace[inTrey].transform.rotation;
+        mug.transform.position = new Vector3(mugSlot[inTrey].transform.position.x, mugSlot[inTrey].transform.position.y, mugSlot[inTrey].transform.position.z);
+        mug.transform.rotation = mugSlot[inTrey].transform.rotation;
         mug.GetComponent<Rigidbody>().isKinematic = true;
         mug.GetComponent<Collider>().enabled = false;
-        mug.transform.parent = mugPlace[inTrey].transform;
+        mug.transform.parent = mugSlot[inTrey].transform;
         mugs.Add(mug);
         inTrey++;
     }
@@ -59,18 +66,18 @@ public class Trey : InteractableItem
             {
                 inTrey--;
                 mugs[i].parent = null;
-                guest.TakeBear(mugs[i].GetComponent<Mug>());
+                guest.TakeOrder(mugs[i].GetComponent<Mug>());
                 mugs.Remove(mugs[i]);
                 return;
             }
         }
-        inventory.canCarry = true;
+        keeperInventory.canCarry = true;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        foreach(Transform place in mugPlace)
+        foreach(Transform place in mugSlot)
         {
             Gizmos.DrawWireSphere(place.position, 0.2f);
         }

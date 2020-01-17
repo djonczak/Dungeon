@@ -15,9 +15,13 @@ public class Guest : MonoBehaviour
     private bool canOrder;
     public SphereCollider coll;
 
-    private void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
         GuestHandler.instance.citizenList.Add(this);
         coll.enabled = false;
     }
@@ -39,7 +43,7 @@ public class Guest : MonoBehaviour
 
     // TODO: Takes drink and starts to gossips
 
-    public void TakeBear(Mug mug)
+    public void TakeOrder(Mug mug)
     {
         this.mug = mug.transform;
         mug.transform.position = new Vector3(handPosition.position.x, handPosition.position.y, handPosition.position.z);
@@ -53,28 +57,25 @@ public class Guest : MonoBehaviour
 
     private void Served()
     {
+        LeaveMug();
+        tavern.goldAmount += goldAmount;
+        tavern.servedGuestAmount++;
+        ExitTavern();
+    }
+
+    private void LeaveMug()
+    {
         mug.parent = null;
         mug.GetComponent<Collider>().enabled = true;
         mug.GetComponent<Rigidbody>().isKinematic = false;
         mug.GetComponent<Mug>().DirtyMug();
         mug = null;
-        tavern.goldAmount += goldAmount;
-        tavern.servedGuestAmount++;
-        ExitTavern();
     }
 
     // TODO: Waiting for drink, if didn't get then go out of tavern
 
     public void Unhandled()
     {
-        //if(mug != null)
-        //{
-        //    mug.parent = null;
-        //    mug.GetComponent<Collider>().enabled = true;
-        //    mug.GetComponent<Rigidbody>().isKinematic = false;
-        //    mug.GetComponent<Mug>().DirtyMug();
-        //    mug = null;
-        //}
         tavern.unhandledGuestAmount++;
         canOrder = false;
         ExitTavern();
@@ -101,7 +102,7 @@ public class Guest : MonoBehaviour
             InkeeperInventory inventory = other.GetComponent<InkeeperInventory>();
             if(inventory != null)
             {
-                if (inventory.isUsingTray)
+                if (inventory.CheckTrey())
                 {
                     var trey = inventory.trey.GetComponent<Trey>();
                     if(trey != null)

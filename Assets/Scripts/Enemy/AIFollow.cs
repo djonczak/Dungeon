@@ -7,7 +7,6 @@ public class AIFollow : StateMachineBehaviour
     public float moveSpeed;
     private NavMeshAgent agent;
     public float meleeRange;
-    public bool isAlive;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -18,10 +17,10 @@ public class AIFollow : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (isAlive == true)
+        if (animator.GetComponent<MobHealth>().isAlive == true)
         {
             agent.SetDestination(target.position);
-            if (meleeRange >= CalculateDistance(animator.transform))
+            if (meleeRange >= TransformExtension.DistanceBetween(animator.transform.position,target.transform.position))
             {
                 animator.SetBool("IsCombat", true);
             }
@@ -31,13 +30,6 @@ public class AIFollow : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        animator.SetBool("IsFollow", false);
-       animator.SetBool("IsRun", false);
-    }
-
-    float CalculateDistance(Transform mob)
-    {
-        var distance = Vector3.Distance(mob.transform.position, target.transform.position);
-        return distance;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

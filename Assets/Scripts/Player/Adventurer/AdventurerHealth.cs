@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,33 +8,18 @@ public class AdventurerHealth : MonoBehaviour, IDamage
     private float currentHP;
     public bool isAlive = true;
     private Animator anim;
-    public Image bloodOverlay;
     public Image HPBar;
-    public Renderer bodyColor;
 
-    private Color alphaColor = new Color(0f, 0f, 0f, 0f);
-    private Color normalColor;
-    private bool isDamaged;
-    private float t;
+    private bool isDamaged = false;
 
-    void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
-        currentHP = maxHP;
-        normalColor = bloodOverlay.color;
-        bloodOverlay.color = alphaColor;
-        bodyColor.material.EnableKeyword("_EMISSION");
     }
 
-    void Update()
+    private void Start()
     {
-        if (isDamaged)
-        {
-            t += Time.deltaTime / 1f;
-            bloodOverlay.color = Color.Lerp(normalColor, alphaColor, t);
-            var damageColor = Color.Lerp(Color.white, alphaColor, t);
-            bodyColor.material.SetColor("_EmissionColor", damageColor);
-        }
+        currentHP = maxHP;
     }
 
     public void TakeDamage(float amount, Vector3 position)
@@ -44,30 +28,33 @@ public class AdventurerHealth : MonoBehaviour, IDamage
         {
             currentHP -= amount;
             HPBar.fillAmount = currentHP / maxHP;
-            StartCoroutine("DamageEffect");
-            AdventurerCameraController.instance.StartCoroutine("CameraShake");
-            if (currentHP <= 0)
-            {
-                StopCoroutine("DamageEffect");
-                Die();
-            }
+            StartCoroutine("DamageCooldown",1f);
+            GetComponent<IDamageEffect>().DamageEffect();
+            AdventurerEvent.PlayerHit();
+            CheckIfAlive();
         }
     }
 
-    void Die()
+    private void CheckIfAlive()
     {
-        Debug.Log("Umarł");
+        if (currentHP <= 0)
+        {
+            StopCoroutine("DamageEffect");
+            Die();
+        }
+    }
+
+    private void Die()
+    {
         isAlive = false;
         anim.SetTrigger("Dead");
         GetComponent<AdventurerController>().enabled = false;
     }
 
-    IEnumerator DamageEffect()
+    private IEnumerator DamageCooldown(float time)
     {
-        bloodOverlay.color = normalColor;
         isDamaged = true;
-        yield return new WaitForSeconds(1.2f);
-        t = 0f;
+        yield return new WaitForSeconds(time);
         isDamaged = false;
     }
 }

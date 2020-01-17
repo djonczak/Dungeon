@@ -678,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb785a96656decd478a9d97db3fbcfb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &6376325682100118859
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,11 +813,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6376325682099697979}
+  - component: {fileID: 4350931692615030091}
+  - component: {fileID: 6610046352555897830}
+  - component: {fileID: 8959265443735782067}
   - component: {fileID: 6376325682092725993}
   - component: {fileID: 4350931692615030088}
   - component: {fileID: 4350931692615030090}
   - component: {fileID: 4350931692615030101}
-  - component: {fileID: 4350931692615030091}
   m_Layer: 10
   m_Name: SkeletonEnemy
   m_TagString: Skeleton
@@ -841,6 +844,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4350931692615030091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376325682100118875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ffdb892a7401e4e8d18917ceac9274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 20
+  currentHP: 0
+  attackDamage: 2
+  goldAmount: 0
+  id: 0
+  isAlive: 1
+  HPBar: {fileID: 8653656011720676633}
+  HPDisplay: {fileID: 4918138843300764741}
+--- !u!114 &6610046352555897830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376325682100118875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fead7c7ed1715c459293421d9873823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 6376325682088618025}
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  alphaColor: {r: 0, g: 0, b: 0, a: 0}
+  isDamaged: 0
+  effectDuration: 0.5
+--- !u!114 &8959265443735782067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376325682100118875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a856bc650b83ebb4ca5c3cc4afa5f17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackStrenght: 22
+  canBeKnockBack: 1
 --- !u!95 &6376325682092725993
 Animator:
   serializedVersion: 3
@@ -911,24 +965,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4350931692615030091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6376325682100118875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ffdb892a7401e4e8d18917ceac9274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 20
-  currentHP: 0
-  attackDamage: 2
-  goldAmount: 0
-  HPBar: {fileID: 8653656011720676633}
-  HPDisplay: {fileID: 4918138843300764741}
 --- !u!1 &6376325682100118877
 GameObject:
   m_ObjectHideFlags: 0

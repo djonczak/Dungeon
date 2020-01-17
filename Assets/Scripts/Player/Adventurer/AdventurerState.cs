@@ -5,8 +5,7 @@ using UnityEngine;
 public class AdventurerState : MonoBehaviour
 {
     public bool isMelee;
-    public float attackDamage;
+    public bool isAiming;
 
     public AdventurerData playerData;
-
 }

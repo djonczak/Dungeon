@@ -1,32 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ActivateMelee : MonoBehaviour
+public class ActivateMelee : MonoBehaviour,IPassFloat
 {
-    private AdventurerState state;
-    public float damage;
-    private SoundManager sound;
+    [SerializeField] private float damage;
 
-    private void Start()
+    public void PassFloat(float amount)
     {
-        state = GetComponentInParent<AdventurerState>();
-        sound = GetComponentInParent<SoundManager>();
-        damage = state.attackDamage;
+        damage = amount;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 10)
         {
-            sound.AttackSound();
-            damage = state.attackDamage;
+            GetComponentInParent<ISoundEffects>().AttackSound();
             other.GetComponent<IDamage>().TakeDamage(damage, transform.parent.position);
-            var meter = GetComponentInParent<AdventurerCombat>();
-            if(meter != null)
-            {
-           //    meter.FuryMeter();
-            }
+           // var meter = GetComponentInParent<AdventurerCombat>();
+           // if(meter != null)
+           // {
+           ////    meter.FuryMeter();
+           // }
         }
     }
 }

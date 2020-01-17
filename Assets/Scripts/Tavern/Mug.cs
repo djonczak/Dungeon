@@ -16,8 +16,8 @@ public class Mug : InteractableItem
 
     public override void ShowInfo()
     {
-        itemName = "Mug";
         interactText = "Press E/X/A/B to pick up " + itemName;
+        HUDEvent.ShowMessage(interactText);
     }
 
     private void Start()

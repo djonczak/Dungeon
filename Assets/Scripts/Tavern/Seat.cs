@@ -12,7 +12,7 @@ public class Seat : MonoBehaviour
         seatPosition = this.transform.position;
     }
 
-    public bool isEmpty()
+    public bool IsEmpty()
     {
         return guest == null;
     }

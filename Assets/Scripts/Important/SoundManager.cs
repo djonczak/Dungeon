@@ -1,20 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoBehaviour, ISoundEffects
 {
-    AudioSource audioSource;
+    private AudioSource audioSource;
 
     public AudioClip[] meleeAttackSound;
-
     public AudioClip rangeAttackSound;
-
     public AudioClip weaponChangeSound;
-
     public AudioClip deathSound;
 
-    private void Start()
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }

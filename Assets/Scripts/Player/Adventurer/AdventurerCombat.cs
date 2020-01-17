@@ -5,46 +5,53 @@ using UnityEngine.UI;
 
 public class AdventurerCombat : MonoBehaviour
 {
-    [SerializeField] private float boltDamage;
+    [SerializeField] private float boltDamage = 1;
     [SerializeField] private float boltSpeed = 180;
-    //public Image furyBar;
+    [SerializeField] private string boltName = "Bolt";
+
     public GameObject[] weaponListActive;
     public Transform crossbowBarrel;
 
-    //private float currentFuryMeter = 0f;
-    //private float furyMaxMeter = 100f;
-    private AdventurerState state;
-    private Animator anim;
     private int comboMeter = 0;
     private bool nexAttack = true;
-    public ParticleSystem weaponTrail;
-    public ParticleSystem furryEffect;
-    private bool canUseFury;
-    private bool isUsingFury;
+
     private SoundManager sound;
+    private AdventurerState state;
+
+    [Header("Weapon effects")]
+    public ParticleSystem weaponTrail;
+
+    //public Image furyBar;
+    //private bool canUseFury;
+    //private bool isUsingFury;
+    //private float currentFuryMeter = 0f;
+    //private float furyMaxMeter = 100f;
+    // public ParticleSystem furryEffect;
+
+    private void Awake()
+    {
+        state = GetComponent<AdventurerState>();
+        sound = GetComponent<SoundManager>();
+    }
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
-        state = GetComponent<AdventurerState>();
-        sound = GetComponent<SoundManager>();
         state.isMelee = true;
         weaponListActive[1].SetActive(false);
     }
 
-    private void Update()
-    {
-        //if (isUsingFury)
-        //{
-        //    currentFuryMeter = (currentFuryMeter - Time.deltaTime) - 0.161f;
-        //    furyBar.fillAmount = currentFuryMeter / furyMaxMeter;
-        //}
-    }
+    //private void Update()
+    //{
+    //    //if (isUsingFury)
+    //    //{
+    //    //    currentFuryMeter = (currentFuryMeter - Time.deltaTime) - 0.161f;
+    //    //    furyBar.fillAmount = currentFuryMeter / furyMaxMeter;
+    //    //}
+    //}
 
     public void SwitchWeapon()
     {
         state.isMelee = !state.isMelee;
-        Debug.Log("Zmiana");
         if (nexAttack == true)
         {
             sound.ChangeSound();
@@ -61,6 +68,39 @@ public class AdventurerCombat : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        if (state.isAiming)
+        {
+            if (state.isMelee == true)
+            {
+                MeleeAttack();
+            }
+            else
+            {
+                sound.RangeSound();
+                CrossbowAttack();
+            }
+        }
+    }
+
+    private void MeleeAttack()
+    {
+        if (nexAttack == true)
+        {
+            weaponTrail.Play();
+            weaponListActive[0].GetComponent<BoxCollider>().enabled = true;
+            nexAttack = false;
+            comboMeter++;
+            GetComponent<AdventurerAnimation>().MeleeAttackAnimation(comboMeter);
+        }
+    }
+
+    private void CrossbowAttack()
+    {
+        GetComponentInChildren<ILauncher>().LaunchProjectile(boltName, boltSpeed, boltDamage);
+    }
+
     public void EndAttack()
     {
         weaponListActive[0].GetComponent<BoxCollider>().enabled = false;
@@ -69,45 +109,6 @@ public class AdventurerCombat : MonoBehaviour
             comboMeter = 0;
         }
         nexAttack = true;
-    }
-
-    public void Attack()
-    {
-        if (state.isMelee == true)
-        {
-            MeleeAttack();
-        }
-        else
-        {
-            sound.RangeSound();
-            CrossbowAttack();
-        }
-    }
-
-    void MeleeAttack()
-    {
-        Debug.Log("Melee Attack");
-        if (nexAttack == true)
-        {
-            weaponTrail.Play();
-            weaponListActive[0].GetComponent<BoxCollider>().enabled = true;
-            nexAttack = false;
-            comboMeter++;
-            anim.SetTrigger("Melee" + comboMeter);
-        }
-    }
-
-    void CrossbowAttack()
-    {
-        GameObject bolt = ObjectPooler.instance.GetPooledObject("Bolt");
-        if (bolt != null)
-        {
-            bolt.transform.position = crossbowBarrel.position;
-            bolt.transform.rotation = crossbowBarrel.rotation;
-            bolt.SetActive(true);
-            bolt.GetComponent<Rigidbody>().AddForce(transform.forward * boltSpeed);
-            bolt.GetComponent<CrossbowBolt>().damage = boltDamage;
-        }
     }
 
     //public void FuryMeter()

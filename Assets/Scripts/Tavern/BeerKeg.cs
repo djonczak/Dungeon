@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class BeerKeg : MonoBehaviour
 {
-    public float minAmount;
-    public float maxAmount;
     public Image beerAmount;
+
+    public float minAmount = 0f;
+    [SerializeField] private float maxAmount = 400f;
 
     void Start()
     {
@@ -21,9 +20,14 @@ public class BeerKeg : MonoBehaviour
             minAmount -= amount;
             beerAmount.fillAmount = minAmount / maxAmount;
         }
-        else
+    }
+
+    public void FillKeg(float amount)
+    {
+        if(minAmount < maxAmount)
         {
-            enabled = false;
+            minAmount += amount;
+            beerAmount.fillAmount = minAmount / maxAmount;
         }
     }
 }

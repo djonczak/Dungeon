@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class TavernHUD : MonoBehaviour
 {
-    public enum Controller
-    {
-        KEYBOARD,
-        DUALSHOCK,
-        XBOX,
-        PROCONTROLLER,
-    };
+    //public enum Controller
+    //{
+    //    KEYBOARD,
+    //    DUALSHOCK,
+    //    XBOX,
+    //    PROCONTROLLER,
+    //};
 
     public GameObject itemMessagePanel;
     public GameObject fillCirclePanel;
@@ -19,7 +19,13 @@ public class TavernHUD : MonoBehaviour
     public bool canFill;
     private float timeToFill = 3.1f;
     private float time = 0;
-   // private List<string> names = new List<string>();
+    // private List<string> names = new List<string>();
+
+    private void OnEnable()
+    {
+        HUDEvent.OnShowMessage += ShowMessage;
+        HUDEvent.OnCloseMessage += CloseMessage;
+    }
 
     public void Start()
     {
@@ -74,5 +80,11 @@ public class TavernHUD : MonoBehaviour
                 fillCircle.fillAmount = time / timeToFill;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        HUDEvent.OnShowMessage -= ShowMessage;
+        HUDEvent.OnCloseMessage -= CloseMessage;
     }
 }

@@ -32,7 +32,6 @@ public class TavernHandler : MonoBehaviour
                 guest.MoveTo(emptySeat.seatPosition);
                 guest.tavern = this;
                 waitingQueue.guestList.Remove(guest);
-                // () => { guest.HadBear(); }
             }
         }
     }
@@ -57,7 +56,7 @@ public class TavernHandler : MonoBehaviour
     {
         foreach(Seat seat in placesToSit)
         {
-            if (seat.isEmpty())
+            if (seat.IsEmpty())
             {
                 return seat;
             }

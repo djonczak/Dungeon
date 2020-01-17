@@ -1,7 +1,3 @@
-/*
-	Michał Dominik 21965 CDV
-*/
-
 using System.Collections.Generic;
 using UnityEngine;
 

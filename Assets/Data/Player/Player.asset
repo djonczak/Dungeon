@@ -18,7 +18,4 @@ MonoBehaviour:
   smallPotion: 0
   mediumPotion: 0
   BigPotion: 0
-  mission:
-  - {fileID: 11400000, guid: 632cf36394a1ccd42a0b949625022633, type: 2}
-  - {fileID: 11400000, guid: dda16f0e41741e54b8412044bba82d7a, type: 2}
-  - {fileID: 11400000, guid: e87fc7508455c044d90fc7949c6fd6b9, type: 2}
+  mission: []

@@ -6,11 +6,16 @@ public class TimeController : Subject
 {
     public Light sun;
     public Light[] lightOutSide;
-    public bool isInsideBuilding;
+    [SerializeField] private bool isInsideBuilding = false;
     [SerializeField] private float secondsInFullDay = 120f;
     [Range(0, 1)] [SerializeField] private float currentTimeOfDay = 0f;
-    private float timeMultiplier = 0.2f;
+    [SerializeField] private float timeMultiplier = 0.2f;
     private float sunInitalIntensify;
+
+    private void OnEnable()
+    {
+        DayNightCycleEvent.OnSwitchLigt += SwitchLights;
+    }
 
     private void Start()
     {
@@ -47,7 +52,7 @@ public class TimeController : Subject
         }
     }
 
-    void UpdateSun()
+    private void UpdateSun()
     {
         sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 360f) - 90, 170, 0);
 
@@ -77,7 +82,7 @@ public class TimeController : Subject
         sun.intensity = sunInitalIntensify * intesityMultiplier;
     }
 
-    void UpdateLightOutside()
+    private void UpdateLightOutside()
     {
         float intesityMultiplier = 1;
 
@@ -121,6 +126,11 @@ public class TimeController : Subject
                 source.enabled = false;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        DayNightCycleEvent.OnSwitchLigt -= SwitchLights;
     }
 
     private void OnDisable()

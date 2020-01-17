@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LightFlick : Observer
+public class LightFlick : DayNightObserver
 {
-    private Light lightSource;
-    public float minIntensify;
-    public float maxIntensify;
+    [SerializeField] private float minIntensify = 1f;
+    [SerializeField] private float maxIntensify = 1.5f;
+    [SerializeField] public float flickSpeed = 9f;
 
-    private float lightFlickCooldown;
-    public float flickSpeed;
+    private Light lightSource;
+    private float lightFlickCooldown = 0f;
     private bool isDay;
 
-    void Start()
+    private void Awake()
     {
         lightSource = GetComponent<Light>();
     }
@@ -34,8 +32,7 @@ public class LightFlick : Observer
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isDay == false)
         {

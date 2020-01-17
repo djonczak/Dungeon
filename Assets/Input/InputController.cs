@@ -63,7 +63,7 @@ public class InputController : IInputActionCollection
                     ""id"": ""724583e3-60c3-4430-8274-37d1b2ce8a43"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=4)""
+                    ""interactions"": ""Hold(duration=2)""
                 }
             ],
             ""bindings"": [
@@ -101,9 +101,9 @@ public class InputController : IInputActionCollection
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Move"",
-                    ""id"": ""05ed42f2-a607-4801-a653-cae950c5bc1e"",
-                    ""path"": ""2DVector"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7d55bd68-30f7-4032-8bef-d4dcbcfc6b7f"",
+                    ""path"": ""2DVector(normalize=false)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -113,8 +113,8 @@ public class InputController : IInputActionCollection
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""a632d1e8-340a-4a9b-b495-4e3511b80c3c"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""2ed44492-96c8-4ce5-925e-e1f7c31a380c"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -124,8 +124,8 @@ public class InputController : IInputActionCollection
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""f151b089-c422-41b1-9c1c-8f3007ed54a0"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""67726ff9-86a9-423b-91ea-c20a137afa0b"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -135,8 +135,8 @@ public class InputController : IInputActionCollection
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""78b798d2-aa84-47c4-99f8-f31c98f0bd89"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""id"": ""6d423904-bf1f-45d3-8fb9-12dbf8040ca9"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -146,8 +146,8 @@ public class InputController : IInputActionCollection
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""137ee7d0-15fa-4858-85f1-0da2792894a6"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""id"": ""79f7c222-b43c-4ea1-81df-636588b34c86"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -414,12 +414,20 @@ public class InputController : IInputActionCollection
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""Interactable"",
+                    ""name"": ""InteractablePress"",
                     ""type"": ""Button"",
                     ""id"": ""ee74c68f-88b6-4436-8268-0f661e7eda1c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""InteractableHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf93df51-ac52-4c63-bb8a-df628663b61b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=2)""
                 }
             ],
             ""bindings"": [
@@ -650,7 +658,7 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interactable"",
+                    ""action"": ""InteractablePress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -661,7 +669,7 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interactable"",
+                    ""action"": ""InteractablePress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -672,7 +680,7 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interactable"",
+                    ""action"": ""InteractablePress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -683,7 +691,51 @@ public class InputController : IInputActionCollection
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interactable"",
+                    ""action"": ""InteractablePress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0264c5ec-058f-4b36-9642-f16794101273"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d93b5cec-404e-4780-a53c-598f976ad83a"",
+                    ""path"": ""<Keyboard>/#(E)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45529c81-756c-4e05-81af-8ffdf16677da"",
+                    ""path"": ""<SwitchProControllerHID>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83136ff5-8a15-4f0c-a4a2-43fbaa3b708d"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractableHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -755,7 +807,8 @@ public class InputController : IInputActionCollection
         m_Adventurer_Rotate = m_Adventurer.GetAction("Rotate");
         m_Adventurer_Attack = m_Adventurer.GetAction("Attack");
         m_Adventurer_SwitchWeapon = m_Adventurer.GetAction("SwitchWeapon");
-        m_Adventurer_Interactable = m_Adventurer.GetAction("Interactable");
+        m_Adventurer_InteractablePress = m_Adventurer.GetAction("InteractablePress");
+        m_Adventurer_InteractableHold = m_Adventurer.GetAction("InteractableHold");
         // UI
         m_UI = asset.GetActionMap("UI");
         m_UI_Submit = m_UI.GetAction("Submit");
@@ -885,7 +938,8 @@ public class InputController : IInputActionCollection
     private readonly InputAction m_Adventurer_Rotate;
     private readonly InputAction m_Adventurer_Attack;
     private readonly InputAction m_Adventurer_SwitchWeapon;
-    private readonly InputAction m_Adventurer_Interactable;
+    private readonly InputAction m_Adventurer_InteractablePress;
+    private readonly InputAction m_Adventurer_InteractableHold;
     public struct AdventurerActions
     {
         private InputController m_Wrapper;
@@ -894,7 +948,8 @@ public class InputController : IInputActionCollection
         public InputAction @Rotate => m_Wrapper.m_Adventurer_Rotate;
         public InputAction @Attack => m_Wrapper.m_Adventurer_Attack;
         public InputAction @SwitchWeapon => m_Wrapper.m_Adventurer_SwitchWeapon;
-        public InputAction @Interactable => m_Wrapper.m_Adventurer_Interactable;
+        public InputAction @InteractablePress => m_Wrapper.m_Adventurer_InteractablePress;
+        public InputAction @InteractableHold => m_Wrapper.m_Adventurer_InteractableHold;
         public InputActionMap Get() { return m_Wrapper.m_Adventurer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -916,9 +971,12 @@ public class InputController : IInputActionCollection
                 SwitchWeapon.started -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnSwitchWeapon;
                 SwitchWeapon.performed -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnSwitchWeapon;
                 SwitchWeapon.canceled -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnSwitchWeapon;
-                Interactable.started -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractable;
-                Interactable.performed -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractable;
-                Interactable.canceled -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractable;
+                InteractablePress.started -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractablePress;
+                InteractablePress.performed -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractablePress;
+                InteractablePress.canceled -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractablePress;
+                InteractableHold.started -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractableHold;
+                InteractableHold.performed -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractableHold;
+                InteractableHold.canceled -= m_Wrapper.m_AdventurerActionsCallbackInterface.OnInteractableHold;
             }
             m_Wrapper.m_AdventurerActionsCallbackInterface = instance;
             if (instance != null)
@@ -935,9 +993,12 @@ public class InputController : IInputActionCollection
                 SwitchWeapon.started += instance.OnSwitchWeapon;
                 SwitchWeapon.performed += instance.OnSwitchWeapon;
                 SwitchWeapon.canceled += instance.OnSwitchWeapon;
-                Interactable.started += instance.OnInteractable;
-                Interactable.performed += instance.OnInteractable;
-                Interactable.canceled += instance.OnInteractable;
+                InteractablePress.started += instance.OnInteractablePress;
+                InteractablePress.performed += instance.OnInteractablePress;
+                InteractablePress.canceled += instance.OnInteractablePress;
+                InteractableHold.started += instance.OnInteractableHold;
+                InteractableHold.performed += instance.OnInteractableHold;
+                InteractableHold.canceled += instance.OnInteractableHold;
             }
         }
     }
@@ -990,7 +1051,8 @@ public class InputController : IInputActionCollection
         void OnRotate(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
-        void OnInteractable(InputAction.CallbackContext context);
+        void OnInteractablePress(InputAction.CallbackContext context);
+        void OnInteractableHold(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

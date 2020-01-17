@@ -4,24 +4,18 @@ using UnityEngine;
 
 public class AdventurerController : MonoBehaviour
 {
-    [SerializeField] private AdventurerCombat adventurerCombat;
-    [SerializeField] private AdventurerState state;
-    [SerializeField] private AdventurerMovement adventurerMovement;
-
-    public AdventurerHUD hud;
+    private AdventurerCombat adventurerCombat;
+    private AdventurerMovement adventurerMovement;
+    private PlayerInteract interact;
 
     private InputController controls;
-    private GameObject interactableItem;
-
-    private void Start()
-    {
-        adventurerCombat = GetComponent<AdventurerCombat>();
-        adventurerMovement = GetComponent<AdventurerMovement>();
-        state = GetComponent<AdventurerState>();
-    }
 
     private void Awake()
     {
+        adventurerCombat = GetComponent<AdventurerCombat>();
+        adventurerMovement = GetComponent<AdventurerMovement>();
+        interact = GetComponent<PlayerInteract>();
+
         controls = new InputController();
 
         //Movement
@@ -37,34 +31,9 @@ public class AdventurerController : MonoBehaviour
         controls.Adventurer.SwitchWeapon.performed += input => adventurerCombat.SwitchWeapon();
 
         //Interact
-        controls.Adventurer.Interactable.performed += input => Interact(); 
-    }
-
-    private void Interact()
-    {
-        if(interactableItem != null)
-        {
-            interactableItem.GetComponent<InteractableItem>().OnInteractPress();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Interactable")
-        {
-            interactableItem = other.gameObject;
-            interactableItem.GetComponent<InteractableItem>().ShowInfo();
-            hud.ShowMessage(interactableItem.GetComponent<InteractableItem>().interactText);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Interactable")
-        {
-            interactableItem = null;
-            hud.CloseMessage();
-        }
+        controls.Adventurer.InteractablePress.performed += input => interact.InteractPress();
+        controls.Adventurer.InteractableHold.started += input => interact.holdButton = input.ReadValue<float>();
+        controls.Adventurer.InteractableHold.canceled += input => interact.holdButton = 0f;
     }
 
     private void OnEnable()

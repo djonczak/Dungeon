@@ -51,7 +51,7 @@
                     "id": "724583e3-60c3-4430-8274-37d1b2ce8a43",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold(duration=4)"
+                    "interactions": "Hold(duration=2)"
                 }
             ],
             "bindings": [
@@ -89,9 +89,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Move",
-                    "id": "05ed42f2-a607-4801-a653-cae950c5bc1e",
-                    "path": "2DVector",
+                    "name": "2D Vector",
+                    "id": "7d55bd68-30f7-4032-8bef-d4dcbcfc6b7f",
+                    "path": "2DVector(normalize=false)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -101,8 +101,8 @@
                 },
                 {
                     "name": "up",
-                    "id": "a632d1e8-340a-4a9b-b495-4e3511b80c3c",
-                    "path": "<Keyboard>/w",
+                    "id": "2ed44492-96c8-4ce5-925e-e1f7c31a380c",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -112,8 +112,8 @@
                 },
                 {
                     "name": "down",
-                    "id": "f151b089-c422-41b1-9c1c-8f3007ed54a0",
-                    "path": "<Keyboard>/s",
+                    "id": "67726ff9-86a9-423b-91ea-c20a137afa0b",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -123,8 +123,8 @@
                 },
                 {
                     "name": "left",
-                    "id": "78b798d2-aa84-47c4-99f8-f31c98f0bd89",
-                    "path": "<Keyboard>/a",
+                    "id": "6d423904-bf1f-45d3-8fb9-12dbf8040ca9",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -134,8 +134,8 @@
                 },
                 {
                     "name": "right",
-                    "id": "137ee7d0-15fa-4858-85f1-0da2792894a6",
-                    "path": "<Keyboard>/d",
+                    "id": "79f7c222-b43c-4ea1-81df-636588b34c86",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -402,12 +402,20 @@
                     "interactions": "Press"
                 },
                 {
-                    "name": "Interactable",
+                    "name": "InteractablePress",
                     "type": "Button",
                     "id": "ee74c68f-88b6-4436-8268-0f661e7eda1c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "InteractableHold",
+                    "type": "Button",
+                    "id": "cf93df51-ac52-4c63-bb8a-df628663b61b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold(duration=2)"
                 }
             ],
             "bindings": [
@@ -638,7 +646,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interactable",
+                    "action": "InteractablePress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -649,7 +657,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interactable",
+                    "action": "InteractablePress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -660,7 +668,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interactable",
+                    "action": "InteractablePress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -671,7 +679,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interactable",
+                    "action": "InteractablePress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0264c5ec-058f-4b36-9642-f16794101273",
+                    "path": "<DualShockGamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d93b5cec-404e-4780-a53c-598f976ad83a",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45529c81-756c-4e05-81af-8ffdf16677da",
+                    "path": "<SwitchProControllerHID>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83136ff5-8a15-4f0c-a4a2-43fbaa3b708d",
+                    "path": "<XInputController>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractableHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -78,10 +78,6 @@ public class OgreHealth : LivingCreature, IDamage
                 if (currentHP <= 0)
                 {
                     anim.GetBehaviour<OgreCombat>().isAlive = false;
-                    foreach (AIFollow follow in anim.GetBehaviours<AIFollow>())
-                    {
-                        follow.isAlive = false;
-                    }
                     Die();
                 }
 

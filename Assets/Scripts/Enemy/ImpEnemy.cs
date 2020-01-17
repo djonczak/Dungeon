@@ -52,7 +52,6 @@ public class ImpEnemy : LivingCreature, IDamage
         KnockBack(direction);
         if(currentHP <= 0)
         {
-            anim.GetBehaviour<AIFollow>().isAlive = false;
             bodyColor.material.SetColor("_EmissionColor", normalColor);
             isExplosion = true;
             anim.SetTrigger("IsDead");
@@ -75,7 +74,6 @@ public class ImpEnemy : LivingCreature, IDamage
     {
         yield return new WaitForSeconds(time);
         GetComponent<NavMeshAgent>().enabled = false;
-        anim.GetBehaviour<AIFollow>().isAlive = false;
         GetComponentInChildren<Renderer>().enabled = false;
         explosion.Play();
         var damagable = Physics.OverlapSphere(transform.position, explosionRange, LayerMask.GetMask("Player"));
