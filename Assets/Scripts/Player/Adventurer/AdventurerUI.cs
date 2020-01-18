@@ -2,14 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdventurerHUD : MonoBehaviour
+public class AdventurerUI : MonoBehaviour
 {
     public GameObject itemMessagePanel;
     public Image bloodOverlay;
 
-    // private List<string> names = new List<string>();
-    private Color alphaColor = new Color(0f, 0f, 0f, 0f);
     private Color defaultColor;
+    private Color alphaColor = new Color(0f, 0f, 0f, 0f);
     private float t;
     private bool isDamaged = false;
 
@@ -30,24 +29,14 @@ public class AdventurerHUD : MonoBehaviour
             defaultColor = bloodOverlay.color;
             bloodOverlay.color = alphaColor;
         }
-        //foreach(string con in Input.GetJoystickNames())
-        //{
-        //    names.Add(con);
-        //}
-
-        //if(names.Contains("Wireless Controller"))
-        //{
-        //    Debug.Log("Dualshock");
-
-        //}
     }
 
     private void Update()
     {
         if (isDamaged)
         {
-            t += Time.deltaTime / 1f;
-            bloodOverlay.color = Color.Lerp(default, alphaColor, t);
+            t += Time.deltaTime / effectDuration;
+            bloodOverlay.color = Color.Lerp(defaultColor, alphaColor, t);
         }
     }
 
@@ -70,7 +59,6 @@ public class AdventurerHUD : MonoBehaviour
     private IEnumerator DamageEffect(float time)
     {
         isDamaged = true;
-        bloodOverlay.color = defaultColor;
         yield return new WaitForSeconds(time);
         t = 0f;
         isDamaged = false;

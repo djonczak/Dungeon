@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439744736c54ccd4f970b2ac810f54af, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  meleeWeapon: {fileID: 11400000, guid: 0d97d08f003e00f4bae6743de904f5f1, type: 2}
-  rangeWeapon: {fileID: 11400000, guid: 9e5f590ecce38cb4baadbe533179252b, type: 2}
+  meleeWeapon: {fileID: 11400000, guid: 619db291d5d0f974a83173327eee242d, type: 2}
+  rangeWeapon: {fileID: 11400000, guid: 8f3f3abd30ec98642afae6b7ac74a64d, type: 2}
   goldAmount: 0
   smallPotion: 0
   mediumPotion: 0
-  BigPotion: 0
+  bigPotion: 0
   mission: []

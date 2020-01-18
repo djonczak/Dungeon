@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SoundManager : MonoBehaviour, ISoundEffects
+public class SoundManager : MonoBehaviour, IPlaySound
 {
     private AudioSource audioSource;
 

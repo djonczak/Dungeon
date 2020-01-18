@@ -9,7 +9,6 @@ public class InkeeperControlls : MonoBehaviour
     private bool canFill;
     private Transform beerKeg;
 
-    public TavernHUD hud;
     private InkeeperMovement move;
     private InkeeperPickObject pickObject;
     private PlayerInteract interact;
@@ -110,7 +109,7 @@ public class InkeeperControlls : MonoBehaviour
         if (other.tag == "Barrel")
         {
            
-            hud.CloseMessage();
+          //  hud.CloseMessage();
         }
     }
 

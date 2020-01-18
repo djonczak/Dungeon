@@ -2081,8 +2081,10 @@ PrefabInstance:
         type: 3}
       propertyPath: HPBar
       value: 
-      objectReference: {fileID: 1723495719}
-    m_RemovedComponents: []
+      objectReference: {fileID: 145598185}
+    m_RemovedComponents:
+    - {fileID: 7468466799599305087, guid: b1d8c3f8b2a8d5243b8e5f2dd1ca1be8, type: 3}
+    - {fileID: 7468466799599305084, guid: b1d8c3f8b2a8d5243b8e5f2dd1ca1be8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1d8c3f8b2a8d5243b8e5f2dd1ca1be8, type: 3}
 --- !u!1 &123229224 stripped
 GameObject:
@@ -2897,6 +2899,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.9600024, y: 0.96000165, z: 2.0800009}
   m_Center: {x: -2.4800012, y: 1.2800012, z: -1.0400004}
+--- !u!114 &145598185 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8411818401872287242, guid: 7bcbcea8d6c0f7241b6e53748b3784f2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8411818401525749445}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &150927952
 GameObject:
   m_ObjectHideFlags: 0
@@ -11036,7 +11050,7 @@ PrefabInstance:
     - target: {fileID: 6376325682100118875, guid: 8289b5a85b53f964498ff3f999996187,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6376325682099697979, guid: 8289b5a85b53f964498ff3f999996187,
         type: 3}
@@ -38040,18 +38054,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.1000013, y: 12.599999, z: 5.1000013}
   m_Center: {x: -2.5500007, y: 8.299999, z: -2.5500007}
---- !u!114 &1723495719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8411818401872287242, guid: 7bcbcea8d6c0f7241b6e53748b3784f2,
-    type: 3}
-  m_PrefabInstance: {fileID: 8411818401525749445}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1730404158
 GameObject:
   m_ObjectHideFlags: 0
@@ -47585,7 +47587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1481225676, guid: 7bcbcea8d6c0f7241b6e53748b3784f2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.5565186
+      value: -1.5566406
       objectReference: {fileID: 0}
     - target: {fileID: 1481225676, guid: 7bcbcea8d6c0f7241b6e53748b3784f2, type: 3}
       propertyPath: m_SizeDelta.x
@@ -47594,6 +47596,20 @@ PrefabInstance:
     - target: {fileID: 1481225676, guid: 7bcbcea8d6c0f7241b6e53748b3784f2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 3.1171
+      objectReference: {fileID: 0}
+    - target: {fileID: 8411818401313939830, guid: 7bcbcea8d6c0f7241b6e53748b3784f2,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481225675, guid: 7bcbcea8d6c0f7241b6e53748b3784f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8411818401579949337, guid: 7bcbcea8d6c0f7241b6e53748b3784f2,
+        type: 3}
+      propertyPath: m_Name
+      value: HPBarBackground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcbcea8d6c0f7241b6e53748b3784f2, type: 3}

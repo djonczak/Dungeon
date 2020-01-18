@@ -1,69 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class AdventurerCombat : MonoBehaviour
 {
-    [SerializeField] private float boltDamage = 1;
-    [SerializeField] private float boltSpeed = 180;
-    [SerializeField] private string boltName = "Bolt";
+    public Transform meleeWeaponSlot;
+    public Transform rangeWeaponSlot;
 
-    public GameObject[] weaponListActive;
-    public Transform crossbowBarrel;
+    private GameObject meleeWeapon;
+    //private GameObject rangeWeapon;
 
     private int comboMeter = 0;
     private bool nexAttack = true;
 
-    private SoundManager sound;
     private AdventurerState state;
 
-    [Header("Weapon effects")]
-    public ParticleSystem weaponTrail;
-
-    //public Image furyBar;
-    //private bool canUseFury;
-    //private bool isUsingFury;
-    //private float currentFuryMeter = 0f;
-    //private float furyMaxMeter = 100f;
-    // public ParticleSystem furryEffect;
+    [SerializeField] private ParticleSystem weaponTrail;
 
     private void Awake()
     {
         state = GetComponent<AdventurerState>();
-        sound = GetComponent<SoundManager>();
     }
 
     private void Start()
     {
         state.isMelee = true;
-        weaponListActive[1].SetActive(false);
+
+        SetWeapons(state.playerData.meleeWeapon, state.playerData.rangeWeapon);
     }
 
-    //private void Update()
-    //{
-    //    //if (isUsingFury)
-    //    //{
-    //    //    currentFuryMeter = (currentFuryMeter - Time.deltaTime) - 0.161f;
-    //    //    furyBar.fillAmount = currentFuryMeter / furyMaxMeter;
-    //    //}
-    //}
+    private void SetWeapons(MeleeWeaponData meleeData,RangeWeaponData rangeData)
+    {
+        meleeWeapon = Instantiate(meleeData.weaponModel);
+        meleeWeapon.transform.SetParent(meleeWeaponSlot, false);
+        meleeWeapon.GetComponent<ActivateMelee>().weaponData = meleeData;
+        weaponTrail = meleeWeapon.transform.GetChild(1).GetComponent<ParticleSystem>();
+        var rangeWeapon = Instantiate(rangeData.weaponModel);
+        rangeWeapon.transform.SetParent(rangeWeaponSlot, false);
+        rangeWeaponSlot.GetComponent<ProjectileLauncher>().weaponData = rangeData;
+        rangeWeaponSlot.gameObject.SetActive(false);
+    }
 
     public void SwitchWeapon()
     {
         state.isMelee = !state.isMelee;
         if (nexAttack == true)
         {
-            sound.ChangeSound();
+            GetComponent<IPlaySound>().ChangeSound();
             if (state.isMelee)
             {
-                weaponListActive[0].SetActive(true);
-                weaponListActive[1].SetActive(false);
+                meleeWeaponSlot.gameObject.SetActive(true);
+                rangeWeaponSlot.gameObject.SetActive(false);
             }
             else
             {
-                weaponListActive[0].SetActive(false);
-                weaponListActive[1].SetActive(true);
+                meleeWeaponSlot.gameObject.SetActive(false);
+                rangeWeaponSlot.gameObject.SetActive(true);
             }
         }
     }
@@ -78,7 +68,7 @@ public class AdventurerCombat : MonoBehaviour
             }
             else
             {
-                sound.RangeSound();
+                GetComponent<IPlaySound>().RangeSound();
                 CrossbowAttack();
             }
         }
@@ -89,7 +79,7 @@ public class AdventurerCombat : MonoBehaviour
         if (nexAttack == true)
         {
             weaponTrail.Play();
-            weaponListActive[0].GetComponent<BoxCollider>().enabled = true;
+            meleeWeapon.GetComponent<BoxCollider>().enabled = true;
             nexAttack = false;
             comboMeter++;
             GetComponent<AdventurerAnimation>().MeleeAttackAnimation(comboMeter);
@@ -98,18 +88,34 @@ public class AdventurerCombat : MonoBehaviour
 
     private void CrossbowAttack()
     {
-        GetComponentInChildren<ILauncher>().LaunchProjectile(boltName, boltSpeed, boltDamage);
+        GetComponentInChildren<ILauncher>().LaunchProjectile();
     }
 
     public void EndAttack()
     {
-        weaponListActive[0].GetComponent<BoxCollider>().enabled = false;
+        meleeWeapon.GetComponent<BoxCollider>().enabled = false;
         if (comboMeter == 2)
         {
             comboMeter = 0;
         }
         nexAttack = true;
     }
+
+    //public Image furyBar;
+    //private bool canUseFury;
+    //private bool isUsingFury;
+    //private float currentFuryMeter = 0f;
+    //private float furyMaxMeter = 100f;
+    // public ParticleSystem furryEffect;
+
+    //private void Update()
+    //{
+    //    //if (isUsingFury)
+    //    //{
+    //    //    currentFuryMeter = (currentFuryMeter - Time.deltaTime) - 0.161f;
+    //    //    furyBar.fillAmount = currentFuryMeter / furyMaxMeter;
+    //    //}
+    //}
 
     //public void FuryMeter()
     //{

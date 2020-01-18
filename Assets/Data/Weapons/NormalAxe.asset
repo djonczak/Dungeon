@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9da28434bd7dd04d8ef967940718b51, type: 3}
-  m_Name: NormalCrossbow
+  m_Name: NormalAxe
   m_EditorClassIdentifier: 
-  weaponName: Normal Crossbow
+  weaponName: Normal Axe
   weaponType: 1
-  weaponDamage: 3
+  weaponModel: {fileID: 257753419164936109, guid: eaff6403e676fc14cb9548f4473296a6,
+    type: 3}
+  weaponDamage: 5
   weaponCriticalChance: 0
+  canKnockBack: 1
   goldCost: 0

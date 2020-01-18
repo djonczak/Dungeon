@@ -1,26 +1,21 @@
 ﻿using UnityEngine;
 
-public class ActivateMelee : MonoBehaviour,IPassFloat
+public class ActivateMelee : MonoBehaviour
 {
-    [SerializeField] private float damage;
-
-    public void PassFloat(float amount)
-    {
-        damage = amount;
-    }
+    public MeleeWeaponData weaponData;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 10)
         {
-            GetComponentInParent<ISoundEffects>().AttackSound();
-            other.GetComponent<IDamage>().TakeDamage(damage, transform.parent.position);
-           // var meter = GetComponentInParent<AdventurerCombat>();
-           // if(meter != null)
-           // {
-           ////    meter.FuryMeter();
-           // }
+            GetComponentInParent<IPlaySound>().AttackSound();
+            DoAttack(other);
         }
+    }
+
+    public void DoAttack(Collider target)
+    {
+        target.GetComponent<IDamage>().TakeDamage(weaponData.weaponDamage, transform.parent.position);
     }
 }
 

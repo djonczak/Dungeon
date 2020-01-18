@@ -15,8 +15,7 @@ public class ImpEnemy : LivingCreature, IDamage
     private Color normalColor = new Color(0f, 0f, 0f, 0f);
     private bool isTicking = false;
 
-
-    void Start()
+    private void Start()
     {
         explosion = GetComponentInChildren<ParticleSystem>();
         bodyColor = GetComponentInChildren<Renderer>();
@@ -24,7 +23,7 @@ public class ImpEnemy : LivingCreature, IDamage
         currentHP = maxHP;
     }
 
-    void Update()
+    private void Update()
     {
         if (isExplosion == false)
         {
@@ -40,7 +39,7 @@ public class ImpEnemy : LivingCreature, IDamage
         }
     }
 
-    void ColorFlick()
+    private void ColorFlick()
     {
         var indicatorColor = Color.Lerp(Color.white, normalColor, Mathf.PingPong(Time.time, 1));
         bodyColor.material.SetColor("_EmissionColor", indicatorColor);

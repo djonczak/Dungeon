@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class ProjectileLauncher : MonoBehaviour, ILauncher
 {
+    public RangeWeaponData weaponData;
     public Transform barrelPosition;
     
-    public void LaunchProjectile(string name, float projectileSpeed, float projectileDamage)
+    public void LaunchProjectile()
     {
-        GameObject projectile = ObjectPooler.instance.GetPooledObject(name);
+        GameObject projectile = ObjectPooler.instance.GetPooledObject(weaponData.projectileName);
         if (projectile != null)
         {
             projectile.transform.position = barrelPosition.position;
             projectile.transform.rotation = barrelPosition.rotation;
             projectile.SetActive(true);
-            projectile.GetComponent<Rigidbody>().AddForce(-transform.right * projectileSpeed);
-            projectile.GetComponent<IPassFloat>().PassFloat(projectileDamage);
+            projectile.GetComponent<Rigidbody>().AddForce(-transform.right * weaponData.projectileSpeed);
+            projectile.GetComponent<IPassFloat>().PassFloat(weaponData.weaponDamage);
         }
     }
 }

@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9da28434bd7dd04d8ef967940718b51, type: 3}
-  m_Name: NormalSword
+  m_Script: {fileID: 11500000, guid: 3e43d3cf45a62204387fda1e91720293, type: 3}
+  m_Name: NormalCrosbow
   m_EditorClassIdentifier: 
-  weaponName: Normal Sword
-  weaponType: 0
-  weaponModel: {fileID: 4191675257332052048, guid: c6159494d4d5e914c866d391d15d8849,
+  weaponName: NormalCrosbow
+  weaponModel: {fileID: 1669781302233937326, guid: fcc8c8e083c0c904897baf65eeb55427,
     type: 3}
-  weaponDamage: 5
+  projectileName: Bolt
+  weaponDamage: 3
   weaponCriticalChance: 0
+  projectileSpeed: 180
+  canKnockBack: 1
   goldCost: 0
-  projectileName: 

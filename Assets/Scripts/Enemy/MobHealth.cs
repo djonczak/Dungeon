@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class MobHealth : LivingCreature, IDamage
 {
     public bool isAlive = true;
-
-    private bool isDamaged = false;
-
     public Image HPBar;
     public GameObject HPDisplay;
+
+
+    private bool isDamaged = false;
 
     private void Start()
     {
@@ -38,8 +38,8 @@ public class MobHealth : LivingCreature, IDamage
             }
             else
             {
-                StartCoroutine("Damaged");
                 GetComponent<KnockBack>().KnockBackEffect(position);
+                StartCoroutine("Damaged");
             }
         }
     }
