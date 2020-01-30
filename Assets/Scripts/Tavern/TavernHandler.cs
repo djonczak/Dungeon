@@ -72,4 +72,10 @@ public class TavernHandler : MonoBehaviour
             Gizmos.DrawWireSphere(point.seatPosition, 1);
         }
     }
+
+    public void OnDestroy()
+    {
+        waitingQueue.OnGuestArrive -= WaitingQueue_OnGuestArrive;
+        waitingQueue.CloseTavern -= WaitingQueue_CloseTavern;
+    }
 }

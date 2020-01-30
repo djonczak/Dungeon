@@ -25,19 +25,9 @@ public class WaitingQueue : MonoBehaviour
     //    return guestList.Count < positionList.Count;
     //}
 
-    public void AddGuest(Guest guest)
-    {
-        guestList.Add(guest);
-        //guest.MoveTo(positionList[guestList.IndexOf(guest)]);
-        if(OnGuestArrive != null)
-        {
-            OnGuestArrive(this, EventArgs.Empty);
-        }
-    }
-
     public Guest GetFirstInQueue()
     {
-        if(guestList.Count == 0)
+        if (guestList.Count == 0)
         {
             return null;
         }
@@ -49,12 +39,16 @@ public class WaitingQueue : MonoBehaviour
         }
     }
 
+    public void AddGuest(Guest guest)
+    {
+        guestList.Add(guest);
+        //guest.MoveTo(positionList[guestList.IndexOf(guest)]);
+        OnGuestArrive?.Invoke(this, EventArgs.Empty);
+    }
+
     public void CloseInn()
     {
-        if (CloseTavern != null)
-        {
-            CloseTavern(this, EventArgs.Empty);
-        }
+        CloseTavern?.Invoke(this, EventArgs.Empty);
     }
 
     //public void OnDrawGizmos()

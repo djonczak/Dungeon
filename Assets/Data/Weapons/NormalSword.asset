@@ -18,5 +18,6 @@ MonoBehaviour:
     type: 3}
   weaponDamage: 5
   weaponCriticalChance: 0
+  weaponAttackSpeed: 1
+  canKnockBack: 0
   goldCost: 0
-  projectileName: 

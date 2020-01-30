@@ -1,27 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class MobHealth : LivingCreature, IDamage
 {
-    public bool isAlive = true;
-    public Image HPBar;
-    public GameObject HPDisplay;
-
-
     private bool isDamaged = false;
 
     private void Start()
     {
         currentHP = maxHP;
-        HPDisplay.transform.rotation = Camera.main.transform.rotation;
-        GetComponentInChildren<IPassFloat>().PassFloat(attackDamage);
-    }
-
-    private void LateUpdate()
-    {
-        HPDisplay.transform.rotation = Quaternion.identity;
     }
 
     public void TakeDamage(float amount, Vector3 position)
@@ -29,9 +16,9 @@ public class MobHealth : LivingCreature, IDamage
         if (isDamaged == false)
         {
             currentHP -= amount;
-            HPBar.fillAmount = currentHP / maxHP;
             GetComponent<IDamageEffect>().DamageEffect();
             ShowDamageText(amount);
+            GetComponentInChildren<MobHealthBar>().ChangeHPBar(currentHP, maxHP);
             if (currentHP <= 0)
             {
                 Die();
@@ -52,7 +39,6 @@ public class MobHealth : LivingCreature, IDamage
         GetComponent<Animator>().SetTrigger("IsDead");
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
-        HPDisplay.SetActive(false);
         enabled = false;
     }
 

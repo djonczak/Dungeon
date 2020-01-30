@@ -9,4 +9,5 @@ public class LivingCreature : MonoBehaviour
     public float attackDamage;
     public float goldAmount;
     public int id;
+    public bool isAlive;
 }

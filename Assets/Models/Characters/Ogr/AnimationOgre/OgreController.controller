@@ -124,11 +124,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.9838945
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -146,7 +146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   canAttack: 1
-  isAlive: 1
 --- !u!1101 &-5894223232669967005
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -161,11 +160,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.09909354
   m_TransitionOffset: 0
-  m_ExitTime: 0.77272725
+  m_ExitTime: 0.9802237
   m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -283,11 +282,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.06387785
   m_TransitionOffset: 0
-  m_ExitTime: 0.8958333
+  m_ExitTime: 0.92829657
   m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -697,10 +696,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a4065c469b95e46aef0ea7d56d8f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   moveSpeed: 10
   meleeRange: 5
-  isAlive: 1
+  target: {fileID: 0}
 --- !u!1101 &1627242690099262409
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -790,11 +788,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.15993983
   m_TransitionOffset: 0
-  m_ExitTime: 0.90625
+  m_ExitTime: 0.99631023
   m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -874,10 +872,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a4065c469b95e46aef0ea7d56d8f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   moveSpeed: 4
   meleeRange: 5
-  isAlive: 1
+  target: {fileID: 0}
 --- !u!1102 &8679540768786966816
 AnimatorState:
   serializedVersion: 5

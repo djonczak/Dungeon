@@ -18,7 +18,7 @@ public class EnemyWaveSpawner : MonoBehaviour
     public int currentEnemy;
 
     private bool spawnEnemies;
-    [SerializeField] private Text waveText;
+    [SerializeField] private Text waveText = null;
 
     private void Awake()
     {

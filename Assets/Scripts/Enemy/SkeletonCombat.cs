@@ -34,15 +34,13 @@ public class SkeletonCombat : StateMachineBehaviour
   //  public static event ResetAttack AttackReset;
 
     private Transform target;
-    private NavMeshAgent agent;
     private bool canAttack = true;
     private float meleeRange;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent = animator.GetComponent<NavMeshAgent>();
         meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
-        target = animator.GetBehaviour<AIFollow>().target;
+        target = animator.GetBehaviour<AIIdle>().GetTarget();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

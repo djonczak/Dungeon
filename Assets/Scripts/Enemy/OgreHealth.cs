@@ -13,30 +13,19 @@ public class OgreHealth : LivingCreature, IDamage
     };
 
     private Animator anim;
-    private NavMeshAgent ogr;
-    private bool isAlive = true;
     public HPState phase;
     private bool doneRoar;
 
     public Image HPBar;
     public GameObject HPDisplay;
 
-    //Changing color on damage
-    private Color normal;
-    private Color damageColor = Color.red;
-    public Renderer meshRenderer;
-    private bool isDamaged;
-    private bool canColor;
-    float t = 0f;
     private bool isInvincible;
+    private bool isDamaged;
 
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        ogr = GetComponent<NavMeshAgent>();
-        normal = meshRenderer.material.color;
 
-        anim.GetBehaviour<OgreCombat>().isAlive = true;
         currentHP = maxHP;
         HPDisplay.transform.rotation = Camera.main.transform.rotation;
     }
@@ -44,26 +33,6 @@ public class OgreHealth : LivingCreature, IDamage
     void LateUpdate()
     {
         HPDisplay.transform.rotation = Quaternion.identity;
-    }
-
-    void Update()
-    {
-        if (isAlive == true)
-        {
-            DamageColor();
-        }
-    }
-
-    private void DamageColor()
-    {
-        if (canColor == true)
-        {
-            t += Time.deltaTime / 0.5f;
-            if (isDamaged == true)
-            {
-                meshRenderer.material.color = Color.Lerp(damageColor, normal, t);
-            }
-        }
     }
 
     public void TakeDamage(float amount, Vector3 position)
@@ -77,7 +46,6 @@ public class OgreHealth : LivingCreature, IDamage
                 HPBar.fillAmount = currentHP / maxHP;
                 if (currentHP <= 0)
                 {
-                    anim.GetBehaviour<OgreCombat>().isAlive = false;
                     Die();
                 }
 
@@ -103,12 +71,9 @@ public class OgreHealth : LivingCreature, IDamage
 
     private IEnumerator Damaged()
     {
-        canColor = true;
         isDamaged = true;
         yield return new WaitForSeconds(0.5f);
         isDamaged = false;
-        t = 0f;
-        canColor = false;
     }
 
     public void EndRoar()
@@ -134,7 +99,6 @@ public class OgreHealth : LivingCreature, IDamage
                 anim.SetTrigger("IsSecondPhase");
                 anim.SetBool("IsFollow", false);
                 anim.SetBool("IsCombat", false);
-                ogr.speed = 0f;
             }
         }
     }

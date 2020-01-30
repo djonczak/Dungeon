@@ -33,6 +33,7 @@ public class AdventurerCombat : MonoBehaviour
         meleeWeapon.transform.SetParent(meleeWeaponSlot, false);
         meleeWeapon.GetComponent<ActivateMelee>().weaponData = meleeData;
         weaponTrail = meleeWeapon.transform.GetChild(1).GetComponent<ParticleSystem>();
+        GetComponent<Animator>().SetFloat("MeleeAttackSpeed", meleeData.weaponAttackSpeed);
         var rangeWeapon = Instantiate(rangeData.weaponModel);
         rangeWeapon.transform.SetParent(rangeWeaponSlot, false);
         rangeWeaponSlot.GetComponent<ProjectileLauncher>().weaponData = rangeData;
@@ -68,7 +69,6 @@ public class AdventurerCombat : MonoBehaviour
             }
             else
             {
-                GetComponent<IPlaySound>().RangeSound();
                 CrossbowAttack();
             }
         }
@@ -77,7 +77,7 @@ public class AdventurerCombat : MonoBehaviour
     private void MeleeAttack()
     {
         if (nexAttack == true)
-        {
+        { 
             weaponTrail.Play();
             meleeWeapon.GetComponent<BoxCollider>().enabled = true;
             nexAttack = false;
@@ -88,6 +88,7 @@ public class AdventurerCombat : MonoBehaviour
 
     private void CrossbowAttack()
     {
+        GetComponent<IPlaySound>().RangeSound();
         GetComponentInChildren<ILauncher>().LaunchProjectile();
     }
 
@@ -147,7 +148,6 @@ public class AdventurerCombat : MonoBehaviour
     //    yield return new WaitForSeconds(time);
     //    furryEffect.Stop();
     //    canUseFury = false;
-    //    Debug.Log("Koniec Furri");
     //    isUsingFury = false;
     //}
 

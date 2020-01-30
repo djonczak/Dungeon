@@ -13,7 +13,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 2.500001, z: 0.9000004}
   m_Center: {x: -0.45000032, y: 2.2500007, z: -0.45000002}
---- !u!114 &8557241442439597242
+--- !u!114 &6854198206345168083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,9 +22,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7301352843762312639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d45313dfe5e361844bdfdf0aa27dcb7c, type: 3}
+  m_Script: {fileID: 11500000, guid: eb785a96656decd478a9d97db3fbcfb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &7301352844356797345
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,12 +315,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7301352844356706267}
+  - component: {fileID: 6260105699414840911}
   - component: {fileID: 7301352844349517833}
   - component: {fileID: 6260105699414840910}
-  - component: {fileID: 6260105699414840911}
   - component: {fileID: 6260105699414840912}
   m_Layer: 10
-  m_Name: OgreEnemy
+  m_Name: Ogre
   m_TagString: Ogre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,6 +343,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6260105699414840911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301352844356797371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459ab2069e8739044bcc55b642a5d5f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 20
+  currentHP: 0
+  attackDamage: 2
+  goldAmount: 0
+  id: 0
+  isAlive: 1
+  phase: 0
+  HPBar: {fileID: 6260105699670569870}
+  HPDisplay: {fileID: 7689640745412983506}
 --- !u!95 &7301352844349517833
 Animator:
   serializedVersion: 3
@@ -374,26 +396,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.28, y: 5.09, z: 1.67}
   m_Center: {x: 0, y: 2.6, z: 0}
---- !u!114 &6260105699414840911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7301352844356797371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 459ab2069e8739044bcc55b642a5d5f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 20
-  currentHP: 0
-  attackDamage: 2
-  goldAmount: 0
-  phase: 0
-  HPBar: {fileID: 6260105699670569870}
-  HPDisplay: {fileID: 7689640745412983506}
-  meshRenderer: {fileID: 7301352844353621705}
 --- !u!195 &6260105699414840912
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -591,7 +593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7301352844356706277}
   - component: {fileID: 8489876143224969856}
-  - component: {fileID: 6312196462563987083}
+  - component: {fileID: 8749333728024767037}
   m_Layer: 0
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
@@ -626,7 +628,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6312196462563987083
+--- !u!114 &8749333728024767037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -635,9 +637,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7301352844356797381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d45313dfe5e361844bdfdf0aa27dcb7c, type: 3}
+  m_Script: {fileID: 11500000, guid: eb785a96656decd478a9d97db3fbcfb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &7301352844356797383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1131,7 @@ PrefabInstance:
     - target: {fileID: 2035063346281720803, guid: 0672b8704735c204fa47ed42c0765986,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: EnemyHPBar
       objectReference: {fileID: 0}
     - target: {fileID: 3594339708963381649, guid: 0672b8704735c204fa47ed42c0765986,
         type: 3}

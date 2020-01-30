@@ -7,6 +7,7 @@ public class MeleeWeaponData : ScriptableObject
     {
         Sword,
         Axe,
+        Mace,
     };
 
     public string weaponName;
@@ -14,6 +15,7 @@ public class MeleeWeaponData : ScriptableObject
     public GameObject weaponModel;
     public float weaponDamage;
     public float weaponCriticalChance;
+    public float weaponAttackSpeed;
     public bool canKnockBack;
     public float goldCost;
 }

@@ -7,31 +7,25 @@ using UnityEngine.AI;
 public class OgreCombat : StateMachineBehaviour
 {
     public Transform target;
-    private NavMeshAgent agent;
     public bool canAttack = true;
     private float meleeRange;
-    public bool isAlive;
 
     private int lastAttack = 0;
     private int randomAttack = 0;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent = animator.GetComponent<NavMeshAgent>();
         meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
-        target = animator.GetBehaviour<AIFollow>().target;
+        target = animator.GetBehaviour<AIIdle>().GetTarget();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (isAlive == true)
+        if (animator.GetComponent<LivingCreature>().isAlive)
         {
-            if (meleeRange >= CalculateDistance(animator.transform))
+            if (meleeRange >=  TransformExtension.DistanceBetween(animator.transform.position,target.transform.position))
             {
-                Quaternion rotation = Quaternion.LookRotation(target.transform.position - animator.transform.position);
-                rotation.x = 0;
-                rotation.z = 0;
-                animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, rotation, 10f * Time.deltaTime);
+                RotateTowards(animator);
                 if (canAttack == true)
                 {
                     while (lastAttack == randomAttack)
@@ -81,10 +75,13 @@ public class OgreCombat : StateMachineBehaviour
             }
         }
     }
-    float CalculateDistance(Transform mob)
+
+    private void RotateTowards(Animator animator)
     {
-        var distance = Vector3.Distance(mob.transform.position, target.transform.position);
-        return distance;
+        Quaternion rotation = Quaternion.LookRotation(target.transform.position - animator.transform.position);
+        rotation.x = 0;
+        rotation.z = 0;
+        animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, rotation, 10f * Time.deltaTime);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -92,7 +89,6 @@ public class OgreCombat : StateMachineBehaviour
         animator.ResetTrigger("Punch1");
         animator.ResetTrigger("Punch2");
         animator.ResetTrigger("SwingAttack");
-
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -5,9 +5,8 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     [Header("Camera options")]
-    [SerializeField] private float smooth = 15f;
+    [SerializeField] private float smoothMovement = 15f;
     [SerializeField] private float cameraDistance = 31f;
-    [SerializeField] private float offset = 4f;
     [SerializeField] GameObject target;
 
     private void Start()
@@ -22,8 +21,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void CameraFollow()
     {
-        Vector3 cameraHeight = target.transform.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cameraDistance + offset));
-        transform.position = Vector3.Lerp(transform.position, target.transform.position + cameraHeight, smooth * Time.fixedDeltaTime);
+        Vector3 cameraHeight = target.transform.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cameraDistance));
+        transform.position = Vector3.Lerp(transform.position, target.transform.position + cameraHeight, smoothMovement * Time.fixedDeltaTime);
     }
 
 }

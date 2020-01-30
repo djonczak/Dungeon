@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 4350931692615030090}
   - component: {fileID: 4350931692615030101}
   m_Layer: 10
-  m_Name: SkeletonEnemy
+  m_Name: NormalSkeleton
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -862,8 +862,6 @@ MonoBehaviour:
   goldAmount: 0
   id: 0
   isAlive: 1
-  HPBar: {fileID: 8653656011720676633}
-  HPDisplay: {fileID: 4918138843300764741}
 --- !u!114 &6610046352555897830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,6 +878,7 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   alphaColor: {r: 0, g: 0, b: 0, a: 0}
   isDamaged: 0
+  colorFlick: 0
   effectDuration: 0.5
 --- !u!114 &8959265443735782067
 MonoBehaviour:
@@ -1187,27 +1186,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0672b8704735c204fa47ed42c0765986, type: 3}
---- !u!1 &4918138843300764741 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2035063346281720803, guid: 0672b8704735c204fa47ed42c0765986,
-    type: 3}
-  m_PrefabInstance: {fileID: 6376325682212124582}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7610215337210140215 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3594339708963381649, guid: 0672b8704735c204fa47ed42c0765986,
     type: 3}
   m_PrefabInstance: {fileID: 6376325682212124582}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8653656011720676633 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2335877438883291839, guid: 0672b8704735c204fa47ed42c0765986,
-    type: 3}
-  m_PrefabInstance: {fileID: 6376325682212124582}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

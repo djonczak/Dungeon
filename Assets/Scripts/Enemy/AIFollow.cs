@@ -3,21 +3,22 @@ using UnityEngine.AI;
 
 public class AIFollow : StateMachineBehaviour
 {
-    public Transform target;
     public float moveSpeed;
-    private NavMeshAgent agent;
     public float meleeRange;
+    [SerializeField] private Transform target;
+    private NavMeshAgent agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
+        target = animator.GetBehaviour<AIIdle>().GetTarget();
         animator.speed = 1f;
         agent.speed = moveSpeed;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (animator.GetComponent<MobHealth>().isAlive == true)
+        if (animator.GetComponent<LivingCreature>().isAlive == true)
         {
             agent.SetDestination(target.position);
             if (meleeRange >= TransformExtension.DistanceBetween(animator.transform.position,target.transform.position))

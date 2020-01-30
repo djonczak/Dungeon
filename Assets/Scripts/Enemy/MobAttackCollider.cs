@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class MobAttackCollider : MonoBehaviour, IPassFloat
+public class MobAttackCollider : MonoBehaviour
 {
     [SerializeField] private float damage;
 
-    public void PassFloat(float amount)
+    private void Start()
     {
-        damage = amount;
+        damage = GetComponentInParent<LivingCreature>().attackDamage;
     }
 
     private void OnTriggerEnter(Collider other)

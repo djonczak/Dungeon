@@ -2,8 +2,8 @@
 
 public class AIIdle : StateMachineBehaviour
 {
-    public float visionRange;
-    public Transform target;
+    [SerializeField] private float visionRange = 5f;
+    [SerializeField] private Transform target;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -23,16 +23,21 @@ public class AIIdle : StateMachineBehaviour
         else
         {
             animator.SetBool("IsFollow", true);
-            foreach(AIFollow follow in animator.GetBehaviours<AIFollow>())
-            {
-                follow.target = target;
-            }
+            //foreach(AIFollow follow in animator.GetBehaviours<AIFollow>())
+            //{
+            //    follow.PassTarget(target);
+            //}
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("IsIdle", false);
+    }
+
+    public Transform GetTarget()
+    {
+        return target;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -8,7 +8,7 @@ public class BeerKeg : MonoBehaviour
     public float minAmount = 0f;
     [SerializeField] private float maxAmount = 400f;
 
-    void Start()
+    private void Start()
     {
         minAmount = maxAmount;
     }

@@ -7,8 +7,10 @@ public class MaterialEffects : MonoBehaviour, IDamageEffect
     [SerializeField] private Color damageColor = Color.red;
     [SerializeField] private Color alphaColor = new Color(0f, 0f, 0f, 0f);
     [SerializeField] private bool isDamaged = false;
+    [SerializeField] private bool colorFlick = false;
     [SerializeField] private float effectDuration = 1.2f;
     private float t;
+
 
     private void Start()
     {
@@ -16,6 +18,21 @@ public class MaterialEffects : MonoBehaviour, IDamageEffect
     }
 
     private void Update()
+    {
+        DamagedColorChange();
+        ColorFlick();
+    }
+
+    private void ColorFlick()
+    {
+        if (colorFlick)
+        {
+            var indicatorColor = Color.Lerp(Color.white, alphaColor, Mathf.PingPong(Time.time, 1));
+            bodyMaterial.material.SetColor("_EmissionColor", indicatorColor);
+        }
+    }
+
+    private void DamagedColorChange()
     {
         if (isDamaged)
         {
@@ -28,6 +45,11 @@ public class MaterialEffects : MonoBehaviour, IDamageEffect
     public void DamageEffect()
     {
         StartCoroutine("EffectDuration", effectDuration);
+    }
+
+    public void FlickEffect()
+    {
+        colorFlick = true;
     }
 
     private IEnumerator EffectDuration(float time)

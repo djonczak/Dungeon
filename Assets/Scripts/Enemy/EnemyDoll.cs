@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyDoll : MonoBehaviour, IDamage
 {
     [SerializeField] private float currentHP;
     [SerializeField] private float maxHP = 100f;
 
-    void Start()
+    private void Start()
     {
         currentHP = maxHP;
     }

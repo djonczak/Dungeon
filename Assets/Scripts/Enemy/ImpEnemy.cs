@@ -5,88 +5,61 @@ using UnityEngine.AI;
 
 public class ImpEnemy : LivingCreature, IDamage
 {
-    public float explosionTimer;
-    public float explosionRange;
+    [SerializeField] private float timeToExplode = 8f;
 
-    private ParticleSystem explosion;
-    private Renderer bodyColor;
     private Animator anim;
-    private bool isExplosion = false;
-    private Color normalColor = new Color(0f, 0f, 0f, 0f);
     private bool isTicking = false;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void Start()
     {
-        explosion = GetComponentInChildren<ParticleSystem>();
-        bodyColor = GetComponentInChildren<Renderer>();
-        anim = GetComponentInChildren<Animator>();
         currentHP = maxHP;
+        GetComponent<Explosion>().SetExplosionDamage(attackDamage);
     }
 
     private void Update()
     {
-        if (isExplosion == false)
+        if (anim.GetBool("IsFollow") == true)
         {
-            if (anim.GetBehaviour<AIFollow>().target != null)
+            if (isTicking == false)
             {
-                ColorFlick();
-                if (isTicking == false)
-                {
-                    StartCoroutine("ExplosionTimer", explosionTimer);
-                    isTicking = true;
-                }
+                StartCoroutine("ExplosionTimer", timeToExplode);
+                GetComponent<MaterialEffects>().FlickEffect();
+                isTicking = true;
             }
         }
     }
 
-    private void ColorFlick()
+    public void TakeDamage(float amount, Vector3 position)
     {
-        var indicatorColor = Color.Lerp(Color.white, normalColor, Mathf.PingPong(Time.time, 1));
-        bodyColor.material.SetColor("_EmissionColor", indicatorColor);
-    }
-
-    public void TakeDamage(float amount, Vector3 direction)
-    {
-        currentHP -= amount;
-        KnockBack(direction);
-        if(currentHP <= 0)
+        if (isAlive)
         {
-            bodyColor.material.SetColor("_EmissionColor", normalColor);
-            isExplosion = true;
-            anim.SetTrigger("IsDead");
-            GetComponent<BoxCollider>().enabled = false;
-            GetComponent<NavMeshAgent>().isStopped = true;
-            GetComponent<NavMeshAgent>().enabled = false;
-            StopAllCoroutines();
+            currentHP -= amount;
+            GetComponent<KnockBack>().KnockBackEffect(position);
+            if (currentHP <= 0)
+            {
+                Dead();
+            }
         }
     }
 
-
-    private void KnockBack(Vector3 position)
+    private void Dead()
     {
-        var direction = (transform.position - position).normalized;
-
-        GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity + direction * 22f, ForceMode.Impulse);
+        isAlive = false;
+        anim.SetTrigger("IsDead");
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<NavMeshAgent>().isStopped = true;
+        GetComponent<NavMeshAgent>().enabled = false;
+        StopAllCoroutines();
     }
 
     private IEnumerator ExplosionTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        GetComponent<NavMeshAgent>().enabled = false;
-        GetComponentInChildren<Renderer>().enabled = false;
-        explosion.Play();
-        var damagable = Physics.OverlapSphere(transform.position, explosionRange, LayerMask.GetMask("Player"));
-        if (damagable.Length > 0)
-        {
-            damagable[0].GetComponent<IDamage>().TakeDamage(attackDamage, transform.position);
-        }
-        yield return new WaitForSeconds(1f);
-        gameObject.SetActive(false);
+        GetComponent<Explosion>().Explode();
     } 
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRange);
-    }
 }
