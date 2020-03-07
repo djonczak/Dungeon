@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class MobHealth : LivingCreature, IDamage
 {
-    private bool isDamaged = false;
+    private bool _isDamaged = false;
 
     private void Start()
     {
@@ -13,13 +13,13 @@ public class MobHealth : LivingCreature, IDamage
 
     public void TakeDamage(float amount, Vector3 position)
     {
-        if (isDamaged == false)
+        if (_isDamaged == false)
         {
             currentHP -= amount;
             GetComponent<IDamageEffect>().DamageEffect();
             ShowDamageText(amount);
             GetComponentInChildren<MobHealthBar>().ChangeHPBar(currentHP, maxHP);
-            if (currentHP <= 0)
+            if (CheckIfAlive())
             {
                 Die();
             }
@@ -29,6 +29,11 @@ public class MobHealth : LivingCreature, IDamage
                 StartCoroutine("Damaged");
             }
         }
+    }
+
+    private bool CheckIfAlive()
+    {
+        return currentHP <= 0;
     }
 
     private void Die()
@@ -56,8 +61,8 @@ public class MobHealth : LivingCreature, IDamage
 
     private IEnumerator Damaged()
     {
-        isDamaged = true;
+        _isDamaged = true;
         yield return new WaitForSeconds(0.5f);
-        isDamaged = false;
+        _isDamaged = false;
     }
 }

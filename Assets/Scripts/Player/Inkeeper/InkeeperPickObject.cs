@@ -4,40 +4,40 @@ using UnityEngine;
 
 public class InkeeperPickObject : MonoBehaviour
 {
-    [SerializeField] private Transform itemToPick;
-    private InkeeperInventory inventory;
+    [SerializeField] private Transform _itemToPick;
+    private InkeeperInventory _inventory;
 
     private void Awake()
     {
-        inventory = GetComponent<InkeeperInventory>();
+        _inventory = GetComponent<InkeeperInventory>();
     }
 
     public void PickItem()
     {
-        if (itemToPick != null)
+        if (_itemToPick != null)
         {
-            inventory.PickItem(itemToPick);
-            itemToPick = null;
+            _inventory.PickItem(_itemToPick);
+            _itemToPick = null;
             HUDEvent.CloseMessage();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Mug")
+        if (other.CompareTag("Mug"))
         {
-            if (itemToPick == null && inventory.canCarry == true)
+            if (_itemToPick == null && _inventory.ReturnIfCanCarry())
             {
-                itemToPick = other.transform;
+                _itemToPick = other.transform;
                 other.GetComponent<InteractableItem>().ShowInfo();
             }
         }
 
-        if (other.tag == "Trey")
+        if (other.CompareTag("Trey"))
         {
-            if (itemToPick == null)
+            if (_itemToPick == null)
             {
-                itemToPick = other.transform;
+                _itemToPick = other.transform;
                 other.GetComponent<InteractableItem>().ShowInfo();
             }
         }
@@ -45,9 +45,9 @@ public class InkeeperPickObject : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (itemToPick != null && itemToPick.name == other.name)
+        if (_itemToPick != null && _itemToPick.name == other.name)
         {
-            itemToPick = null;
+            _itemToPick = null;
             HUDEvent.CloseMessage();
         }
     }

@@ -1,63 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AdventurerAnimation : MonoBehaviour
 {
-    private AdventurerState state;
-    private AdventurerMovement movement;
-    private Animator anim;
+    private AdventurerState _state;
+    private Animator _anim;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        state = GetComponent<AdventurerState>();
-        movement = GetComponent<AdventurerMovement>();
+        _anim = GetComponent<Animator>();
+        _state = GetComponent<AdventurerState>();
     }
 
-    void Update()
+    private void Update()
     {
-        WeaponAimingAnimation();
+        MoveAnimation(GetComponent<IPlayer>().ReturnMovePosition());
+        WeaponAimingAnimation(GetComponent<IPlayer>().ReturnRotationPosition());
+    }
 
-        if (state.isAiming == false)
+    private void MoveAnimation(Vector2 playerPosition)
+    {
+        if (_state.ReturnAimingState() == false)
         {
-            if (movement.movePosition.magnitude > 0.25f)
+            if (playerPosition.magnitude > 0.25f)
             {
-                anim.SetFloat("VelNormal", Mathf.Abs(movement.movePosition.magnitude));
+                _anim.SetFloat("VelNormal", Mathf.Abs(playerPosition.magnitude));
             }
             else
             {
-                anim.SetFloat("VelNormal", Mathf.Abs(movement.movePosition.magnitude));
+                _anim.SetFloat("VelNormal", Mathf.Abs(playerPosition.magnitude));
             }
         }
     }
 
-    private void WeaponAimingAnimation()
+    private void WeaponAimingAnimation(Vector2 playerPosition)
     {
-        if (state.isAiming)
+        if (_state.ReturnAimingState() == true)
         {
-            anim.SetFloat("VelXCombat", movement.movePosition.x);
-            anim.SetFloat("VelYCombat", movement.movePosition.y);
-            if (state.isMelee == true)
+            _anim.SetFloat("VelXCombat", playerPosition.x);
+            _anim.SetFloat("VelYCombat", playerPosition.y);
+            if (_state.ReturnWeponState() == true)
             {
-                anim.SetBool("IsSword", true);
-                anim.SetBool("IsCrosbow", false);
+                _anim.SetBool("IsSword", true);
+                _anim.SetBool("IsCrosbow", false);
             }
             else
             {
-                anim.SetBool("IsSword", false);
-                anim.SetBool("IsCrosbow", true);
+                _anim.SetBool("IsSword", false);
+                _anim.SetBool("IsCrosbow", true);
             }
         }
         else
         {
-            anim.SetBool("IsSword", false);
-            anim.SetBool("IsCrosbow", false);
+            _anim.SetBool("IsSword", false);
+            _anim.SetBool("IsCrosbow", false);
         }
     }
-
+    
     public void MeleeAttackAnimation(int animationNumber)
     {
-        anim.SetTrigger("Melee" + animationNumber);
+        _anim.SetTrigger("Melee" + animationNumber);
     }
 }

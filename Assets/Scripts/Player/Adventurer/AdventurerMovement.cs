@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
 
-public class AdventurerMovement : MonoBehaviour
+public class AdventurerMovement : MonoBehaviour, IPlayer
 {
-    [SerializeField] private float runSpeed = 8;
+    [SerializeField] private float _runSpeed = 8;
 
-    private Rigidbody rb;
-    private AdventurerState state;
+    private Rigidbody _rb;
+    private AdventurerState _state;
 
-    public Vector2 movePosition;
-    public Vector2 rotationPosition;
+    private Vector2 _movePosition;
+    private Vector2 _rotationPosition;
 
-    [SerializeField]private GameObject circle;
+    private GameObject _circle;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        state = GetComponent<AdventurerState>();
+        _rb = GetComponent<Rigidbody>();
+        _state = GetComponent<AdventurerState>();
 
-        circle = TransformExtension.GetChildObject(transform, "Direction").gameObject;
+        _circle = TransformExtension.GetChildObject(transform, "Direction").gameObject;
     }
 
     private void Start()
     {
-        rb.freezeRotation = true;
+        _rb.freezeRotation = true;
     }
    
     private void FixedUpdate()
@@ -33,16 +33,16 @@ public class AdventurerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (movePosition.magnitude > 0.25f)
+        if (_movePosition.magnitude > 0.25f)
         {
-            Vector3 move = new Vector3(movePosition.x, rb.velocity.y, movePosition.y);
-            var moveVelocity = move * runSpeed;
-            rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+            Vector3 move = new Vector3(_movePosition.x, _rb.velocity.y, _movePosition.y);
+            var moveVelocity = move * _runSpeed;
+            _rb.MovePosition(_rb.position + moveVelocity * Time.fixedDeltaTime);
             RotateTowardsWalkeDirection(move);
         }
         else
         {
-             rb.velocity = new Vector3(0f,rb.velocity.y,0f);
+             _rb.velocity = new Vector3(0f,_rb.velocity.y,0f);
         }
     }
 
@@ -56,11 +56,11 @@ public class AdventurerMovement : MonoBehaviour
 
     private void Rotate()
     {
-        if(rotationPosition.magnitude > 0.25)
+        if(_rotationPosition.magnitude > 0.25)
         {
-            circle.SetActive(true);
-            state.isAiming = true;
-            Vector3 rotate = new Vector3(rotationPosition.x, 0f, rotationPosition.y);
+            _circle.SetActive(true);
+            _state.SetAimingState(true);
+            Vector3 rotate = new Vector3(_rotationPosition.x, 0f, _rotationPosition.y);
             float angle = Vector3.Angle(Vector3.forward, rotate);
             angle = (rotate.x > 0) ? angle : angle * -1;
 
@@ -68,9 +68,29 @@ public class AdventurerMovement : MonoBehaviour
         }
         else
         {
-            state.isAiming = false;
-            circle.SetActive(false);
+            _state.SetAimingState(false);
+            _circle.SetActive(false);
         }
+    }
+
+    public Vector2 ReturnMovePosition()
+    {
+        return _movePosition;
+    }
+
+    public void SetMovePosition(Vector2 input)
+    {
+        _movePosition = input;
+    }
+
+    public Vector2 ReturnRotationPosition()
+    {
+        return _rotationPosition;
+    }
+
+    public void SetRotationPosition(Vector2 input)
+    {
+        _rotationPosition = input;
     }
 
 }

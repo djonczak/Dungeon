@@ -7,12 +7,12 @@ public class AdventurerUI : MonoBehaviour
     public GameObject itemMessagePanel;
     public Image bloodOverlay;
 
-    private Color defaultColor;
-    private Color alphaColor = new Color(0f, 0f, 0f, 0f);
-    private float t;
-    private bool isDamaged = false;
+    [SerializeField] private float _effectDuration = 1.2f;
 
-    [SerializeField] private float effectDuration = 1.2f;
+    private Color _defaultColor;
+    private Color _alphaColor = new Color(0f, 0f, 0f, 0f);
+    private float _t;
+    private bool _isDamaged = false;
 
     private void OnEnable()
     {
@@ -21,28 +21,28 @@ public class AdventurerUI : MonoBehaviour
         HUDEvent.OnCloseMessage += CloseMessage;
     }
 
-    public void Start()
+    private void Start()
     {
         CloseMessage();
         if (bloodOverlay != null)
         {
-            defaultColor = bloodOverlay.color;
-            bloodOverlay.color = alphaColor;
+            _defaultColor = bloodOverlay.color;
+            bloodOverlay.color = _alphaColor;
         }
     }
 
     private void Update()
     {
-        if (isDamaged)
+        if (_isDamaged)
         {
-            t += Time.deltaTime / effectDuration;
-            bloodOverlay.color = Color.Lerp(defaultColor, alphaColor, t);
+            _t += Time.deltaTime / _effectDuration;
+            bloodOverlay.color = Color.Lerp(_defaultColor, _alphaColor, _t);
         }
     }
 
     public void GotHurt()
     {
-        StartCoroutine("DamageEffect", effectDuration);
+        StartCoroutine(DamageEffect(_effectDuration));
     }
 
     public void ShowMessage(string text)
@@ -58,10 +58,10 @@ public class AdventurerUI : MonoBehaviour
 
     private IEnumerator DamageEffect(float time)
     {
-        isDamaged = true;
+        _isDamaged = true;
         yield return new WaitForSeconds(time);
-        t = 0f;
-        isDamaged = false;
+        _t = 0f;
+        _isDamaged = false;
 
     }
 

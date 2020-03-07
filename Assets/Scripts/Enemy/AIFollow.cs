@@ -5,23 +5,23 @@ public class AIFollow : StateMachineBehaviour
 {
     public float moveSpeed;
     public float meleeRange;
-    [SerializeField] private Transform target;
-    private NavMeshAgent agent;
+    [SerializeField] private Transform _target;
+    private NavMeshAgent _agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent = animator.GetComponent<NavMeshAgent>();
-        target = animator.GetBehaviour<AIIdle>().GetTarget();
+        _agent = animator.GetComponent<NavMeshAgent>();
+        _target = animator.GetBehaviour<AIIdle>().GetTarget();
         animator.speed = 1f;
-        agent.speed = moveSpeed;
+        _agent.speed = moveSpeed;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animator.GetComponent<LivingCreature>().isAlive == true)
         {
-            agent.SetDestination(target.position);
-            if (meleeRange >= TransformExtension.DistanceBetween(animator.transform.position,target.transform.position))
+            _agent.SetDestination(_target.position);
+            if (meleeRange >= TransformExtension.DistanceBetween(animator.transform.position, _target.transform.position))
             {
                 animator.SetBool("IsCombat", true);
             }
@@ -32,16 +32,4 @@ public class AIFollow : StateMachineBehaviour
     {
        animator.SetBool("IsFollow", false);
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

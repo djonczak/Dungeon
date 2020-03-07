@@ -4,8 +4,28 @@ using UnityEngine;
 
 public class AdventurerState : MonoBehaviour
 {
-    public bool isMelee;
-    public bool isAiming;
+    [SerializeField] private bool _isMelee;
+    [SerializeField] bool _isAiming;
 
     public AdventurerData playerData;
+
+    public void SetWeaponState(bool state)
+    {
+        _isMelee = state;
+    }
+
+    public void SetAimingState(bool state)
+    {
+        _isAiming = state;
+    }
+
+    public bool ReturnWeponState()
+    {
+        return _isMelee;
+    }
+
+    public bool ReturnAimingState()
+    {
+        return _isAiming;
+    }
 }

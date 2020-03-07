@@ -2,17 +2,17 @@
 
 public class LightFlick : DayNightObserver
 {
-    [SerializeField] private float minIntensify = 1f;
-    [SerializeField] private float maxIntensify = 1.5f;
-    [SerializeField] public float flickSpeed = 9f;
+    [SerializeField] private float _minIntensify = 1f;
+    [SerializeField] private float _maxIntensify = 1.5f;
+    [SerializeField] public float _flickSpeed = 9f;
 
-    private Light lightSource;
-    private float lightFlickCooldown = 0f;
-    private bool isDay;
+    private Light _lightSource;
+    private float _lightFlickCooldown = 0f;
+    private bool _isDay;
 
     private void Awake()
     {
-        lightSource = GetComponent<Light>();
+        _lightSource = GetComponent<Light>();
     }
 
     public override void OnNotify(object value, NotificationType notificationType)
@@ -20,27 +20,27 @@ public class LightFlick : DayNightObserver
         if (notificationType == NotificationType.Day)
         {
             Debug.Log("Dzien");
-            lightSource.enabled = false;
-            isDay = true;
+            _lightSource.enabled = false;
+            _isDay = true;
         }
 
         if (notificationType == NotificationType.Night)
         {
             Debug.Log("Noc");
-            lightSource.enabled = true;
-            isDay = false;
+            _lightSource.enabled = true;
+            _isDay = false;
         }
     }
 
     private void Update()
     {
-        if (isDay == false)
+        if (_isDay == false)
         {
-            lightFlickCooldown -= Time.deltaTime;
-            if (lightFlickCooldown <= 0)
+            _lightFlickCooldown -= Time.deltaTime;
+            if (_lightFlickCooldown <= 0)
             {
-                lightSource.intensity = Random.Range(minIntensify, maxIntensify);
-                lightFlickCooldown = 1f / flickSpeed;
+                _lightSource.intensity = Random.Range(_minIntensify, _maxIntensify);
+                _lightFlickCooldown = 1f / _flickSpeed;
             }
         }
     }

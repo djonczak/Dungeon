@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Guest : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    public float goldAmount;
+    private NavMeshAgent _agent;
+    [SerializeField] private int goldAmount = 5;
     public Seat seat;
     public Transform handPosition;
 
-    public TavernHandler tavern;
-    private Transform mug;
-    private bool canOrder;
+    private TavernHandler _tavern;
+    private Transform _mug;
+    private bool _canOrder;
     public SphereCollider coll;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     private void Start()
@@ -28,7 +26,7 @@ public class Guest : MonoBehaviour
 
     public void MoveTo(Vector3 position)
     {
-        agent.SetDestination(position);
+        _agent.SetDestination(position);
     }
 
     // TODO: Orders drink and wait for it, if didn't get then go out of tavern
@@ -38,14 +36,14 @@ public class Guest : MonoBehaviour
         Debug.Log("Może zamówić");
         coll.enabled = true;
         Invoke("Unhandled", 30f);
-        canOrder = true;
+        _canOrder = true;
     }
 
     // TODO: Takes drink and starts to gossips
 
     public void TakeOrder(Mug mug)
     {
-        this.mug = mug.transform;
+        _mug = mug.transform;
         mug.transform.position = new Vector3(handPosition.position.x, handPosition.position.y, handPosition.position.z);
         mug.transform.rotation = handPosition.rotation;
         CancelInvoke("Unhandled");
@@ -58,26 +56,26 @@ public class Guest : MonoBehaviour
     private void Served()
     {
         LeaveMug();
-        tavern.goldAmount += goldAmount;
-        tavern.servedGuestAmount++;
+        _tavern.goldAmount += goldAmount;
+        _tavern.servedGuestAmount++;
         ExitTavern();
     }
 
     private void LeaveMug()
     {
-        mug.parent = null;
-        mug.GetComponent<Collider>().enabled = true;
-        mug.GetComponent<Rigidbody>().isKinematic = false;
-        mug.GetComponent<Mug>().DirtyMug();
-        mug = null;
+        _mug.parent = null;
+        _mug.GetComponent<Collider>().enabled = true;
+        _mug.GetComponent<Rigidbody>().isKinematic = false;
+        _mug.GetComponent<Mug>().DirtyMug();
+        _mug = null;
     }
 
     // TODO: Waiting for drink, if didn't get then go out of tavern
 
     public void Unhandled()
     {
-        tavern.unhandledGuestAmount++;
-        canOrder = false;
+        _tavern.unhandledGuestAmount++;
+        _canOrder = false;
         ExitTavern();
     }
 
@@ -86,10 +84,10 @@ public class Guest : MonoBehaviour
     private void ExitTavern()
     {
         Debug.Log("Wychodzi");
-        tavern.TryToSendGuest();
+      //  _tavern.TryToSendGuest();
         seat.EmptySeat();
         seat = null;
-        tavern = null;
+        _tavern = null;
         MoveTo(GuestHandler.instance.exitPoint.position);
     }
 
@@ -97,17 +95,17 @@ public class Guest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" && mug == null && canOrder == true)
+        if(other.CompareTag("Player") && _mug == null && _canOrder == true)
         {
             InkeeperInventory inventory = other.GetComponent<InkeeperInventory>();
             if(inventory != null)
             {
                 if (inventory.CheckTrey())
                 {
-                    var trey = inventory.trey.GetComponent<Trey>();
+                    var trey = inventory.ReturnTrey();
                     if(trey != null)
                     {
-                        if (trey.mugs.Count != 0)
+                        if (trey.ReturnMugsCount() != 0)
                         {
                             trey.GiveGuest(this);
                         }
@@ -115,13 +113,18 @@ public class Guest : MonoBehaviour
                 }
                 else
                 {
-                    if(inventory.mugs.Count != 0)
+                    if(inventory.ReturnMugCount() != 0)
                     {
                         inventory.GiveGuest(this);
                     }
                 }                   
             }
         }
+    }
+
+    public void SetTavern(TavernHandler tavernHandler)
+    {
+        _tavern = tavernHandler;
     }
 
     // TODO: Draw gizmo sphere for hand position

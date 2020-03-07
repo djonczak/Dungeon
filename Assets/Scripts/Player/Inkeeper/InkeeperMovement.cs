@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class InkeeperMovement : MonoBehaviour
+public class InkeeperMovement : MonoBehaviour, IPlayer
 {
-    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float _walkSpeed = 5f;
 
-    public Vector2 movePosition;
-
-    private Rigidbody rb;
-    private Vector3 rotationPosition;
+    private Rigidbody _rb;
+    private Vector2 _position;
+    private Vector2 _rotation;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -23,16 +20,36 @@ public class InkeeperMovement : MonoBehaviour
 
     private void Movement()
     {
-        if (movePosition.magnitude > 0.25f)
+        if (_position.magnitude > 0.25f)
         {
-            Vector3 movement = new Vector3(movePosition.x, 0f, movePosition.y);
-            var moveVelocity = movement * walkSpeed;
-            rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(movePosition.x, 0f, movePosition.y)), 0.15f);
+            Vector3 movement = new Vector3(_position.x, 0f, _position.y).normalized;
+            var moveVelocity = movement * _walkSpeed;
+            _rb.MovePosition(_rb.position + moveVelocity * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(_position.x, 0f, _position.y)), 0.15f);
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            _rb.velocity = Vector3.zero;
         }
+    }
+
+    public Vector2 ReturnMovePosition()
+    {
+        return _position;
+    }
+
+    public void SetMovePosition(Vector2 input)
+    {
+        _position = input;
+    }
+
+    public Vector2 ReturnRotationPosition()
+    {
+        return _rotation;
+    }
+
+    public void SetRotationPosition(Vector2 input)
+    {
+        _rotation = input;
     }
 }

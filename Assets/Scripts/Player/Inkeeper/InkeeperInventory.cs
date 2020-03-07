@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class InkeeperInventory : MonoBehaviour
 {
-    [SerializeField] private bool isUsingTray;
-    [SerializeField] Transform treyPosition;
-    public GameObject trey;
+    [SerializeField] private bool _isUsingTray;
+    [SerializeField] Transform _treyPosition;
+    [SerializeField] private GameObject _trey;
     public Transform[] handsPoint;
-    public List<Transform> mugs = new List<Transform>();
-    [SerializeField] private  int inHand = -1;
-    public bool canCarry = true;
+    [SerializeField] private List<Transform> _mugs = new List<Transform>();
+    [SerializeField] private  int _inHand = -1;
+    private bool _canCarry = true;
 
     private void Start()
     {
-        treyPosition = TransformExtension.GetChildObject(this.transform, "TreyPosition");
+        _treyPosition = TransformExtension.GetChildObject(this.transform, "TreyPosition");
     }
     
     public void PickItem(Transform item)
     {
-        if (item.tag == "Mug")
+        if (item.CompareTag("Mug"))
         {
-            if (canCarry == true)
+            if (_canCarry == true)
             {
                 TakeMug(item);
             }
         }
 
-        if (item.tag == "Trey")
+        if (item.CompareTag("Trey"))
         {
-            if (item.GetComponent<Trey>().inTrey == 4 && inHand > -1)
+            if (item.GetComponent<Trey>().ReturnMugs() == 4 && _inHand > -1)
             {
 
             }
@@ -42,13 +42,13 @@ public class InkeeperInventory : MonoBehaviour
 
     public void DropItem()
     {
-        if (isUsingTray)
+        if (_isUsingTray)
         {
             DropDownTrey();
         }
         else
         {
-            if (mugs.Count != 0)
+            if (_mugs.Count != 0)
             {
                 DropMug();
             }
@@ -57,58 +57,58 @@ public class InkeeperInventory : MonoBehaviour
 
     private void PickTrey(Transform item)
     {
-        trey = item.gameObject;
-        trey.transform.parent = transform;
-        trey.transform.position = treyPosition.position;
-        trey.transform.rotation = treyPosition.rotation;
-        trey.GetComponent<Rigidbody>().isKinematic = true;
-        trey.GetComponent<Collider>().enabled = false;
-        isUsingTray = true;
-        canCarry = true;
+        _trey = item.gameObject;
+        _trey.transform.parent = transform;
+        _trey.transform.position = _treyPosition.position;
+        _trey.transform.rotation = _treyPosition.rotation;
+        _trey.GetComponent<Rigidbody>().isKinematic = true;
+        _trey.GetComponent<Collider>().enabled = false;
+        _isUsingTray = true;
+        _canCarry = true;
 
-        if (mugs.Count != 0)
+        if (_mugs.Count != 0)
         {
-            for (int j = 0; j < mugs.Count; j++)
+            for (int j = 0; j < _mugs.Count; j++)
             {
-                if (trey.GetComponent<Trey>().inTrey < 4)
+                if (_trey.GetComponent<Trey>().ReturnMugs() < 4)
                 {
-                    trey.GetComponent<Trey>().PlaceMug(mugs[j]);
-                    inHand--;
+                    _trey.GetComponent<Trey>().PlaceMug(_mugs[j]);
+                    _inHand--;
                 }
                 else
                 {
                     DropMug();
                 }
             }
-            mugs.Clear();
+            _mugs.Clear();
         }
     }
 
     private void DropDownTrey()
     {
-        if (trey != null)
+        if (_trey != null)
         {
-            trey.transform.parent = null;
-            trey.GetComponent<Rigidbody>().isKinematic = false;
-            trey.GetComponent<Collider>().enabled = true;
-            trey = null;
-            isUsingTray = false;
-            canCarry = true;
+            _trey.transform.parent = null;
+            _trey.GetComponent<Rigidbody>().isKinematic = false;
+            _trey.GetComponent<Collider>().enabled = true;
+            _trey = null;
+            _isUsingTray = false;
+            _canCarry = true;
         }
     }
 
     private void TakeMug(Transform mug)
     {
-        if (isUsingTray == true)
+        if (_isUsingTray == true)
         {
             PutMugOnTrey(mug);
         }
         else
         {
-            if (inHand <= 1)
+            if (_inHand <= 1)
             {
-                mugs.Add(mug);
-                inHand++;
+                _mugs.Add(mug);
+                _inHand++;
                 PutMugInHand(mug);
             }
         }
@@ -116,19 +116,19 @@ public class InkeeperInventory : MonoBehaviour
 
     private void PutMugOnTrey(Transform mug)
     {
-        if (trey.GetComponent<Trey>().inTrey < 4)
+        if (_trey.GetComponent<Trey>().ReturnMugs() < 4)
         {
-            trey.GetComponent<Trey>().PlaceMug(mug);
+            _trey.GetComponent<Trey>().PlaceMug(mug);
         }
-        if (trey.GetComponent<Trey>().inTrey == 4)
+        if (_trey.GetComponent<Trey>().ReturnMugs() == 4)
         {
-            canCarry = false;
+            _canCarry = false;
         }
     }
 
     private void PutMugInHand(Transform mug)
     {
-        if (inHand == 0)
+        if (_inHand == 0)
         {
             mug.transform.parent = handsPoint[0].transform;
             mug.transform.position = new Vector3(handsPoint[0].position.x, handsPoint[0].position.y, handsPoint[0].position.z);
@@ -136,38 +136,38 @@ public class InkeeperInventory : MonoBehaviour
             mug.GetComponent<Collider>().enabled = false;
             mug.GetComponent<Rigidbody>().isKinematic = true;
         }
-        if (inHand == 1)
+        if (_inHand == 1)
         {
             mug.transform.parent = handsPoint[1].transform;
             mug.transform.position = new Vector3(handsPoint[1].position.x, handsPoint[1].position.y, handsPoint[1].position.z);
             mug.transform.rotation = handsPoint[1].rotation;
             mug.GetComponent<Collider>().enabled = false;
             mug.GetComponent<Rigidbody>().isKinematic = true;
-            canCarry = false;
+            _canCarry = false;
         }
     }
 
     private void DropMug()
     {
-        var mug = mugs[mugs.Count - 1];
+        var mug = _mugs[_mugs.Count - 1];
         mug.parent = null;
         mug.GetComponent<Rigidbody>().isKinematic = false;
         mug.GetComponent<Collider>().enabled = true;
-        inHand--;
-        mugs.Remove(mug);
-        canCarry = true;
+        _inHand--;
+        _mugs.Remove(mug);
+        _canCarry = true;
     }
 
     public void GiveGuest(Guest guest)
     {
-        for (int i = 0; i < mugs.Count; i++)
+        for (int i = 0; i < _mugs.Count; i++)
         {
-            if (mugs[i].GetComponent<Mug>().isFull == true)
+            if (_mugs[i].GetComponent<Mug>().isFull == true)
             {
-                inHand--;
-                mugs[i].parent = null;
-                guest.TakeOrder(mugs[i].GetComponent<Mug>());
-                mugs.Remove(mugs[i]);
+                _inHand--;
+                _mugs[i].parent = null;
+                guest.TakeOrder(_mugs[i].GetComponent<Mug>());
+                _mugs.Remove(_mugs[i]);
                 return;
             }
         }
@@ -175,7 +175,27 @@ public class InkeeperInventory : MonoBehaviour
     
     public bool CheckTrey()
     {
-        return isUsingTray;
+        return _isUsingTray;
+    }
+
+    public bool ReturnIfCanCarry()
+    {
+        return _canCarry;
+    }
+
+    public int ReturnMugCount()
+    {
+        return _mugs.Count;
+    }
+
+    public Trey ReturnTrey()
+    {
+        return _trey.GetComponent<Trey>();
+    }
+
+    public void SetIfCanCarry(bool state)
+    {
+        _canCarry = state;
     }
 
     private void OnDrawGizmos()

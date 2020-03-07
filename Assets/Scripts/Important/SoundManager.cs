@@ -2,7 +2,7 @@
 
 public class SoundManager : MonoBehaviour, IPlaySound
 {
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
 
     public AudioClip[] meleeAttackSound;
     public AudioClip rangeAttackSound;
@@ -11,28 +11,28 @@ public class SoundManager : MonoBehaviour, IPlaySound
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void AttackSound()
     {
         var random = Random.Range(0, meleeAttackSound.Length);
-        audioSource.PlayOneShot(meleeAttackSound[random], 0.1f);
+        _audioSource.PlayOneShot(meleeAttackSound[random], 0.1f);
     }
 
     public void RangeSound()
     {
-        audioSource.PlayOneShot(rangeAttackSound, 0.1f);
+        _audioSource.PlayOneShot(rangeAttackSound, 0.1f);
     }
 
     public void ChangeSound()
     {
-        audioSource.PlayOneShot(weaponChangeSound, 0.1F);
+        _audioSource.PlayOneShot(weaponChangeSound, 0.1F);
     }
 
     public void DeathSound()
     {
-        audioSource.PlayOneShot(deathSound, 0.1f);
+        _audioSource.PlayOneShot(deathSound, 0.1f);
     }
 }
 

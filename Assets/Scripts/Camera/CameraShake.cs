@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    [SerializeField] private float smooth = 15f;
-    [SerializeField] private float shakeTime = 0.1f;
-    [SerializeField] private float shakeStrenght = 0.5f;
+    [SerializeField] private float _smooth = 15f;
+    [SerializeField] private float _shakeTime = 0.1f;
+    [SerializeField] private float _shakeStrenght = 0.5f;
 
     public void OnEnable()
     {
@@ -14,19 +14,18 @@ public class CameraShake : MonoBehaviour
 
     public void Shake()
     {
-        StartCoroutine("ShakeCamera");
+        StartCoroutine(ShakeCamera());
     }
 
     private IEnumerator ShakeCamera()
     {
         var timer = 0f;
-        while (timer < shakeTime)
+        while (timer < _shakeTime)
         {
-            transform.position = Vector3.Lerp(transform.position, transform.position + Random.insideUnitSphere * shakeStrenght, smooth);
+            transform.position = Vector3.Lerp(transform.position, transform.position + Random.insideUnitSphere * _shakeStrenght, _smooth);
             timer += Time.deltaTime;
             yield return null;
         }
-        timer = 0f;
     }
 
     private void OnDestroy()

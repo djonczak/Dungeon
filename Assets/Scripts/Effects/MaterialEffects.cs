@@ -4,13 +4,12 @@ using UnityEngine;
 public class MaterialEffects : MonoBehaviour, IDamageEffect
 {
     public Renderer bodyMaterial;
-    [SerializeField] private Color damageColor = Color.red;
-    [SerializeField] private Color alphaColor = new Color(0f, 0f, 0f, 0f);
-    [SerializeField] private bool isDamaged = false;
-    [SerializeField] private bool colorFlick = false;
-    [SerializeField] private float effectDuration = 1.2f;
-    private float t;
-
+    [SerializeField] private Color _damageColor = Color.red;
+    private Color _alphaColor = new Color(0f, 0f, 0f, 0f);
+    private bool _isDamaged = false;
+    private bool _colorFlick = false;
+    [SerializeField] private float _effectDuration = 1.2f;
+    private float _t;
 
     private void Start()
     {
@@ -25,38 +24,38 @@ public class MaterialEffects : MonoBehaviour, IDamageEffect
 
     private void ColorFlick()
     {
-        if (colorFlick)
+        if (_colorFlick)
         {
-            var indicatorColor = Color.Lerp(Color.white, alphaColor, Mathf.PingPong(Time.time, 1));
+            var indicatorColor = Color.Lerp(Color.white, _alphaColor, Mathf.PingPong(Time.time, 1));
             bodyMaterial.material.SetColor("_EmissionColor", indicatorColor);
         }
     }
 
     private void DamagedColorChange()
     {
-        if (isDamaged)
+        if (_isDamaged)
         {
-            t += Time.deltaTime / effectDuration;
-            var colorChange = Color.Lerp(damageColor, alphaColor, t);
+            _t += Time.deltaTime / _effectDuration;
+            var colorChange = Color.Lerp(_damageColor, _alphaColor, _t);
             bodyMaterial.material.SetColor("_EmissionColor", colorChange);
         }
     }
 
     public void DamageEffect()
     {
-        StartCoroutine("EffectDuration", effectDuration);
+        StartCoroutine("EffectDuration", _effectDuration);
     }
 
     public void FlickEffect()
     {
-        colorFlick = true;
+        _colorFlick = true;
     }
 
     private IEnumerator EffectDuration(float time)
     {
-        isDamaged = true;
+        _isDamaged = true;
         yield return new WaitForSeconds(time);
-        t = 0f;
-        isDamaged = false;
+        _t = 0f;
+        _isDamaged = false;
     }
 }

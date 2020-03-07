@@ -2,7 +2,7 @@
 
 public class ActivateMelee : MonoBehaviour
 {
-    public MeleeWeaponData weaponData;
+    private MeleeWeaponData _weaponData;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,9 +13,14 @@ public class ActivateMelee : MonoBehaviour
         }
     }
 
-    public void DoAttack(Collider target)
+    private void DoAttack(Collider target)
     {
-        target.GetComponent<IDamage>().TakeDamage(weaponData.weaponDamage, transform.parent.position);
+        target.GetComponent<IDamage>().TakeDamage(_weaponData.weaponDamage, transform.parent.position);
+    }
+
+    public void SetWeapon(MeleeWeaponData data)
+    {
+        _weaponData = data;
     }
 }
 

@@ -2,10 +2,10 @@
 
 public class CrossbowBolt : MonoBehaviour, IPassFloat
 {
-    [SerializeField] private float damage;
-    [SerializeField] private  ParticleSystem trail;
-    private GameObject poolerParent;
-    private AudioSource sound;
+    [SerializeField] private float _damage;
+    [SerializeField] private  ParticleSystem _trail;
+    private GameObject _poolerParent;
+    private AudioSource _sound;
 
     private void OnEnable()
     {
@@ -14,45 +14,45 @@ public class CrossbowBolt : MonoBehaviour, IPassFloat
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = true;
-        trail.Play();
+        _trail.Play();
     }
 
     private void Awake()
     {
-        sound = GetComponent<AudioSource>();
-        trail = gameObject.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
+        _sound = GetComponent<AudioSource>();
+        _trail = gameObject.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
     }
 
     private void Start()
     {
-        poolerParent = this.transform.parent.gameObject;
+        _poolerParent = this.transform.parent.gameObject;
     }
 
     public void PassFloat(float amount)
     {
-        damage = amount;
+        _damage = amount;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 10)
         {
-            other.GetComponent<IDamage>().TakeDamage(damage, PlayerExtension.GetPlayerObject().transform.position);
-            if (other.tag != "Imp")
+            other.GetComponent<IDamage>().TakeDamage(_damage, PlayerExtension.GetPlayerObject().transform.position);
+            if (!other.CompareTag("Imp"))
             {
                 AttachToBody(other);
             }
-            sound.PlayOneShot(sound.clip, 0.1f);
+            _sound.PlayOneShot(_sound.clip, 0.1f);
             Invoke("DisableObject", 13f);
-            trail.Stop();
+            _trail.Stop();
         }
 
         if (other.gameObject.layer == 14)
         {
             TurnOffBody();
-            sound.PlayOneShot(sound.clip, 0.1f);
+            _sound.PlayOneShot(_sound.clip, 0.1f);
             Invoke("DisableObject", 13f);
-            trail.Stop();
+            _trail.Stop();
         }
     }
 
@@ -75,7 +75,7 @@ public class CrossbowBolt : MonoBehaviour, IPassFloat
     public void DisableObject()
     {
         gameObject.layer = 12;
-        transform.parent = poolerParent.transform;
+        transform.parent = _poolerParent.transform;
         this.gameObject.SetActive(false);
     }
 }

@@ -1,49 +1,45 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 public class OgreCombat : StateMachineBehaviour
 {
-    public Transform target;
-    public bool canAttack = true;
-    private float meleeRange;
+    [SerializeField] private Transform _target;
+    private bool _canAttack = true;
+    [SerializeField] private float _meleeRange;
 
-    private int lastAttack = 0;
-    private int randomAttack = 0;
+    private int _lastAttack = 0;
+    private int _randomAttack = 0;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
-        target = animator.GetBehaviour<AIIdle>().GetTarget();
+        _meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
+        _target = animator.GetBehaviour<AIIdle>().GetTarget();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animator.GetComponent<LivingCreature>().isAlive)
         {
-            if (meleeRange >=  TransformExtension.DistanceBetween(animator.transform.position,target.transform.position))
+            if (_meleeRange >=  TransformExtension.DistanceBetween(animator.transform.position, _target.transform.position))
             {
                 RotateTowards(animator);
-                if (canAttack == true)
+                if (_canAttack == true)
                 {
-                    while (lastAttack == randomAttack)
+                    while (_lastAttack == _randomAttack)
                     {
-                        randomAttack = UnityEngine.Random.Range(1, 4);
-                        Debug.Log(randomAttack);
+                        _randomAttack = UnityEngine.Random.Range(1, 4);
+                        Debug.Log(_randomAttack);
                     }
-                    lastAttack = randomAttack;
-                    canAttack = false;
-                    if (randomAttack == 1)
+                    _lastAttack = _randomAttack;
+                    _canAttack = false;
+                    if (_randomAttack == 1)
                     {
                         animator.SetTrigger("SwingAttack");
                     }
-                    if (randomAttack == 2)
+                    if (_randomAttack == 2)
                     {
                         animator.SetTrigger("Punch1");
                     }
-                    if (randomAttack == 3)
+                    if (_randomAttack == 3)
                     {
                         animator.SetTrigger("Punch2");
                     }
@@ -55,7 +51,7 @@ public class OgreCombat : StateMachineBehaviour
                 }
                 else
                 {
-                    canAttack = true;
+                    _canAttack = true;
                 }
             }
             else
@@ -78,7 +74,7 @@ public class OgreCombat : StateMachineBehaviour
 
     private void RotateTowards(Animator animator)
     {
-        Quaternion rotation = Quaternion.LookRotation(target.transform.position - animator.transform.position);
+        Quaternion rotation = Quaternion.LookRotation(_target.transform.position - animator.transform.position);
         rotation.x = 0;
         rotation.z = 0;
         animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, rotation, 10f * Time.deltaTime);
@@ -90,16 +86,4 @@ public class OgreCombat : StateMachineBehaviour
         animator.ResetTrigger("Punch2");
         animator.ResetTrigger("SwingAttack");
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

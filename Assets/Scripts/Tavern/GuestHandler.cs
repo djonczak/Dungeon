@@ -24,7 +24,7 @@ public class GuestHandler : MonoBehaviour
         //{
         //    waitingQuePositionList.Add(firstPosition.transform.position + new Vector3(0, 0, 1) * positionSize * i);
         //}
-        waitingQueue.Queue();
+       // waitingQueue.Queue();
     }
 
     public void OpenTavern()
@@ -41,7 +41,7 @@ public class GuestHandler : MonoBehaviour
         waitingQueue.CloseInn();
     }
 
-    private void AddGuest()
+    public void AddGuest()
     {
         if (citizenList.Count != 0 && isOpened == true) 
         {

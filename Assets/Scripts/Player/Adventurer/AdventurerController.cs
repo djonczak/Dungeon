@@ -1,48 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AdventurerController : MonoBehaviour
 {
-    private AdventurerCombat adventurerCombat;
-    private AdventurerMovement adventurerMovement;
-    private PlayerInteract interact;
-
-    private InputController controls;
+    private InputController _controls;
 
     private void Awake()
     {
-        adventurerCombat = GetComponent<AdventurerCombat>();
-        adventurerMovement = GetComponent<AdventurerMovement>();
-        interact = GetComponent<PlayerInteract>();
+        _controls = new InputController();
 
-        controls = new InputController();
+        var adventurerInteract = GetComponent<PlayerInteract>();
+        var adventurerCombat = GetComponent<AdventurerCombat>();
 
         //Movement
-        controls.Adventurer.Movement.performed += input => adventurerMovement.movePosition = input.ReadValue<Vector2>();
-        controls.Adventurer.Movement.canceled += input => adventurerMovement.movePosition = Vector2.zero;
+        _controls.Adventurer.Movement.performed += input => GetComponent<IPlayer>().SetMovePosition(input.ReadValue<Vector2>());
+        _controls.Adventurer.Movement.canceled += input => GetComponent<IPlayer>().SetMovePosition(Vector2.zero);
 
         //Rotate
-        controls.Adventurer.Rotate.performed += input => adventurerMovement.rotationPosition = input.ReadValue<Vector2>();
-        controls.Adventurer.Rotate.canceled += input => adventurerMovement.rotationPosition = Vector2.zero;
+        _controls.Adventurer.Rotate.performed += input => GetComponent<IPlayer>().SetRotationPosition(input.ReadValue<Vector2>());
+        _controls.Adventurer.Rotate.canceled += input => GetComponent<IPlayer>().SetRotationPosition(Vector2.zero);
 
         //Combat
-        controls.Adventurer.Attack.performed += input => adventurerCombat.Attack();
-        controls.Adventurer.SwitchWeapon.performed += input => adventurerCombat.SwitchWeapon();
+        _controls.Adventurer.Attack.performed += input => adventurerCombat.Attack();
+        _controls.Adventurer.SwitchWeapon.performed += input => adventurerCombat.SwitchWeapon();
 
         //Interact
-        controls.Adventurer.InteractablePress.performed += input => interact.InteractPress();
-        controls.Adventurer.InteractableHold.started += input => interact.holdButton = input.ReadValue<float>();
-        controls.Adventurer.InteractableHold.canceled += input => interact.holdButton = 0f;
+        _controls.Adventurer.InteractablePress.performed += input => adventurerInteract.InteractPress();
+        _controls.Adventurer.InteractableHold.started += input => adventurerInteract.holdButton = input.ReadValue<float>();
+        _controls.Adventurer.InteractableHold.canceled += input => adventurerInteract.holdButton = 0f;
     }
 
     private void OnEnable()
     {
-        controls.Adventurer.Enable();
+        _controls.Adventurer.Enable();
     }
 
     private void OnDisable()
     {
-        controls.Adventurer.Disable();
+        _controls.Adventurer.Disable();
     }
 }

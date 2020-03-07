@@ -1,18 +1,17 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ImpEnemy : LivingCreature, IDamage
 {
-    [SerializeField] private float timeToExplode = 8f;
+    [SerializeField] private float _timeToExplode = 8f;
 
-    private Animator anim;
-    private bool isTicking = false;
+    private Animator _anim;
+    private bool _isTicking = false;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -23,13 +22,13 @@ public class ImpEnemy : LivingCreature, IDamage
 
     private void Update()
     {
-        if (anim.GetBool("IsFollow") == true)
+        if (_anim.GetBool("IsFollow") == true)
         {
-            if (isTicking == false)
+            if (_isTicking == false)
             {
-                StartCoroutine("ExplosionTimer", timeToExplode);
+                StartCoroutine("ExplosionTimer", _timeToExplode);
                 GetComponent<MaterialEffects>().FlickEffect();
-                isTicking = true;
+                _isTicking = true;
             }
         }
     }
@@ -50,7 +49,7 @@ public class ImpEnemy : LivingCreature, IDamage
     private void Dead()
     {
         isAlive = false;
-        anim.SetTrigger("IsDead");
+        _anim.SetTrigger("IsDead");
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;

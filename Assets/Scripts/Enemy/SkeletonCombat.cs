@@ -1,62 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-
-//public class myscript : monobehaviour
-//{
-//    void onenable()
-//    {
-//        skeletoncombat.attackreset += docoroutine;
-//    }
-
-//    void ondisable()
-//    {
-//        skeletoncombat.attackreset -= docoroutine;
-//    }
-
-//    void docoroutine()
-//    {
-//        startcoroutine("resumeattack", 1.5f);
-//    }
-
-//    ienumerator resumeattack(float time)
-//    {
-//        debug.log("icyk");
-//        yield return new waitforseconds(time);
-//        getcomponent<animator>().getbehaviour<skeletoncombat>().canattack = true;
-//    }
-//}
+﻿using UnityEngine;
 
 public class SkeletonCombat : StateMachineBehaviour
 {
-  //  public delegate void ResetAttack();
-  //  public static event ResetAttack AttackReset;
-
-    private Transform target;
-    private bool canAttack = true;
-    private float meleeRange;
+    private Transform _target;
+    private bool _canAttack = true;
+    private float _meleeRange;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
-        target = animator.GetBehaviour<AIIdle>().GetTarget();
+        _meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
+        _target = animator.GetBehaviour<AIIdle>().GetTarget();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animator.GetComponent<MobHealth>().isAlive == true)
         {
-            if (meleeRange >= TransformExtension.DistanceBetween(animator.transform.position,target.transform.position))
+            if (_meleeRange >= TransformExtension.DistanceBetween(animator.transform.position, _target.transform.position))
             {
-                Quaternion rotation = Quaternion.LookRotation(target.transform.position - animator.transform.position);
-                rotation.x = 0;
-                rotation.z = 0;
-                animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, rotation, 10f * Time.deltaTime);
-                if (canAttack == true)
+                RotateTowards(animator);
+                if (_canAttack == true)
                 {
                     animator.SetTrigger("Melee");
-                    canAttack = false;
+                    _canAttack = false;
                 }
 
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // check if "attack" is playing...
@@ -65,8 +31,7 @@ public class SkeletonCombat : StateMachineBehaviour
                 }
                 else
                 {
-                    canAttack = true;
-                   // AttackReset();
+                    _canAttack = true;
                 }
             }
             else
@@ -76,22 +41,18 @@ public class SkeletonCombat : StateMachineBehaviour
         }
     }
 
+    private void RotateTowards(Animator animator)
+    {
+        Quaternion rotation = Quaternion.LookRotation(_target.transform.position - animator.transform.position);
+        rotation.x = 0;
+        rotation.z = 0;
+        animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, rotation, 10f * Time.deltaTime);
+    }
+
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("IsCombat", false);
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
 
 

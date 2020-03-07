@@ -2,18 +2,18 @@
 
 public class MobAttackCollider : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] private float _damage;
 
     private void Start()
     {
-        damage = GetComponentInParent<LivingCreature>().attackDamage;
+        _damage = GetComponentInParent<LivingCreature>().attackDamage;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            other.GetComponent<IDamage>().TakeDamage(damage, transform.position);
+            other.GetComponent<IDamage>().TakeDamage(_damage, transform.position);
         }
     }
 }

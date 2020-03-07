@@ -5,8 +5,8 @@ using UnityEngine;
 public class TavernHandler : MonoBehaviour
 {
     public List<Seat> placesToSit;
-
-    public WaitingQueue waitingQueue;
+    
+    //private WaitingQueue waitingQueue;
 
     public float guestAmount;
     public float goldAmount;
@@ -15,30 +15,30 @@ public class TavernHandler : MonoBehaviour
 
     private void Start()
     {
-        waitingQueue.OnGuestArrive += WaitingQueue_OnGuestArrive;
-        waitingQueue.CloseTavern += WaitingQueue_CloseTavern;
+       // waitingQueue.OnGuestArrive += WaitingQueue_OnGuestArrive;
+       // waitingQueue.CloseTavern += WaitingQueue_CloseTavern;
     }
 
-    public void TryToSendGuest()
-    {
-        Seat emptySeat = GetEmptySeat();
-        if(emptySeat != null)
-        {
-            Guest guest = waitingQueue.GetFirstInQueue();
-            if(guest != null)
-            {
-                guestAmount++;
-                emptySeat.SeatGuest(guest);
-                guest.MoveTo(emptySeat.seatPosition);
-                guest.tavern = this;
-                waitingQueue.guestList.Remove(guest);
-            }
-        }
-    }
+    //public void TryToSendGuest()
+    //{
+    //    Seat emptySeat = GetEmptySeat();
+    //    if(emptySeat != null)
+    //    {
+    //        Guest guest = waitingQueue.GetFirstInQueue();
+    //        if(guest != null)
+    //        {
+    //            guestAmount++;
+    //            emptySeat.SeatGuest(guest);
+    //            guest.MoveTo(emptySeat.seatPosition);
+    //            guest.SetTavern(this);
+    //          //  waitingQueue.guestList.Remove(guest);
+    //        }
+    //    }
+    //}
 
     private void WaitingQueue_OnGuestArrive(object sender, System.EventArgs e)
     {
-        TryToSendGuest();
+      //  TryToSendGuest();
         Debug.Log("Jest wolne miejsce");
     }
 
@@ -52,7 +52,7 @@ public class TavernHandler : MonoBehaviour
 
     }
 
-    public Seat GetEmptySeat()
+    private Seat GetEmptySeat()
     {
         foreach(Seat seat in placesToSit)
         {
@@ -75,7 +75,7 @@ public class TavernHandler : MonoBehaviour
 
     public void OnDestroy()
     {
-        waitingQueue.OnGuestArrive -= WaitingQueue_OnGuestArrive;
-        waitingQueue.CloseTavern -= WaitingQueue_CloseTavern;
+      // waitingQueue.OnGuestArrive -= WaitingQueue_OnGuestArrive;
+      //  waitingQueue.CloseTavern -= WaitingQueue_CloseTavern;
     }
 }

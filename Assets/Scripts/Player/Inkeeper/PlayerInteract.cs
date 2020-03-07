@@ -2,9 +2,9 @@
 
 public class PlayerInteract : MonoBehaviour
 {
-    [SerializeField] private InteractableItem itemInteract;
+    [SerializeField] private InteractableItem _itemInteract;
     public float holdButton;
-    private float holdTime = 0f;
+    private float _holdTime = 0f;
 
     private void Update()
     {
@@ -15,53 +15,53 @@ public class PlayerInteract : MonoBehaviour
     {
         if (holdButton > 0.25f)
         {
-            holdTime += Time.deltaTime;
-            if (holdTime >= 2f)
+            _holdTime += Time.deltaTime;
+            if (_holdTime >= 2f)
             { 
                 InteractHold();
-                holdTime = 0f;
+                _holdTime = 0f;
             }
         }
         else
         {
-            holdTime = 0f;
+            _holdTime = 0f;
         }
     }
 
     public void InteractPress()
     {
-        if (itemInteract != null)
+        if (_itemInteract != null)
         {
-            itemInteract.OnInteractPress();
+            _itemInteract.OnInteractPress();
         }
     }
 
     private void InteractHold()
     {
-        if (itemInteract != null)
+        if (_itemInteract != null)
         {
-            itemInteract.OnInteractHold();
+            _itemInteract.OnInteractHold();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Interactable")
+        if (other.CompareTag("Interactable"))
         {
             var interact = other.GetComponent<InteractableItem>();
             if (interact != null)
             {
                 interact.ShowInfo();
-                itemInteract = interact;
+                _itemInteract = interact;
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Interactable")
+        if (other.CompareTag("Interactable"))
         {
-            itemInteract = null;
+            _itemInteract = null;
             HUDEvent.CloseMessage();
         }
     }

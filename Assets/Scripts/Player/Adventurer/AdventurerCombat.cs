@@ -5,34 +5,34 @@ public class AdventurerCombat : MonoBehaviour
     public Transform meleeWeaponSlot;
     public Transform rangeWeaponSlot;
 
-    private GameObject meleeWeapon;
+    private GameObject _meleeWeapon;
     //private GameObject rangeWeapon;
 
-    private int comboMeter = 0;
-    private bool nexAttack = true;
+    private int _comboMeter = 0;
+    private bool _nexAttack = true;
 
-    private AdventurerState state;
+    private AdventurerState _state;
 
-    [SerializeField] private ParticleSystem weaponTrail;
+    [SerializeField] private ParticleSystem _weaponTrail;
 
     private void Awake()
     {
-        state = GetComponent<AdventurerState>();
+        _state = GetComponent<AdventurerState>();
     }
 
     private void Start()
     {
-        state.isMelee = true;
+        _state.SetWeaponState(true);
 
-        SetWeapons(state.playerData.meleeWeapon, state.playerData.rangeWeapon);
+        SetWeapons(_state.playerData.meleeWeapon, _state.playerData.rangeWeapon);
     }
 
     private void SetWeapons(MeleeWeaponData meleeData,RangeWeaponData rangeData)
     {
-        meleeWeapon = Instantiate(meleeData.weaponModel);
-        meleeWeapon.transform.SetParent(meleeWeaponSlot, false);
-        meleeWeapon.GetComponent<ActivateMelee>().weaponData = meleeData;
-        weaponTrail = meleeWeapon.transform.GetChild(1).GetComponent<ParticleSystem>();
+        _meleeWeapon = Instantiate(meleeData.weaponModel);
+        _meleeWeapon.transform.SetParent(meleeWeaponSlot, false);
+        _meleeWeapon.GetComponent<ActivateMelee>().SetWeapon(meleeData);
+        _weaponTrail = _meleeWeapon.transform.GetChild(1).GetComponent<ParticleSystem>();
         GetComponent<Animator>().SetFloat("MeleeAttackSpeed", meleeData.weaponAttackSpeed);
         var rangeWeapon = Instantiate(rangeData.weaponModel);
         rangeWeapon.transform.SetParent(rangeWeaponSlot, false);
@@ -42,11 +42,11 @@ public class AdventurerCombat : MonoBehaviour
 
     public void SwitchWeapon()
     {
-        state.isMelee = !state.isMelee;
-        if (nexAttack == true)
+        _state.SetWeaponState(!_state.ReturnWeponState());
+        if (_nexAttack == true)
         {
             GetComponent<IPlaySound>().ChangeSound();
-            if (state.isMelee)
+            if (_state.ReturnWeponState())
             {
                 meleeWeaponSlot.gameObject.SetActive(true);
                 rangeWeaponSlot.gameObject.SetActive(false);
@@ -61,9 +61,9 @@ public class AdventurerCombat : MonoBehaviour
 
     public void Attack()
     {
-        if (state.isAiming)
+        if (_state.ReturnAimingState())
         {
-            if (state.isMelee == true)
+            if (_state.ReturnWeponState() == true)
             {
                 MeleeAttack();
             }
@@ -76,13 +76,13 @@ public class AdventurerCombat : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (nexAttack == true)
+        if (_nexAttack == true)
         { 
-            weaponTrail.Play();
-            meleeWeapon.GetComponent<BoxCollider>().enabled = true;
-            nexAttack = false;
-            comboMeter++;
-            GetComponent<AdventurerAnimation>().MeleeAttackAnimation(comboMeter);
+            _weaponTrail.Play();
+            _meleeWeapon.GetComponent<BoxCollider>().enabled = true;
+            _nexAttack = false;
+            _comboMeter++;
+            GetComponent<AdventurerAnimation>().MeleeAttackAnimation(_comboMeter);
         }
     }
 
@@ -94,12 +94,12 @@ public class AdventurerCombat : MonoBehaviour
 
     public void EndAttack()
     {
-        meleeWeapon.GetComponent<BoxCollider>().enabled = false;
-        if (comboMeter == 2)
+        _meleeWeapon.GetComponent<BoxCollider>().enabled = false;
+        if (_comboMeter == 2)
         {
-            comboMeter = 0;
+            _comboMeter = 0;
         }
-        nexAttack = true;
+        _nexAttack = true;
     }
 
     //public Image furyBar;

@@ -7,11 +7,11 @@ public class ShowWorldMap : MonoBehaviour
     public GameObject mapCanvas;
     public GameObject[] cityObjects;
 
-    [SerializeField] private List<GameObject> mapObjects = new List<GameObject>();
-    [SerializeField] private float timeToShow = 1.5f;
+    [SerializeField] private List<GameObject> _mapObjects = new List<GameObject>();
+    [SerializeField] private float _timeToShow = 1.5f;
 
-    [SerializeField] private bool cityActive = true;
-    [SerializeField] private bool mapActive = false;
+    [SerializeField] private bool _cityActive = true;
+    [SerializeField] private bool _mapActive = false;
 
     private void OnEnable()
     {
@@ -24,7 +24,7 @@ public class ShowWorldMap : MonoBehaviour
         mapCanvas.SetActive(false);
         foreach(Transform child in transform)
         {
-            mapObjects.Add(child.gameObject);
+            _mapObjects.Add(child.gameObject);
         }
     }
 
@@ -32,16 +32,16 @@ public class ShowWorldMap : MonoBehaviour
 
     public void ActivateMap()
     {
-        StartCoroutine("ActivaterTimer", timeToShow);
+        StartCoroutine("ActivaterTimer", _timeToShow);
     }
 
     private IEnumerator ActivaterTimer(float time)
     {
         BlackScreenEvent.ShowBlackScreen();
         CheckMapElements();
-        mapActive = true;
+        _mapActive = true;
         CheckCityElements();
-        cityActive = false;
+        _cityActive = false;
         mapCanvas.SetActive(true);
         yield return new WaitForSeconds(time);
     }
@@ -50,13 +50,13 @@ public class ShowWorldMap : MonoBehaviour
 
     public void DeactivateMap()
     {
-        StartCoroutine("DeactivateTimer", timeToShow);
+        StartCoroutine("DeactivateTimer", _timeToShow);
     }
 
     private IEnumerator DeactivateTimer(float time)
     {
-        mapActive = false;
-        cityActive = true;
+        _mapActive = false;
+        _cityActive = true;
         BlackScreenEvent.ShowBlackScreen();
         CheckMapElements();
         yield return new WaitForSeconds(time);
@@ -68,16 +68,16 @@ public class ShowWorldMap : MonoBehaviour
 
     private void CheckMapElements()
     {
-        if (mapActive == false)
+        if (_mapActive == false)
         {
-            foreach (GameObject subject in mapObjects)
+            foreach (GameObject subject in _mapObjects)
             {
                 subject.SetActive(true);
             }
         }
         else
         {
-            foreach (GameObject subject in mapObjects)
+            foreach (GameObject subject in _mapObjects)
             {
                 subject.SetActive(false);
             }
@@ -88,7 +88,7 @@ public class ShowWorldMap : MonoBehaviour
 
     private void CheckCityElements()
     {
-        if (cityActive == false)
+        if (_cityActive == false)
         {
             foreach (GameObject subject in cityObjects)
             {

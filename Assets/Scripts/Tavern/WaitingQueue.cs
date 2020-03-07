@@ -8,17 +8,17 @@ public class WaitingQueue : MonoBehaviour
     public event EventHandler CloseTavern;
 
     //private List<Vector3> positionList;
-    public List<Guest> guestList;
+    public List<Guest> guestList = new List<Guest>();
     //private Vector3 entrancePoint;
     //private bool canDraw;
 
-    public void Queue()
-    {
-        //this.positionList = positionList;
-        //entrancePoint = positionList[positionList.Count - 1] + new Vector3(0,0,-20f);
-        //canDraw = true;
-        guestList = new List<Guest>();
-    }
+    //public void Queue()
+    //{
+    //    //this.positionList = positionList;
+    //    //entrancePoint = positionList[positionList.Count - 1] + new Vector3(0,0,-20f);
+    //    //canDraw = true;
+    //    guestList = new List<Guest>();
+    //}
 
     //public bool CanAddGuest()
     //{
@@ -50,6 +50,7 @@ public class WaitingQueue : MonoBehaviour
     {
         CloseTavern?.Invoke(this, EventArgs.Empty);
     }
+
 
     //public void OnDrawGizmos()
     //{

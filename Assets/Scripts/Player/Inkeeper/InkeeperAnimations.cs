@@ -1,51 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InkeeperAnimations : MonoBehaviour
 {
-    private Animator anim;
-    private InkeeperMovement inkeeperMove;
-    private InkeeperInventory inventory;
+    private Animator _anim;
+    private InkeeperInventory _inventory;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        inventory = GetComponent<InkeeperInventory>();
-        inkeeperMove = GetComponent<InkeeperMovement>();
+        _anim = GetComponent<Animator>();
+        _inventory = GetComponent<InkeeperInventory>();
     }
 
     private void Update()
     {
-        if (inkeeperMove.movePosition.magnitude > 0.25f)
+        if (GetComponent<IPlayer>().ReturnMovePosition().magnitude > 0.25f)
         {
-            if (inventory.CheckTrey() == true || inventory.mugs.Count != 0)
+            if (_inventory.CheckTrey() == true || _inventory.ReturnMugCount() != 0)
             {
-                anim.SetBool("IsWalkingTrey", true);
-                anim.SetBool("IsWalking", false);
+                _anim.SetBool("IsWalkingTrey", true);
+                _anim.SetBool("IsWalking", false);
             }
             else
             {
-                anim.SetBool("IsWalking", true);
-                anim.SetBool("IsWalkingTrey", false);
+               _anim.SetBool("IsWalking", true);
+                _anim.SetBool("IsWalkingTrey", false);
             }
-            anim.SetBool("IsIdle", false);
-            anim.SetBool("IsIdleTrey", false);
+            _anim.SetBool("IsIdle", false);
+            _anim.SetBool("IsIdleTrey", false);
         }
         else
         {
-            if (inventory.CheckTrey() == true || inventory.mugs.Count != 0)
+            if (_inventory.CheckTrey() == true || _inventory.ReturnMugCount() != 0)
             {
-                anim.SetBool("IsIdleTrey", true);
-                anim.SetBool("IsIdle", false);
+                _anim.SetBool("IsIdleTrey", true);
+                _anim.SetBool("IsIdle", false);
             }
             else
             {
-                anim.SetBool("IsIdle", true);
-                anim.SetBool("IsIdleTrey", false);
+                _anim.SetBool("IsIdle", true);
+                _anim.SetBool("IsIdleTrey", false);
             }
-            anim.SetBool("IsWalking", false);
-            anim.SetBool("IsWalkingTrey", false);
+            _anim.SetBool("IsWalking", false);
+            _anim.SetBool("IsWalkingTrey", false);
         }
     }
 }

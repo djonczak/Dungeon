@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BuyItem : InteractableItem
+﻿public class BuyItem : InteractableItem
 {
     public float goldCost;
     public float amount;

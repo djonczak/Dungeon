@@ -4,57 +4,56 @@ using UnityEngine.UI;
 
 public class AdventurerHealth : MonoBehaviour, IDamage
 {
-    public float maxHP;
-    private float currentHP;
-    public bool isAlive = true;
-    private Animator anim;
+    [SerializeField] private float _maxHP = 0f;
+    [SerializeField] private float _currentHP = 0f;
+    private Animator _anim;
+
     public Image HPBar;
 
-    private bool isDamaged = false;
+    private bool _isDamaged = false;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Start()
     {
-        currentHP = maxHP;
+        _currentHP = _maxHP;
     }
 
-    public void TakeDamage(float amount, Vector3 position)
+    public void TakeDamage(float amount, Vector3 enemyPosition)
     {
-        if (isDamaged == false)
+        if (_isDamaged == false)
         {
-            currentHP -= amount;
-            HPBar.fillAmount = currentHP / maxHP;
-            StartCoroutine("DamageCooldown",1f);
+            _currentHP -= amount;
+            HPBar.fillAmount = _currentHP / _maxHP;
+            StartCoroutine(DamageCooldown(1f));
             GetComponent<IDamageEffect>().DamageEffect();
             AdventurerEvent.PlayerHit();
-            CheckIfAlive();
+            if (CheckIfAlive())
+            {
+                StopCoroutine("DamageEffect");
+                Die();
+            }
         }
     }
 
-    private void CheckIfAlive()
+    private bool CheckIfAlive()
     {
-        if (currentHP <= 0)
-        {
-            StopCoroutine("DamageEffect");
-            Die();
-        }
+        return _currentHP <= 0;
     }
 
     private void Die()
     {
-        isAlive = false;
-        anim.SetTrigger("Dead");
+        _anim.SetTrigger("Dead");
         GetComponent<AdventurerController>().enabled = false;
     }
 
     private IEnumerator DamageCooldown(float time)
     {
-        isDamaged = true;
+        _isDamaged = true;
         yield return new WaitForSeconds(time);
-        isDamaged = false;
+        _isDamaged = false;
     }
 }

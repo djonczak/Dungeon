@@ -2,8 +2,8 @@
 
 public class AIIdle : StateMachineBehaviour
 {
-    [SerializeField] private float visionRange = 5f;
-    [SerializeField] private Transform target;
+    [SerializeField] private float _visionRange = 5f;
+    [SerializeField] private Transform _target;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -12,21 +12,17 @@ public class AIIdle : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (target == null)
+        if (_target == null)
         {
-            var sphereVision = Physics.OverlapSphere(animator.gameObject.transform.position, visionRange, LayerMask.GetMask("Player"));
+            var sphereVision = Physics.OverlapSphere(animator.gameObject.transform.position, _visionRange, LayerMask.GetMask("Player"));
             if (sphereVision.Length > 0)
             {
-                target = sphereVision[0].transform;
+                _target = sphereVision[0].transform;
             }
         }
         else
         {
             animator.SetBool("IsFollow", true);
-            //foreach(AIFollow follow in animator.GetBehaviours<AIFollow>())
-            //{
-            //    follow.PassTarget(target);
-            //}
         }
     }
 
@@ -37,18 +33,7 @@ public class AIIdle : StateMachineBehaviour
 
     public Transform GetTarget()
     {
-        return target;
+        return _target;
     }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

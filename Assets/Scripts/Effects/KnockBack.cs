@@ -2,23 +2,23 @@
 
 public class KnockBack : MonoBehaviour
 {
-    [SerializeField] private float knockBackStrenght = 22f;
-    [SerializeField] private bool canBeKnockBack = true;
+    [SerializeField] private float _knockBackStrenght = 22f;
+    [SerializeField] private bool _canBeKnockBack = true;
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     public void KnockBackEffect(Vector3 position)
     {
-        if (canBeKnockBack)
+        if (_canBeKnockBack)
         {
             var direction = (transform.position - position).normalized;
 
-            rb.AddForce(rb.velocity + direction * knockBackStrenght, ForceMode.Impulse);
+            _rb.AddForce(_rb.velocity + direction * _knockBackStrenght, ForceMode.Impulse);
         }
     }
 }
