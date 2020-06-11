@@ -2,21 +2,27 @@
 
 public static class TransformExtension
 {
-   public static Transform GetChildObject(Transform parentTransform, string childName)
+   public static GameObject GetChildObject(GameObject parentTransform, string childName)
    {
-        foreach (Transform child in parentTransform)
+        if (null == parentTransform)
+            return null;
+
+        foreach (Transform child in parentTransform.transform)
         {
+            if (null == child)
+                continue;
+
             if (child.name == childName)
             {
-                return child;
+                return child.gameObject;
             }
             else
             {
-                return null;
+                GetChildObject(child.gameObject, childName);
             }
         }
         return null;
-   }
+    }
 
     public static float DistanceBetween(Vector3 object1, Vector3 object2)
     {

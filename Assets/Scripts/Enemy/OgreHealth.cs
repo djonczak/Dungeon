@@ -12,9 +12,9 @@ public class OgreHealth : LivingCreature, IDamage
         Half,
     };
 
-    private Animator anim;
+    private Animator _anim;
     public HPState phase;
-    private bool doneRoar;
+    private bool _doneRoar;
 
     public Image HPBar;
     public GameObject HPDisplay;
@@ -24,7 +24,7 @@ public class OgreHealth : LivingCreature, IDamage
 
     private void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        _anim = GetComponentInChildren<Animator>();
 
         currentHP = maxHP;
         HPDisplay.transform.rotation = Camera.main.transform.rotation;
@@ -53,7 +53,7 @@ public class OgreHealth : LivingCreature, IDamage
                 {
                     CheckHPState();
                 }
-                StartCoroutine("Damaged");
+                StartCoroutine(Damaged(3));
             }
         }
     }
@@ -62,14 +62,14 @@ public class OgreHealth : LivingCreature, IDamage
     {
         isAlive = false;
         GetComponent<Collider>().enabled = false;
-        anim.SetTrigger("IsDead");
+        _anim.SetTrigger("IsDead");
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
         HPDisplay.SetActive(false);
         this.enabled = false;
     }
 
-    private IEnumerator Damaged()
+    private IEnumerator Damaged(float time)
     {
         isDamaged = true;
         yield return new WaitForSeconds(0.5f);
@@ -78,9 +78,9 @@ public class OgreHealth : LivingCreature, IDamage
 
     public void EndRoar()
     {
-        anim.SetBool("IsRun",true);
+        _anim.SetBool("IsRun",true);
         isInvincible = false;
-        doneRoar = true;
+        _doneRoar = true;
     }
 
     private void CheckHPState()
@@ -93,12 +93,12 @@ public class OgreHealth : LivingCreature, IDamage
         else
         {
             phase = HPState.Half;
-            if(doneRoar == false)
+            if(_doneRoar == false)
             {
                 isInvincible = true;
-                anim.SetTrigger("IsSecondPhase");
-                anim.SetBool("IsFollow", false);
-                anim.SetBool("IsCombat", false);
+                _anim.SetTrigger("IsSecondPhase");
+                _anim.SetBool("IsFollow", false);
+                _anim.SetBool("IsCombat", false);
             }
         }
     }

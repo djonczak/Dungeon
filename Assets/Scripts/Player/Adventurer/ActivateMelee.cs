@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 
-public class ActivateMelee : MonoBehaviour
+namespace Adventurer.Player
 {
-    private MeleeWeaponData _weaponData;
-
-    private void OnTriggerEnter(Collider other)
+    public class ActivateMelee : MonoBehaviour
     {
-        if (other.gameObject.layer == 10)
+        private MeleeWeaponData _weaponData;
+
+        private void OnTriggerEnter(Collider other)
         {
-            GetComponentInParent<IPlaySound>().AttackSound();
-            DoAttack(other);
+            if (other.gameObject.layer == 10)
+            {
+                GetComponentInParent<IPlaySound>().AttackSound();
+                DoAttack(other);
+            }
         }
-    }
 
-    private void DoAttack(Collider target)
-    {
-        target.GetComponent<IDamage>().TakeDamage(_weaponData.weaponDamage, transform.parent.position);
-    }
+        private void DoAttack(Collider target)
+        {
+            target.GetComponent<IDamage>().TakeDamage(_weaponData.weaponDamage, transform.parent.position);
+        }
 
-    public void SetWeapon(MeleeWeaponData data)
-    {
-        _weaponData = data;
+        public void SetWeapon(MeleeWeaponData data)
+        {
+            _weaponData = data;
+        }
     }
 }
 

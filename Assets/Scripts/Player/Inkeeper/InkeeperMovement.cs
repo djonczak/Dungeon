@@ -1,55 +1,53 @@
 ﻿using UnityEngine;
 
-public class InkeeperMovement : MonoBehaviour, IPlayer
+namespace Adventurer.Player
 {
-    [SerializeField] private float _walkSpeed = 5f;
-
-    private Rigidbody _rb;
-    private Vector2 _position;
-    private Vector2 _rotation;
-
-    private void Awake()
+    public class InkeeperMovement : MonoBehaviour, IPlayer
     {
-        _rb = GetComponent<Rigidbody>();
-    }
+        [SerializeField] private float _walkSpeed = 5f;
 
-    private void FixedUpdate()
-    {
-        Movement();
-    }
+        private Rigidbody _rb;
+        private Adventurer _adventurer;
 
-    private void Movement()
-    {
-        if (_position.magnitude > 0.25f)
+        private void Awake()
         {
-            Vector3 movement = new Vector3(_position.x, 0f, _position.y).normalized;
-            var moveVelocity = movement * _walkSpeed;
-            _rb.MovePosition(_rb.position + moveVelocity * Time.fixedDeltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(_position.x, 0f, _position.y)), 0.15f);
+            _rb = GetComponent<Rigidbody>();
+            _adventurer = gameObject.AddComponent<Adventurer>();
         }
-        else
+
+        private void FixedUpdate()
         {
-            _rb.velocity = Vector3.zero;
+            Movement();
         }
-    }
 
-    public Vector2 ReturnMovePosition()
-    {
-        return _position;
-    }
+        private void Movement()
+        {
+            if (_adventurer.MoveVector.magnitude > 0.25f)
+            {
+                Vector3 movement = new Vector3(_adventurer.MoveVector.x, 0f, _adventurer.MoveVector.y).normalized;
+                var moveVelocity = movement * _walkSpeed;
+                _rb.MovePosition(_rb.position + moveVelocity * Time.fixedDeltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(_adventurer.MoveVector.x, 0f, _adventurer.MoveVector.y)), 0.15f);
+            }
+            else
+            {
+                _rb.velocity = Vector3.zero;
+            }
+        }
 
-    public void SetMovePosition(Vector2 input)
-    {
-        _position = input;
-    }
+        public Vector2 ReturnMovePosition()
+        {
+            return _adventurer.MoveVector;
+        }
 
-    public Vector2 ReturnRotationPosition()
-    {
-        return _rotation;
-    }
+        public Vector2 ReturnRotationPosition()
+        {
+            return _adventurer.MoveVector;
+        }
 
-    public void SetRotationPosition(Vector2 input)
-    {
-        _rotation = input;
+        public Adventurer GetAdventurer()
+        {
+            return _adventurer;
+        }
     }
 }

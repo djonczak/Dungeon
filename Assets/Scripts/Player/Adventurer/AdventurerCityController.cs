@@ -1,29 +1,35 @@
 ﻿using UnityEngine;
 
-public class AdventurerCityController : MonoBehaviour
+namespace Adventurer.Player
 {
-    private InputController _controls;
-
-    private void Awake()
+    public class AdventurerCityController : MonoBehaviour
     {
-        var interact = GetComponent<PlayerInteract>();
+        private InputController _controls;
 
-        _controls = new InputController();
-        _controls.Adventurer.Movement.performed += input => GetComponent<IPlayer>().SetMovePosition(input.ReadValue<Vector2>());
-        _controls.Adventurer.Movement.canceled += input => GetComponent<IPlayer>().SetMovePosition(Vector2.zero);
+        private void Awake()
+        {
+            _controls = new InputController();
 
-        _controls.Adventurer.InteractablePress.performed += input => interact.InteractPress();
-        _controls.Adventurer.InteractableHold.started += input => interact.holdButton = input.ReadValue<float>();
-        _controls.Adventurer.InteractableHold.canceled += input => interact.holdButton = 0f;
-    }
+            var interact = GetComponent<PlayerInteract>();
+            var adventurer = GetComponent<AdventurerState>();
 
-    private void OnEnable()
-    {
-        _controls.Adventurer.Enable();
-    }
+            //Movement
+            _controls.Adventurer.Movement.performed += input => adventurer.MoveVector = input.ReadValue<Vector2>();
+            _controls.Adventurer.Movement.canceled += input => adventurer.MoveVector = Vector2.zero;
 
-    private void OnDisable()
-    {
-        _controls.Adventurer.Disable();
+            _controls.Adventurer.InteractablePress.performed += input => interact.InteractPress();
+            _controls.Adventurer.InteractableHold.started += input => interact.holdButton = input.ReadValue<float>();
+            _controls.Adventurer.InteractableHold.canceled += input => interact.holdButton = 0f;
+        }
+
+        private void OnEnable()
+        {
+            _controls.Adventurer.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _controls.Adventurer.Disable();
+        }
     }
 }

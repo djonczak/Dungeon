@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 439744736c54ccd4f970b2ac810f54af, type: 3}
-  m_Name: Player
+  m_Name: NewGame
   m_EditorClassIdentifier: 
   meleeWeapon: {fileID: 11400000, guid: bf2ece3748e150141a66a6e2327bb8f4, type: 2}
   rangeWeapon: {fileID: 11400000, guid: 8f3f3abd30ec98642afae6b7ac74a64d, type: 2}

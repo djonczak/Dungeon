@@ -3,11 +3,12 @@
 public class OgreCombat : StateMachineBehaviour
 {
     [SerializeField] private Transform _target;
-    private bool _canAttack = true;
     [SerializeField] private float _meleeRange;
 
     private int _lastAttack = 0;
     private int _randomAttack = 0;
+
+    private bool _canAttack = true;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

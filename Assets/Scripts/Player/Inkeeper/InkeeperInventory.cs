@@ -14,7 +14,7 @@ public class InkeeperInventory : MonoBehaviour
 
     private void Start()
     {
-        _treyPosition = TransformExtension.GetChildObject(this.transform, "TreyPosition");
+        _treyPosition = TransformExtension.GetChildObject(this.gameObject, "TreyPosition").transform;
     }
     
     public void PickItem(Transform item)

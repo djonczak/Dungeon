@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,11 @@ public class ImpEnemy : LivingCreature, IDamage
 
     private Animator _anim;
     private bool _isTicking = false;
+
+    private const string _follow = "IsFollow";
+    private const string _dead = "IsDead";
+
+    private Coroutine _explosionCourotine;
 
     private void Awake()
     {
@@ -22,11 +28,11 @@ public class ImpEnemy : LivingCreature, IDamage
 
     private void Update()
     {
-        if (_anim.GetBool("IsFollow") == true)
+        if (_anim.GetBool(_follow) == true)
         {
             if (_isTicking == false)
             {
-                StartCoroutine("ExplosionTimer", _timeToExplode);
+                _explosionCourotine = StartCoroutine(ExplosionTimer(_timeToExplode));
                 GetComponent<MaterialEffects>().FlickEffect();
                 _isTicking = true;
             }
@@ -49,11 +55,11 @@ public class ImpEnemy : LivingCreature, IDamage
     private void Dead()
     {
         isAlive = false;
-        _anim.SetTrigger("IsDead");
+        _anim.SetTrigger(_dead);
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
-        StopAllCoroutines();
+        StopCoroutine(_explosionCourotine);
     }
 
     private IEnumerator ExplosionTimer(float time)

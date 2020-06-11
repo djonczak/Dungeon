@@ -25,7 +25,7 @@ public class SkeletonCombat : StateMachineBehaviour
                     _canAttack = false;
                 }
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // check if "attack" is playing...
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) 
                 {
 
                 }
