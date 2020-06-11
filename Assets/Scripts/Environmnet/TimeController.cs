@@ -1,136 +1,138 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeController : Subject
 {
-    public Light sun;
-    public Light[] lightOutSide;
-    [SerializeField] private bool _isInsideBuilding = false;
+    [Header("Light sources")]
+    [SerializeField] private Light _sun;
+    [SerializeField] private Light[] _lightsOutside;
+    [Header("Cycle options")]
     [SerializeField] private float _secondsInFullDay = 120f;
-    [Range(0, 1)] [SerializeField] private float _currentTimeOfDay = 0f;
     [SerializeField] private float _timeMultiplier = 0.2f;
+    [Range(0, 1)] [SerializeField] private float _currentTimeOfDay = 0f;
+
+    private bool _isSunLight = true;
     private float _sunInitalIntensify;
+    private Coroutine _timeCoroutine;
 
     private void OnEnable()
     {
-        DayNightCycleEvent.OnSwitchLigt += SwitchLights;
+        DayNightCycleEvent.OnSwitchLight += SwitchLights;
     }
 
     private void Start()
     {
         _currentTimeOfDay = PlayerPrefs.GetFloat("DayTime");
-
-        if (_isInsideBuilding == false)
+        _sunInitalIntensify = _sun.intensity;
+        if (_currentTimeOfDay < 0.23f || _currentTimeOfDay >= 0.75f)
         {
-            _sunInitalIntensify = sun.intensity;
+            _timeCoroutine = StartCoroutine(NightCycle());
         }
-        else
+        else if (_currentTimeOfDay >= 0.24f && _currentTimeOfDay <= 0.73f)
         {
-            _sunInitalIntensify = lightOutSide[0].intensity;
+            _timeCoroutine = StartCoroutine(DayCycle());
+        }
+        else if (_currentTimeOfDay >= 0.73f && _currentTimeOfDay <= 0.75f)
+        {
+            _timeCoroutine = StartCoroutine(EveningCycle());
         }
     }
 
-    private void Update()
+    private IEnumerator DayCycle()
     {
-        if (_isInsideBuilding == false)
+        Notify(this, NotificationType.Day);
+        while (_currentTimeOfDay > 0.24f && _currentTimeOfDay <= 0.73f)
         {
-            if (sun != null)
-            {
-                UpdateSun();
-            }
+            _currentTimeOfDay += (Time.deltaTime / _secondsInFullDay) * _timeMultiplier;
+            float intesityMultiplier = Mathf.Clamp01(1 - (_currentTimeOfDay - 0.73f) * (1 / 0.02f));
+
+            Light(intesityMultiplier);
+
+            yield return null;
+        }
+        StartCoroutine(EveningCycle());
+    }
+
+    private IEnumerator EveningCycle()
+    {
+        Notify(this, NotificationType.Night);
+        while (_currentTimeOfDay >= 0.73f && _currentTimeOfDay <= 0.75f)
+        {
+            _currentTimeOfDay += (Time.deltaTime / _secondsInFullDay) * _timeMultiplier;
+            float intesityMultiplier = Mathf.Clamp01((_currentTimeOfDay - 0.23f) * (1 / 0.02f));
+
+            Light(intesityMultiplier);
+
+            yield return null;
+        }
+        _timeCoroutine = StartCoroutine(NightCycle());
+    }
+
+    private IEnumerator NightCycle()
+    {
+        float intesityMultiplier = 0;
+        while (_currentTimeOfDay < 0.24f || _currentTimeOfDay >= 0.75f)
+        {
+            _currentTimeOfDay += (Time.deltaTime / _secondsInFullDay) * _timeMultiplier;
+            intesityMultiplier = Mathf.Clamp01((_currentTimeOfDay - 0.23f) * (1 / 0.02f));
+
+            Light(intesityMultiplier);
+
+            ResetTime();
+            yield return null;
+        }
+        _timeCoroutine = StartCoroutine(DayCycle());
+    }
+
+    private void Light(float intesityMultiplier)
+    {
+        if (_isSunLight)
+        {
+            _sun.transform.localRotation = Quaternion.Euler((_currentTimeOfDay * 360f) - 90, 170, 0);
+            _sun.intensity = _sunInitalIntensify * intesityMultiplier;
         }
         else
         {
-            UpdateLightOutside();
+            foreach (Light light in _lightsOutside)
+            {
+                light.transform.localRotation = Quaternion.Euler((_currentTimeOfDay * 360f) - 90, 170, 0);
+                light.intensity = _sunInitalIntensify * intesityMultiplier;
+            }
         }
+    }
 
-        _currentTimeOfDay += (Time.deltaTime / _secondsInFullDay) * _timeMultiplier;
+    private void ResetTime()
+    {
         if (_currentTimeOfDay >= 1)
         {
             _currentTimeOfDay = 0;
         }
     }
 
-    private void UpdateSun()
+    private void SwitchLights()
     {
-        sun.transform.localRotation = Quaternion.Euler((_currentTimeOfDay * 360f) - 90, 170, 0);
-
-        float intesityMultiplier = 1;
-
-        if (_currentTimeOfDay < 0.23f || _currentTimeOfDay >= 0.75f)
+        _isSunLight = !_isSunLight;
+        if (_isSunLight)
         {
-            intesityMultiplier = 0f;
-            if (observers.Count != 0)
+            _sun.enabled = true;
+            foreach (Light light in _lightsOutside)
             {
-                Notify(this, NotificationType.Night);
-            }
-        }
-        else if(_currentTimeOfDay <= 0.24f)
-        {
-            intesityMultiplier = Mathf.Clamp01((_currentTimeOfDay - 0.23f) * (1 / 0.02f));
-            if (observers.Count != 0)
-            {
-                Notify(this, NotificationType.Day);
-            }
-        }
-        else if(_currentTimeOfDay >= 0.73f)
-        {
-            intesityMultiplier = Mathf.Clamp01(1 - (_currentTimeOfDay - 0.73f) * (1 / 0.02f));
-        }
-
-        sun.intensity = _sunInitalIntensify * intesityMultiplier;
-    }
-
-    private void UpdateLightOutside()
-    {
-        float intesityMultiplier = 1;
-
-        if (_currentTimeOfDay < 0.23f || _currentTimeOfDay >= 0.75f)
-        {
-            intesityMultiplier = 0.5f;
-        }
-        else if (_currentTimeOfDay <= 0.25f)
-        {
-            intesityMultiplier = Mathf.Clamp01((_currentTimeOfDay - 0.23f) * (1 / 0.02f));
-        }
-        else if (_currentTimeOfDay >= 0.73f)
-        {
-            intesityMultiplier = Mathf.Clamp01(1 - (_currentTimeOfDay - 0.73f) * (1 / 0.02f));
-        }
-
-        foreach (Light source in lightOutSide)
-        {
-            source.intensity = _sunInitalIntensify * intesityMultiplier;
-            source.transform.localRotation = Quaternion.Euler((_currentTimeOfDay * 360f) - 90, 170, 0);
-        }
-    }
-
-    public void SwitchLights()
-    {
-        _isInsideBuilding = !_isInsideBuilding;
-
-        if (_isInsideBuilding == true)
-        {
-            sun.enabled = false;
-            foreach (Light source in lightOutSide)
-            {
-                source.enabled = true;
+                light.enabled = false;
             }
         }
         else
         {
-            sun.enabled = true;
-            foreach (Light source in lightOutSide)
+            _sun.enabled = false;
+            foreach (Light light in _lightsOutside)
             {
-                source.enabled = false;
+                light.enabled = true;
             }
         }
     }
 
     private void OnDestroy()
     {
-        DayNightCycleEvent.OnSwitchLigt -= SwitchLights;
+        DayNightCycleEvent.OnSwitchLight -= SwitchLights;
     }
 
     private void OnDisable()

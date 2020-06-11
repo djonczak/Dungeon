@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class DayNightCycleEvent : MonoBehaviour
-{
-    public delegate void SwitchLightEventHandler();
-    public static event SwitchLightEventHandler OnSwitchLigt;
-
-    public static void SwitchLight()
+    public class DayNightCycleEvent : MonoBehaviour
     {
-        OnSwitchLigt?.Invoke();
+        public delegate void SwitchLightEventHandler();
+        public static event SwitchLightEventHandler OnSwitchLight;
+
+        public static void SwitchLight()
+        {
+            OnSwitchLight?.Invoke();
+        }
     }
-}
