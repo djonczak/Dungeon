@@ -2,35 +2,52 @@
 
 public class EnterBuilding : InteractableItem
 {
-    [SerializeField] private bool inBuilding = false;
-    public Transform outsidePoint;
-    public Transform inSidesPoint;
+    [SerializeField] private bool _inBuilding = false;
+    [SerializeField] private Transform _outSidePoint;
+    [SerializeField] private Transform _inSidesPoint;
 
-    public GameObject city;
-    public GameObject dungeon;
+    [SerializeField] private GameObject _outsideArea;
+    [SerializeField] private GameObject _insideArea;
 
+    private string _interactTextIn;
+    private string _interactTextOut;
     private void Start()
     {
-        dungeon.SetActive(false);
+        _insideArea.SetActive(false);
+        SetTexts();
+    }
+
+    public override void SetTexts()
+    {
+        if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        {
+            var language = StringExtension.CutString(LanguageText.Polish);
+            _interactTextOut = language[0];
+            _interactTextIn = language[1];
+        }
+        else
+        {
+            var language = StringExtension.CutString(LanguageText.English);
+            _interactTextOut = language[0];
+            _interactTextIn = language[1];
+        }
     }
 
     public override void ShowInfo()
     {
-        if (inBuilding == false)
+        if (_inBuilding == false)
         {
-            interactText = "Press E to enter dungeon";
-            HUDEvent.ShowMessage(interactText);
+            HUDEvent.ShowMessage(_interactTextIn);
         }
         else
         {
-            interactText = "Press E to go outside.";
-            HUDEvent.ShowMessage(interactText);
+            HUDEvent.ShowMessage(_interactTextOut);
         }
     }
 
     public override void OnInteractPress()
     {
-        if(inBuilding == false)
+        if(_inBuilding == false)
         {
             GoInside();
         }
@@ -42,20 +59,20 @@ public class EnterBuilding : InteractableItem
 
     private void GoOut()
     {
-        inBuilding = false;
-        dungeon.SetActive(false);
-        city.SetActive(true);
-        PlayerExtension.GetPlayerObject().transform.position = outsidePoint.position;
+        _inBuilding = false;
+        _insideArea.SetActive(false);
+        _outsideArea.SetActive(true);
+        PlayerExtension.GetPlayerObject().transform.position = _outSidePoint.position;
         BlackScreenEvent.ShowBlackScreen();
         DayNightCycleEvent.SwitchLight(); 
     }
 
     private void GoInside()
     {
-        inBuilding = true;
-        dungeon.SetActive(true);
-        city.SetActive(false);
-        PlayerExtension.GetPlayerObject().transform.position = inSidesPoint.position;
+        _inBuilding = true;
+        _insideArea.SetActive(true);
+        _outsideArea.SetActive(false);
+        PlayerExtension.GetPlayerObject().transform.position = _inSidesPoint.position;
         BlackScreenEvent.ShowBlackScreen();
         DayNightCycleEvent.SwitchLight();
     }

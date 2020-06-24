@@ -19,13 +19,13 @@ namespace Adventurer.Player
         private void OnEnable()
         {
             AdventurerEvent.OnPlayerHurt += GotHurt;
-            HUDEvent.OnShowMessage += ShowMessage;
-            HUDEvent.OnCloseMessage += CloseMessage;
+            HUDEvent.OnShowMessage += ShowInfoMessage;
+            HUDEvent.OnCloseMessage += CloseInfoMessage;
         }
 
         private void Start()
         {
-            CloseMessage();
+            CloseInfoMessage();
             if (bloodOverlay != null)
             {
                 _defaultColor = bloodOverlay.color;
@@ -47,13 +47,13 @@ namespace Adventurer.Player
             StartCoroutine(DamageEffect(_effectDuration));
         }
 
-        public void ShowMessage(string text)
+        public void ShowInfoMessage(string text)
         {
             itemMessagePanel.SetActive(true);
             itemMessagePanel.GetComponentInChildren<Text>().text = text;
         }
 
-        public void CloseMessage()
+        public void CloseInfoMessage()
         {
             itemMessagePanel.SetActive(false);
         }
@@ -64,14 +64,13 @@ namespace Adventurer.Player
             yield return new WaitForSeconds(time);
             _t = 0f;
             _isDamaged = false;
-
         }
 
         private void OnDestroy()
         {
             AdventurerEvent.OnPlayerHurt -= GotHurt;
-            HUDEvent.OnShowMessage -= ShowMessage;
-            HUDEvent.OnCloseMessage -= CloseMessage;
+            HUDEvent.OnShowMessage -= ShowInfoMessage;
+            HUDEvent.OnCloseMessage -= CloseInfoMessage;
         }
     }
 }

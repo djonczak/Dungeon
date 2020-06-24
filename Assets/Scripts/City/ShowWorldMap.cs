@@ -32,7 +32,7 @@ public class ShowWorldMap : MonoBehaviour
 
     public void ActivateMap()
     {
-        StartCoroutine("ActivaterTimer", _timeToShow);
+        StartCoroutine(ActivaterTimer(_timeToShow));
     }
 
     private IEnumerator ActivaterTimer(float time)
@@ -50,7 +50,7 @@ public class ShowWorldMap : MonoBehaviour
 
     public void DeactivateMap()
     {
-        StartCoroutine("DeactivateTimer", _timeToShow);
+        StartCoroutine(DeactivateTimer(_timeToShow));
     }
 
     private IEnumerator DeactivateTimer(float time)

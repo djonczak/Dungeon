@@ -6,13 +6,17 @@ namespace Adventurer.Player
 {
     public class AdventurerHealth : MonoBehaviour, IDamage
     {
-        [SerializeField] private float _maxHP = 0f;
-        [SerializeField] private float _currentHP = 0f;
-        private Animator _anim;
-
         public Image HPBar;
 
-        private bool _isDamaged = false;
+        [SerializeField] private float _maxHP = 0f;
+        [SerializeField] private float _currentHP = 0f;
+
+        private bool _isDamaged;
+
+        private Animator _anim;
+        private Coroutine _damageCooldown;
+
+        private const string _dead = "Dead";
 
         private void Awake()
         {
@@ -30,12 +34,12 @@ namespace Adventurer.Player
             {
                 _currentHP -= amount;
                 HPBar.fillAmount = _currentHP / _maxHP;
-                StartCoroutine(DamageCooldown(1f));
+                _damageCooldown = StartCoroutine(DamageCooldown(1f));
                 GetComponent<IDamageEffect>().DamageEffect();
                 AdventurerEvent.PlayerHit();
                 if (CheckIfAlive())
                 {
-                    StopCoroutine("DamageEffect");
+                    StopCoroutine(_damageCooldown);
                     Die();
                 }
             }
@@ -48,7 +52,7 @@ namespace Adventurer.Player
 
         private void Die()
         {
-            _anim.SetTrigger("Dead");
+            _anim.SetTrigger(_dead);
             GetComponent<AdventurerController>().enabled = false;
         }
 

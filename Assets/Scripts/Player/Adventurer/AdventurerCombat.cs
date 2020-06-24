@@ -27,20 +27,20 @@ namespace Adventurer.Player
         {
             _state.MeleeState = true;
 
-            SetWeapons(_state.playerData.meleeWeapon, _state.playerData.rangeWeapon);
+            SetWeapons(_state.playerData.MeleeWeapon, _state.playerData.RangeWeapon);
         }
 
         private void SetWeapons(MeleeWeaponData meleeData, RangeWeaponData rangeData)
         {
-            _meleeWeapon = Instantiate(meleeData.weaponModel);
+            _meleeWeapon = Instantiate(meleeData.WeaponModel);
             _meleeWeapon.transform.SetParent(meleeWeaponSlot, false);
             _meleeWeapon.GetComponent<ActivateMelee>().SetWeapon(meleeData);
             _weaponTrail = _meleeWeapon.transform.GetChild(1).GetComponent<ParticleSystem>();
 
-            GetComponent<Animator>().SetFloat(_attackSpeed, meleeData.weaponAttackSpeed);
-            var rangeWeapon = Instantiate(rangeData.weaponModel);
+            GetComponent<Animator>().SetFloat(_attackSpeed, meleeData.WeaponAttackSpeed);
+            var rangeWeapon = Instantiate(rangeData.WeaponModel);
             rangeWeapon.transform.SetParent(rangeWeaponSlot, false);
-            rangeWeaponSlot.GetComponent<ProjectileLauncher>().weaponData = rangeData;
+            rangeWeaponSlot.GetComponent<ProjectileLauncher>().WeaponData = rangeData;
             rangeWeaponSlot.gameObject.SetActive(false);
         }
 

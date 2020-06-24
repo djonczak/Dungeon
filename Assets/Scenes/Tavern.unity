@@ -97,6 +97,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -360,6 +361,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -493,6 +495,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -929,6 +937,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1431,6 +1440,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1670,13 +1680,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observers: []
-  sun: {fileID: 1736704364}
-  lightOutSide:
-  - {fileID: 2056731014}
-  isInsideBuilding: 0
-  secondsInFullDay: 400
-  currentTimeOfDay: 0.397
-  timeMultiplier: 0.2
+  _sun: {fileID: 0}
+  _lightsOutside: []
+  _secondsInFullDay: 120
+  _timeMultiplier: 0.2
+  _currentTimeOfDay: 0
 --- !u!1001 &270693898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2811,6 +2819,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2890,8 +2899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9096f3ca20b909a40ae197beb03b8639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  interactText: Press B to open tavern
+  ItemName: 
+  LanguageText: {fileID: 11400000, guid: 5d76eacdb4c2d0f468c1d1dddb595019, type: 2}
   isOpen: 0
 --- !u!4 &503551050 stripped
 Transform:
@@ -3122,6 +3131,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3363,6 +3373,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3450,6 +3461,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3623,6 +3640,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3888,6 +3906,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4998,6 +5022,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5090,6 +5115,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5240,6 +5266,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5415,6 +5442,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5759,6 +5787,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5976,6 +6005,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6055,6 +6085,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7174,8 +7205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdd399a7b0ada6408d066895a58295a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Trey
-  interactText: Press F to pickup the item
+  ItemName: 
+  LanguageText: {fileID: 11400000, guid: 465dcd3eb86f56f4ebe096cd414c226f, type: 2}
   _mugSlot: []
   _parent: {fileID: 0}
 --- !u!1 &1048064747
@@ -7238,6 +7269,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -8179,6 +8211,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -8237,6 +8270,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8495,9 +8534,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98089236acbd5d34ca63dbffa4203fa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothMovement: 15
-  cameraDistance: 38.03
-  target: {fileID: 5006512735741172435}
+  _smoothMovement: 15
+  _cameraDistance: 31
+  _target: {fileID: 0}
 --- !u!1 &1228130376 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 89a6d964a823f4e48ae322cc52a9e889,
@@ -8791,6 +8830,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9004,6 +9049,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9036,6 +9082,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279670681}
   m_Mesh: {fileID: 4300000, guid: 5956e27b8a073d944b63cbc02cf8045d, type: 3}
+--- !u!1 &1284317073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1284317075}
+  - component: {fileID: 1284317074}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1284317074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284317073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383a2fef05de2be4e8efec99d689958b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameLanguage: 0
+--- !u!4 &1284317075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284317073}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.522675, y: 8.174884, z: 50.40003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1287129007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9697,6 +9787,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9874,6 +9965,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -10274,6 +10366,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -10524,6 +10617,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -10635,6 +10729,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -11169,6 +11264,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11371,6 +11472,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -11482,6 +11584,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -11600,6 +11703,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -12178,6 +12282,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -12864,8 +12969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb35dce17e5ec24ea8dc45e3ad80fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questList: []
-  player: {fileID: 11400000, guid: d025c1347a2298c44b6aba47b3170f74, type: 2}
+  QuestList: []
+  Player: {fileID: 11400000, guid: d025c1347a2298c44b6aba47b3170f74, type: 2}
 --- !u!1 &1705086307
 GameObject:
   m_ObjectHideFlags: 0
@@ -13096,8 +13201,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736704363}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -13209,6 +13315,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -13530,6 +13637,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -14088,6 +14196,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15154,8 +15263,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056731013}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 0
+  m_Shape: 0
   m_Color: {r: 1, g: 0.81621426, b: 0.3915094, a: 1}
   m_Intensity: 1
   m_Range: 75.84
@@ -15218,7 +15328,7 @@ Transform:
   m_LocalScale: {x: 0.73402, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 27.06, y: -7.3, z: 101.67}
 --- !u!1 &2059722787
 GameObject:
@@ -15266,6 +15376,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15310,6 +15421,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mug (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15419,6 +15536,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15497,6 +15615,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -16120,6 +16239,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -16623,6 +16743,12 @@ PrefabInstance:
       propertyPath: itemName
       value: Mug
       objectReference: {fileID: 0}
+    - target: {fileID: 7033535046850816808, guid: 07c9e80b97866aa47915b45b6cce0d3b,
+        type: 3}
+      propertyPath: LanguageText
+      value: 
+      objectReference: {fileID: 11400000, guid: a3cde3ee20f870d44a4c4dbc0da3299e,
+        type: 2}
     - target: {fileID: 7033535046850816811, guid: 07c9e80b97866aa47915b45b6cce0d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16801,6 +16927,7 @@ GameObject:
   - component: {fileID: 3166231813484378025}
   - component: {fileID: 952889811}
   - component: {fileID: 952889810}
+  - component: {fileID: 8296172668793956548}
   - component: {fileID: 952889806}
   - component: {fileID: 952889812}
   - component: {fileID: 952889805}
@@ -16851,8 +16978,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 578ecff12cb69f44ca065b21d84bbba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInteract: {fileID: 0}
+  _itemInteract: {fileID: 0}
   holdButton: 0
+--- !u!114 &8296172668793956548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172668793956544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6762105f3a96b43be37eccc6e770c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: d025c1347a2298c44b6aba47b3170f74, type: 2}
 --- !u!1 &8296172668947090898
 GameObject:
   m_ObjectHideFlags: 0

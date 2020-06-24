@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager instance;
 
-    public List<Quest> questList = new List<Quest>();
-    public AdventurerData player;
+    public List<Quest> QuestList = new List<Quest>();
+    public AdventurerData Player;
 
     public void OnEnable()
     {
@@ -22,9 +21,9 @@ public class QuestManager : MonoBehaviour
             instance = this;
         }
 
-        foreach(Quest quest in player.mission)
+        foreach(Quest quest in Player.Mission)
         {
-            questList.Add(quest);
+            QuestList.Add(quest);
         }
 
         DontDestroyOnLoad(this);
@@ -33,14 +32,14 @@ public class QuestManager : MonoBehaviour
     public void GotTarget(int id)
     {
         Debug.Log("Got target " + id);
-        for(int i = 0; i < questList.Count; i++)
+        for(int i = 0; i < QuestList.Count; i++)
         {
-            if(questList[i].missionState.targetID == id)
+            if(QuestList[i].MissionState.TargetID == id)
             {
-                questList[i].missionState.GotTarget(id);
-                if(questList[i].missionState.complete == true)
+                QuestList[i].MissionState.GotTarget(id);
+                if(QuestList[i].MissionState.Complete == true)
                 {
-                    QuestComplited(questList[i]);
+                    QuestComplited(QuestList[i]);
                 }
                 return;
             }
@@ -49,7 +48,7 @@ public class QuestManager : MonoBehaviour
     
     public void QuestComplited(Quest quest)
     {
-        player.goldAmount += quest.GetReward();
+        Player.GoldAmount += quest.GetReward();
     }
 
     private void OnDestroy()

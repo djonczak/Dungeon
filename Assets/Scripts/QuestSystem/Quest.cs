@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu]
 public class Quest : ScriptableObject
 {
-    public bool isUnlocked;
-    [Range(0, 1)] public float unlockAmount;
+    public bool IsUnlocked;
+    [Range(0, 1)] public float UnlockAmount;
 
-    public string title;
-    public string description;
-    public int goldAmount;
-    public MissionType missionType;
-    public Location location;
+    public string Title;
+    public string Description;
+    public int GoldAmount;
+    public MissionType MissionType;
+    public Location Location;
 
-    public MissionsState missionState;
+    public MissionsState MissionState;
 
     public int GetReward()
     {
-        return goldAmount;
+        return GoldAmount;
     }
 }
 

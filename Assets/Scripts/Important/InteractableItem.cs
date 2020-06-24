@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InteractableItem : MonoBehaviour
 {
-    public string itemName;
+    public LanguageText LanguageText;
 
-    public string interactText;
+    public virtual void SetTexts() { }
 
     public virtual void OnInteractPress() { }
 

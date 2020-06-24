@@ -36,7 +36,7 @@ public class BlackScreenDisperse : MonoBehaviour
 
     public void Disperse()
     {
-        StartCoroutine("DisperseTimer", _disperseTime);
+        StartCoroutine(DisperseTimer(_disperseTime));
     }
 
     private IEnumerator DisperseTimer(float time)

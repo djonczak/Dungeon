@@ -10,21 +10,43 @@ public class Trey : InteractableItem
     private int _inTrey = 0;
 
     [SerializeField] private Transform _parent;
+    private string _interactText;
 
-    public override void ShowInfo()
+    private void Awake()
     {
-        interactText = "Press E/X/A/B to pick up " + itemName;
-        HUDEvent.ShowMessage(interactText);
+        SetTexts();
     }
 
     private void Start()
     {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         _parent = transform.parent;
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             _mugSlot.Add(child);
         }
         _keeperInventory = PlayerExtension.GetPlayerObject().GetComponent<InkeeperInventory>();
+    }
+
+    public override void SetTexts()
+    {
+        if(GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        {
+            _interactText = LanguageText.Polish;
+        }
+        else
+        {
+            _interactText = LanguageText.English;
+        }
+    }
+
+    public override void ShowInfo()
+    {
+        HUDEvent.ShowMessage(_interactText);
     }
 
     public void PlaceMug(Transform mug)
@@ -38,7 +60,7 @@ public class Trey : InteractableItem
         _inTrey++;
     }
 
-    void DropMugs()
+    private void DropMugs()
     {
         foreach (Transform mug in _mugs)
         {

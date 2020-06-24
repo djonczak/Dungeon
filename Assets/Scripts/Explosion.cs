@@ -3,29 +3,30 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    [SerializeField] private float explosionDamage = 0f;
-    [SerializeField] private float explosionRange = 5f;
-    [SerializeField] private LayerMask damagableObjects = 11;
-    private ParticleSystem explosionEffect;
+    [SerializeField] private float _explosionDamage = 0f;
+    [SerializeField] private float _explosionRange = 5f;
+    [SerializeField] private LayerMask _damagableObjects = 11;
+
+    private ParticleSystem _explosionEffect;
 
     private void Awake()
     {
-        explosionEffect = GetComponentInChildren<ParticleSystem>();
+        _explosionEffect = GetComponentInChildren<ParticleSystem>();
     }
 
     public void Explode()
     {
-        StartCoroutine("ExplosionEffectDuration", explosionEffect.main.duration);
+        StartCoroutine(ExplosionEffectDuration(_explosionEffect.main.duration));
     }
 
     private IEnumerator ExplosionEffectDuration(float time)
     {
         GetComponentInChildren<Renderer>().enabled = false;
-        explosionEffect.Play();
-        var damagable = Physics.OverlapSphere(transform.position, explosionRange, damagableObjects);
+        _explosionEffect.Play();
+        var damagable = Physics.OverlapSphere(transform.position, _explosionRange, _damagableObjects);
         if (damagable.Length > 0)
         {
-            damagable[0].GetComponent<IDamage>().TakeDamage(explosionDamage, transform.position);
+            damagable[0].GetComponent<IDamage>().TakeDamage(_explosionDamage, transform.position);
         }
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
@@ -33,12 +34,12 @@ public class Explosion : MonoBehaviour
 
     public void SetExplosionDamage(float amount)
     {
-        explosionDamage = amount;
+        _explosionDamage = amount;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRange);
+        Gizmos.DrawWireSphere(transform.position, _explosionRange);
     }
 }

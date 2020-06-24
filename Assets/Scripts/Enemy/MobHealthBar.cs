@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MobHealthBar : MonoBehaviour
 {
-    public UnityEngine.UI.Image healthbar;
+    [SerializeField] private UnityEngine.UI.Image healthbar;
     [SerializeField] private float _yOffset = 0;
 
     private void Start()
     {
         gameObject.transform.rotation = Camera.main.transform.rotation;
-        transform.position = new Vector3(transform.position.x, _yOffset, transform.position.z);
+        transform.position = new Vector3(transform.position.x,  transform.position.y + _yOffset, transform.position.z);
     }
 
     private void LateUpdate()

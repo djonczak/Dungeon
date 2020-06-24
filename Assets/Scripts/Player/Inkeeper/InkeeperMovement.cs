@@ -7,12 +7,12 @@ namespace Adventurer.Player
         [SerializeField] private float _walkSpeed = 5f;
 
         private Rigidbody _rb;
-        private Adventurer _adventurer;
+        private AdventurerState _state;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            _adventurer = gameObject.AddComponent<Adventurer>();
+            _state = GetComponent<AdventurerState>();
         }
 
         private void FixedUpdate()
@@ -22,12 +22,12 @@ namespace Adventurer.Player
 
         private void Movement()
         {
-            if (_adventurer.MoveVector.magnitude > 0.25f)
+            if (_state.MoveVector.magnitude > 0.25f)
             {
-                Vector3 movement = new Vector3(_adventurer.MoveVector.x, 0f, _adventurer.MoveVector.y).normalized;
+                Vector3 movement = new Vector3(_state.MoveVector.x, 0f, _state.MoveVector.y).normalized;
                 var moveVelocity = movement * _walkSpeed;
                 _rb.MovePosition(_rb.position + moveVelocity * Time.fixedDeltaTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(_adventurer.MoveVector.x, 0f, _adventurer.MoveVector.y)), 0.15f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(_state.MoveVector.x, 0f, _state.MoveVector.y)), 0.15f);
             }
             else
             {
@@ -37,17 +37,12 @@ namespace Adventurer.Player
 
         public Vector2 ReturnMovePosition()
         {
-            return _adventurer.MoveVector;
+            return _state.MoveVector;
         }
 
         public Vector2 ReturnRotationPosition()
         {
-            return _adventurer.MoveVector;
-        }
-
-        public Adventurer GetAdventurer()
-        {
-            return _adventurer;
+            return _state.MoveVector;
         }
     }
 }

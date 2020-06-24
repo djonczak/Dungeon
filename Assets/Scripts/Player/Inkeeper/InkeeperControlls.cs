@@ -12,8 +12,7 @@ namespace Adventurer.Player
         {
             var pickingObject = GetComponent<InkeeperPickObject>();
             var interact = GetComponent<PlayerInteract>();
-            var adventurerMovement = GetComponent<InkeeperMovement>();
-            Adventurer adventurer = adventurerMovement.GetAdventurer();
+            var adventurer = GetComponent<AdventurerState>();
 
             _controls = new InputController();
             // TODO: Getting vector2 from left stick to move player

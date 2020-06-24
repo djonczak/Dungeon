@@ -11484,6 +11484,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1869525242008295998, guid: 8289b5a85b53f964498ff3f999996187,
+        type: 3}
+      propertyPath: _yOffset
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6376325682099697921, guid: 8289b5a85b53f964498ff3f999996187,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -35837,11 +35842,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   interactText: Press E to enter
-  inBuilding: 0
-  outsidePoint: {fileID: 928421937}
-  inSidesPoint: {fileID: 1097017726}
-  city: {fileID: 1608387503}
-  dungeon: {fileID: 71909574}
+  _inBuilding: 0
+  _outSidePoint: {fileID: 0}
+  _inSidesPoint: {fileID: 0}
+  _outsideArea: {fileID: 0}
+  _insideArea: {fileID: 0}
 --- !u!65 &1578009812
 BoxCollider:
   m_ObjectHideFlags: 0

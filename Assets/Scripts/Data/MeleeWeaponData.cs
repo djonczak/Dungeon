@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Melee Weapon Data")]
-public class MeleeWeaponData : ScriptableObject
+[CreateAssetMenu(menuName = "Item/Melee Weapon Data")]
+public class MeleeWeaponData : Item
 {
     public enum WeaponType
     {
@@ -10,12 +10,10 @@ public class MeleeWeaponData : ScriptableObject
         Mace,
     };
 
-    public string weaponName;
-    public WeaponType weaponType;
-    public GameObject weaponModel;
-    public float weaponDamage;
-    public float weaponCriticalChance;
-    public float weaponAttackSpeed;
-    public bool canKnockBack;
-    public float goldCost;
+    public WeaponType Type;
+    public GameObject WeaponModel;
+    public float WeaponDamage { get;}
+    public float WeaponCriticalChance  { get;}
+    public float WeaponAttackSpeed { get; }
+    public bool CanKnockBack { get; }
 }

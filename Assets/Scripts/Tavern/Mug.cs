@@ -13,11 +13,11 @@ public class Mug : InteractableItem
     public Transform fullMug;
 
     private Transform parent;
+    private string _interactText;
 
-    public override void ShowInfo()
+    private void Awake()
     {
-        interactText = "Press E/X/A/B to pick up " + itemName;
-        HUDEvent.ShowMessage(interactText);
+        SetTexts();
     }
 
     private void Start()
@@ -27,7 +27,24 @@ public class Mug : InteractableItem
         fullMug.gameObject.SetActive(false);
     }
 
-    void LateUpdate()
+    public override void SetTexts()
+    {
+        if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        {
+            _interactText = LanguageText.Polish;
+        }
+        else
+        {
+            _interactText = LanguageText.English;
+        }
+    }
+
+    public override void ShowInfo()
+    {
+        HUDEvent.ShowMessage(_interactText);
+    }
+
+    private void LateUpdate()
     {
        canvas.transform.rotation = Camera.main.transform.rotation;
     }
@@ -50,10 +67,5 @@ public class Mug : InteractableItem
         isDirty = true;
         fullMug.gameObject.SetActive(false);
         emptyMug.gameObject.SetActive(true);
-    }
-
-    public void CleanMug()
-    {
-
     }
 }

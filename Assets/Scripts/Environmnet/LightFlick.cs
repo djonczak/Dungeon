@@ -19,14 +19,12 @@ public class LightFlick : DayNightObserver
     {
         if (notificationType == NotificationType.Day)
         {
-            Debug.Log("Dzien");
             _lightSource.enabled = false;
             _isDay = true;
         }
 
         if (notificationType == NotificationType.Night)
         {
-            Debug.Log("Noc");
             _lightSource.enabled = true;
             _isDay = false;
         }

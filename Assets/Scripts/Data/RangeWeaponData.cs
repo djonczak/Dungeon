@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Range Weapon Data")]
-public class RangeWeaponData : ScriptableObject
+[CreateAssetMenu(menuName = "Item/Range Weapon Data")]
+public class RangeWeaponData : Item
 {
-    public string weaponName;
-    public GameObject weaponModel;
-    public string projectileName;
-    public float weaponDamage;
-    public float weaponCriticalChance;
-    public float projectileSpeed;
-    public bool canKnockBack;
-    public float goldCost;
+    public string ProjectileName;
+    public GameObject WeaponModel;
+    public float WeaponDamage;
+    public float WeaponCriticalChance;
+    public float ProjectileSpeed;
+    public bool CanKnockBack;
 }

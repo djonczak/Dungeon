@@ -1,16 +1,31 @@
-﻿public class BuyItem : InteractableItem
+﻿using System;
+using UnityEngine;
+
+public class BuyItem : InteractableItem
 {
-    public float goldCost;
-    public float amount;
+    [SerializeField] private Item _item;
+    private string _interactText;
 
     private void Start()
     {
-        interactText = "Press A/X/A/B to buy item " + itemName;
+        SetTexts();
+    }
+
+    public override void SetTexts()
+    {
+        if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        {
+            _interactText = LanguageText.Polish + _item.ItemName;
+        }
+        else
+        {
+            _interactText = LanguageText.English + _item.ItemName;
+        }
     }
 
     public override void ShowInfo()
     {
-        HUDEvent.ShowMessage(interactText);
+        HUDEvent.ShowMessage(_interactText);
     }
 
     public override void OnInteractPress()

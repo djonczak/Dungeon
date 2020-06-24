@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ProjectileLauncher : MonoBehaviour, ILauncher
 {
-    public RangeWeaponData weaponData;
-    public Transform barrelPosition;
+    public RangeWeaponData WeaponData;
+    public Transform BarrelPosition;
     
     public void LaunchProjectile()
     {
-        GameObject projectile = ObjectPooler.instance.GetPooledObject(weaponData.projectileName);
+        GameObject projectile = ObjectPooler.instance.GetPooledObject(WeaponData.ProjectileName);
         if (projectile != null)
         {
-            projectile.transform.position = barrelPosition.position;
-            projectile.transform.rotation = barrelPosition.rotation;
+            projectile.transform.position = BarrelPosition.position;
+            projectile.transform.rotation = BarrelPosition.rotation;
             projectile.SetActive(true);
-            projectile.GetComponent<Rigidbody>().AddForce(-transform.right * weaponData.projectileSpeed);
-            projectile.GetComponent<IPassFloat>().PassFloat(weaponData.weaponDamage);
+            projectile.GetComponent<Rigidbody>().AddForce(-transform.right * WeaponData.ProjectileSpeed);
+            projectile.GetComponent<IPassFloat>().PassFloat(WeaponData.WeaponDamage);
         }
     }
 }

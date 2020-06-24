@@ -17,7 +17,7 @@ namespace Adventurer.Player
 
         private void DoAttack(Collider target)
         {
-            target.GetComponent<IDamage>().TakeDamage(_weaponData.weaponDamage, transform.parent.position);
+            target.GetComponent<IDamage>().TakeDamage(_weaponData.WeaponDamage, transform.parent.position);
         }
 
         public void SetWeapon(MeleeWeaponData data)

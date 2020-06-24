@@ -5,10 +5,29 @@ public class TavernDoor : InteractableItem
 {
     [SerializeField] private bool isOpen;
 
+    private string _interactText;
+    private const string _levelToLoad = "CityHUB";
+
+    private void Awake()
+    {
+        SetTexts();
+    }
+
+    public override void SetTexts()
+    {
+        if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        {
+            _interactText = LanguageText.Polish;
+        }
+        else
+        {
+            _interactText = LanguageText.English;
+        }
+    }
+
     public override void ShowInfo()
     {
-        interactText = "Press E to open Tavern or Hold to exit.";
-        HUDEvent.ShowMessage(interactText);  
+        HUDEvent.ShowMessage(_interactText);  
     }
 
     public override void OnInteractPress()
@@ -22,7 +41,7 @@ public class TavernDoor : InteractableItem
     {
         if (isOpen == false)
         {
-            SceneManager.LoadScene("CityHUB");
+            SceneManager.LoadScene(_levelToLoad);
         }  
     }
 }
