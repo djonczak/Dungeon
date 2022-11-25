@@ -1,15 +1,20 @@
 ﻿using UnityEngine.SceneManagement;
 
-public class ExitTavern : InteractableItem
+namespace Tavern.Interactable
 {
-    private string _interactText;
-    public override void ShowInfo()
+    public class ExitTavern : InteractableItem
     {
-        HUDEvent.ShowMessage(_interactText);
-    }
+        private string _interactText;
 
-    public override void OnInteractPress()
-    {
-        SceneManager.LoadScene("CityHUB");
+        private const string CityHub = "CityHUB";
+        public override void ShowInfo()
+        {
+            GameUI.HUDEvent.ShowMessage(_interactText);
+        }
+
+        public override void OnInteractPress()
+        {
+            SceneManager.LoadScene(CityHub);
+        }
     }
 }

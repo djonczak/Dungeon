@@ -21,7 +21,7 @@ public class ShowMapTrigger: InteractableItem
 
     public override void ShowInfo()
     {
-        HUDEvent.ShowMessage(_interactText);
+        GameUI.HUDEvent.ShowMessage(_interactText);
     }
 
     public override void OnInteractPress()

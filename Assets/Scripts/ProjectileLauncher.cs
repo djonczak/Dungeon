@@ -1,20 +1,28 @@
 ﻿using UnityEngine;
 
-public class ProjectileLauncher : MonoBehaviour, ILauncher
+namespace Adventurer.Player
 {
-    public RangeWeaponData WeaponData;
-    public Transform BarrelPosition;
-    
-    public void LaunchProjectile()
+
+    public class ProjectileLauncher : MonoBehaviour, ILauncher
     {
-        GameObject projectile = ObjectPooler.instance.GetPooledObject(WeaponData.ProjectileName);
-        if (projectile != null)
+        public Weapon.RangeWeaponData WeaponData
         {
-            projectile.transform.position = BarrelPosition.position;
-            projectile.transform.rotation = BarrelPosition.rotation;
-            projectile.SetActive(true);
-            projectile.GetComponent<Rigidbody>().AddForce(-transform.right * WeaponData.ProjectileSpeed);
-            projectile.GetComponent<IPassFloat>().PassFloat(WeaponData.WeaponDamage);
+            set => _weaponData = value;
+        }
+        public Transform BarrelPosition;
+
+        private Weapon.RangeWeaponData _weaponData;
+        public void LaunchProjectile()
+        {
+            GameObject projectile = ObjectPooler.instance.GetPooledObject(_weaponData.ProjectileName);
+            if (projectile != null)
+            {
+                projectile.transform.position = BarrelPosition.position;
+                projectile.transform.rotation = BarrelPosition.rotation;
+                projectile.SetActive(true);
+                projectile.GetComponent<Rigidbody>().AddForce(-transform.right * _weaponData.ProjectileSpeed);
+                projectile.GetComponent<IPassFloat>().PassFloat(_weaponData.WeaponDamage);
+            }
         }
     }
 }

@@ -1,47 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TavernDoor : InteractableItem
+namespace Tavern.Interactable 
 {
-    [SerializeField] private bool isOpen;
-
-    private string _interactText;
-    private const string _levelToLoad = "CityHUB";
-
-    private void Awake()
+    public class TavernDoor : InteractableItem
     {
-        SetTexts();
-    }
+        [SerializeField] private bool _isOpen;
 
-    public override void SetTexts()
-    {
-        if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        private string _interactText;
+        private const string LevelToLoad = "CityHUB";
+
+        private void Awake()
         {
-            _interactText = LanguageText.Polish;
+            SetTexts();
         }
-        else
+
+        public override void SetTexts()
         {
-            _interactText = LanguageText.English;
+            if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+            {
+                _interactText = LanguageText.Polish;
+            }
+            else
+            {
+                _interactText = LanguageText.English;
+            }
         }
-    }
 
-    public override void ShowInfo()
-    {
-        HUDEvent.ShowMessage(_interactText);  
-    }
-
-    public override void OnInteractPress()
-    {
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z), Time.deltaTime * 50f);
-        GuestHandler.instance.OpenTavern();
-        isOpen = true;
-    }
-
-    public override void OnInteractHold()
-    {
-        if (isOpen == false)
+        public override void ShowInfo()
         {
-            SceneManager.LoadScene(_levelToLoad);
-        }  
+            GameUI.HUDEvent.ShowMessage(_interactText);
+        }
+
+        public override void OnInteractPress()
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z), Time.deltaTime * 50f);
+            Tavern.Guests.GuestHandler.instance.OpenTavern();
+            _isOpen = true;
+        }
+
+        public override void OnInteractHold()
+        {
+            if (_isOpen == false)
+            {
+                SceneManager.LoadScene(LevelToLoad);
+            }
+        }
     }
 }

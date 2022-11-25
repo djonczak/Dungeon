@@ -14,7 +14,7 @@ namespace Adventurer.Player
 
         private AdventurerState _state;
 
-        private const string _attackSpeed = "MeleeAttackSpeed";
+        private const string AttackSpeed = "MeleeAttackSpeed";
 
         [SerializeField] private ParticleSystem _weaponTrail;
 
@@ -30,14 +30,14 @@ namespace Adventurer.Player
             SetWeapons(_state.playerData.MeleeWeapon, _state.playerData.RangeWeapon);
         }
 
-        private void SetWeapons(MeleeWeaponData meleeData, RangeWeaponData rangeData)
+        private void SetWeapons(Weapon.MeleeWeaponData meleeData, Weapon.RangeWeaponData rangeData)
         {
             _meleeWeapon = Instantiate(meleeData.WeaponModel);
             _meleeWeapon.transform.SetParent(meleeWeaponSlot, false);
             _meleeWeapon.GetComponent<ActivateMelee>().SetWeapon(meleeData);
             _weaponTrail = _meleeWeapon.transform.GetChild(1).GetComponent<ParticleSystem>();
 
-            GetComponent<Animator>().SetFloat(_attackSpeed, meleeData.WeaponAttackSpeed);
+            GetComponent<Animator>().SetFloat(AttackSpeed, meleeData.WeaponAttackSpeed);
             var rangeWeapon = Instantiate(rangeData.WeaponModel);
             rangeWeapon.transform.SetParent(rangeWeaponSlot, false);
             rangeWeaponSlot.GetComponent<ProjectileLauncher>().WeaponData = rangeData;

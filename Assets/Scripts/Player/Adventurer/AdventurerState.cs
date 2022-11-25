@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Adventurer.Player {
+namespace Adventurer.Player 
+{
     public class AdventurerState : Adventurer, IPlayer
     {
         public AdventurerData playerData;

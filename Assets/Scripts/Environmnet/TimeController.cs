@@ -15,6 +15,8 @@ public class TimeController : Subject
     private float _sunInitalIntensify;
     private Coroutine _timeCoroutine;
 
+    private const string DayTime = "DayTime";
+
     private void OnEnable()
     {
         DayNightCycleEvent.OnSwitchLight += SwitchLights;
@@ -22,7 +24,7 @@ public class TimeController : Subject
 
     private void Start()
     {
-        _currentTimeOfDay = PlayerPrefs.GetFloat("DayTime");
+        _currentTimeOfDay = PlayerPrefs.GetFloat(DayTime);
         _sunInitalIntensify = _sun.intensity;
         if (_currentTimeOfDay < 0.23f || _currentTimeOfDay >= 0.75f)
         {
@@ -137,7 +139,7 @@ public class TimeController : Subject
 
     private void OnDisable()
     {
-        PlayerPrefs.SetFloat("DayTime", _currentTimeOfDay);
+        PlayerPrefs.SetFloat(DayTime, _currentTimeOfDay);
     }
 }
 

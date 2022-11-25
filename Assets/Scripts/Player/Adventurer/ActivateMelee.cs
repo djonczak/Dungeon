@@ -4,7 +4,7 @@ namespace Adventurer.Player
 {
     public class ActivateMelee : MonoBehaviour
     {
-        private MeleeWeaponData _weaponData;
+        private Weapon.MeleeWeaponData _weaponData;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -20,7 +20,7 @@ namespace Adventurer.Player
             target.GetComponent<IDamage>().TakeDamage(_weaponData.WeaponDamage, transform.parent.position);
         }
 
-        public void SetWeapon(MeleeWeaponData data)
+        public void SetWeapon(Weapon.MeleeWeaponData data)
         {
             _weaponData = data;
         }

@@ -1,17 +1,20 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
 
-public class Item : ScriptableObject
+namespace Shop
 {
-    public string ItemName;
-    public UnityEngine.UI.Image ItemIcon;
-    public ItemType ItemOption;
-    public string Description;
-    public int GoldCost;
-
-    public enum ItemType
+    public class Item : ScriptableObject
     {
-        Weapon,
-        Potion
-    }   
+        public string ItemName;
+        public UnityEngine.UI.Image ItemIcon;
+        public ItemType ItemOption;
+        public string Description;
+        public int GoldCost;
+
+        public enum ItemType
+        {
+            Weapon,
+            Potion
+        }
+    }
 }

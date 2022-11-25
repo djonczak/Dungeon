@@ -2,48 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seat : MonoBehaviour
+namespace Tavern.Guests
 {
-    public Guest guest;
-    public Vector3 seatPosition;
-
-    private void Start()
+    public class Seat : MonoBehaviour
     {
-        seatPosition = this.transform.position;
-    }
+        public Guest guest;
+        public Vector3 seatPosition;
 
-    public bool IsEmpty()
-    {
-        return guest == null;
-    }
-
-    public void SeatGuest(Guest guest)
-    {
-        this.guest = guest;
-        guest.seat = this;
-    }
-
-    public void EmptySeat()
-    {
-        guest = null;
-    }
-
-    public void Close()
-    {
-        if (guest != null)
+        private void Start()
         {
-            guest.Unhandled();
+            seatPosition = this.transform.position;
+        }
+
+        public bool IsEmpty()
+        {
+            return guest == null;
+        }
+
+        public void SeatGuest(Guest guest)
+        {
+            this.guest = guest;
+            guest.seat = this;
+        }
+
+        public void EmptySeat()
+        {
             guest = null;
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (guest != null)
+        public void Close()
         {
-            if (other.name == guest.name)
+            if (guest != null)
             {
-                guest.Order();
+                guest.Unhandled();
+                guest = null;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (guest != null)
+            {
+                if (other.name == guest.name)
+                {
+                    guest.Order();
+                }
             }
         }
     }

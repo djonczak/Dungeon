@@ -1,59 +1,62 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour
+namespace QuestSystem 
 {
-    public static QuestManager instance;
-
-    public List<Quest> QuestList = new List<Quest>();
-    public AdventurerData Player;
-
-    public void OnEnable()
+    public class QuestManager : MonoBehaviour
     {
-        DeathEvent.OnEnemyDeath += GotTarget;
-        InteractEvent.OnInteract += GotTarget;
-    }
+        public static QuestManager instance;
 
-    private void Start()
-    {
-        if(instance == null)
+        public List<Quest> QuestList = new List<Quest>();
+        public Adventurer.Player.AdventurerData Player;
+
+        public void OnEnable()
         {
-            instance = this;
+            DeathEvent.OnEnemyDeath += GotTarget;
+            InteractEvent.OnInteract += GotTarget;
         }
 
-        foreach(Quest quest in Player.Mission)
+        private void Start()
         {
-            QuestList.Add(quest);
-        }
-
-        DontDestroyOnLoad(this);
-    }
-
-    public void GotTarget(int id)
-    {
-        Debug.Log("Got target " + id);
-        for(int i = 0; i < QuestList.Count; i++)
-        {
-            if(QuestList[i].MissionState.TargetID == id)
+            if (instance == null)
             {
-                QuestList[i].MissionState.GotTarget(id);
-                if(QuestList[i].MissionState.Complete == true)
+                instance = this;
+            }
+
+            foreach (Quest quest in Player.Mission)
+            {
+                QuestList.Add(quest);
+            }
+
+            DontDestroyOnLoad(this);
+        }
+
+        public void GotTarget(int id)
+        {
+            Debug.Log("Got target " + id);
+            for (int i = 0; i < QuestList.Count; i++)
+            {
+                if (QuestList[i].MissionState.TargetID == id)
                 {
-                    QuestComplited(QuestList[i]);
+                    QuestList[i].MissionState.GotTarget(id);
+                    if (QuestList[i].MissionState.Complete == true)
+                    {
+                        QuestComplited(QuestList[i]);
+                    }
+                    return;
                 }
-                return;
             }
         }
-    }
-    
-    public void QuestComplited(Quest quest)
-    {
-        Player.GoldAmount += quest.GetReward();
-    }
 
-    private void OnDestroy()
-    {
-        DeathEvent.OnEnemyDeath -= GotTarget;
-        InteractEvent.OnInteract -= GotTarget;
+        public void QuestComplited(Quest quest)
+        {
+            Player.GoldAmount += quest.GetReward();
+        }
+
+        private void OnDestroy()
+        {
+            DeathEvent.OnEnemyDeath -= GotTarget;
+            InteractEvent.OnInteract -= GotTarget;
+        }
     }
 }

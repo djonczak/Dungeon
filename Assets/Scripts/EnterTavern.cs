@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class EnterTavern : InteractableItem
 {
-    private const string _tavern = "Tavern";
+    private const string Tavern = "Tavern";
     private string _interactText;
 
     private void Start()
@@ -32,11 +32,11 @@ public class EnterTavern : InteractableItem
 
     public override void ShowInfo()
     {
-        HUDEvent.ShowMessage(_interactText);    
+        GameUI.HUDEvent.ShowMessage(_interactText);    
     }
 
     public override void OnInteractPress()
     {
-        SceneManager.LoadScene(_tavern);
+        SceneManager.LoadScene(Tavern);
     }
 }

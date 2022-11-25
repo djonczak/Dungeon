@@ -1,30 +1,33 @@
-﻿[System.Serializable]
-public class MissionsState
+﻿namespace QuestSystem
 {
-    public Quest Quest { get; set; }
-    public int TargetID;
-    public bool Complete;
-    public int RequiredAmount;
-    public int CurrentAmount;
-    public string Text;
-
-    public void CheckQuest()
+    [System.Serializable]
+    public class MissionsState
     {
-        if(CurrentAmount >= RequiredAmount)
+        public Quest Quest { get; set; }
+        public int TargetID;
+        public bool Complete;
+        public int RequiredAmount;
+        public int CurrentAmount;
+        public string Text;
+
+        public void CheckQuest()
         {
-            Completed();
+            if (CurrentAmount >= RequiredAmount)
+            {
+                Completed();
+            }
         }
-    }
 
-    public void GotTarget(int id)
-    {
-        CurrentAmount++;
-        CheckQuest();
-    }
+        public void GotTarget(int id)
+        {
+            CurrentAmount++;
+            CheckQuest();
+        }
 
-    public void Completed()
-    {
-        Complete = true;
+        public void Completed()
+        {
+            Complete = true;
+        }
     }
 }
 

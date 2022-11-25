@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Potion Data")]
-public class PotionData : Item
+namespace Shop
 {
-    public enum Type
+    [CreateAssetMenu(menuName = "Item/Potion Data")]
+    public class PotionData : Item
     {
-        Health,
-        Stamina,
-    }
+        public enum Type
+        {
+            Health,
+            Stamina,
+        }
 
-    public Type PotionType;
-    public float EffectAmount;
+        public Type PotionType;
+        public float EffectAmount;
+    }
 }

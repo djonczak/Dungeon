@@ -2,80 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TavernHandler : MonoBehaviour
-{
-    public List<Seat> placesToSit;
-    
-    //private WaitingQueue waitingQueue;
+namespace Tavern {
 
-    public float guestAmount;
-    public float goldAmount;
-    public float servedGuestAmount;
-    public float unhandledGuestAmount;
-
-    private void Start()
+    public class TavernHandler : MonoBehaviour
     {
-       // waitingQueue.OnGuestArrive += WaitingQueue_OnGuestArrive;
-       // waitingQueue.CloseTavern += WaitingQueue_CloseTavern;
-    }
+        public List<Guests.Seat> placesToSit;
 
-    //public void TryToSendGuest()
-    //{
-    //    Seat emptySeat = GetEmptySeat();
-    //    if(emptySeat != null)
-    //    {
-    //        Guest guest = waitingQueue.GetFirstInQueue();
-    //        if(guest != null)
-    //        {
-    //            guestAmount++;
-    //            emptySeat.SeatGuest(guest);
-    //            guest.MoveTo(emptySeat.seatPosition);
-    //            guest.SetTavern(this);
-    //          //  waitingQueue.guestList.Remove(guest);
-    //        }
-    //    }
-    //}
+        //private WaitingQueue waitingQueue;
 
-    private void WaitingQueue_OnGuestArrive(object sender, System.EventArgs e)
-    {
-      //  TryToSendGuest();
-        Debug.Log("Jest wolne miejsce");
-    }
+        public float guestAmount;
+        public float goldAmount;
+        public float servedGuestAmount;
+        public float unhandledGuestAmount;
 
-    private void WaitingQueue_CloseTavern(object sender, System.EventArgs e)
-    {
-        Debug.Log("Zamykamy tawerne");
-        foreach(Seat seat in placesToSit)
+        private void Start()
         {
-            seat.Close();
+            // waitingQueue.OnGuestArrive += WaitingQueue_OnGuestArrive;
+            // waitingQueue.CloseTavern += WaitingQueue_CloseTavern;
         }
 
-    }
+        //public void TryToSendGuest()
+        //{
+        //    Seat emptySeat = GetEmptySeat();
+        //    if(emptySeat != null)
+        //    {
+        //        Guest guest = waitingQueue.GetFirstInQueue();
+        //        if(guest != null)
+        //        {
+        //            guestAmount++;
+        //            emptySeat.SeatGuest(guest);
+        //            guest.MoveTo(emptySeat.seatPosition);
+        //            guest.SetTavern(this);
+        //          //  waitingQueue.guestList.Remove(guest);
+        //        }
+        //    }
+        //}
 
-    private Seat GetEmptySeat()
-    {
-        foreach(Seat seat in placesToSit)
+        private void WaitingQueue_OnGuestArrive(object sender, System.EventArgs e)
         {
-            if (seat.IsEmpty())
+            //  TryToSendGuest();
+            Debug.Log("Jest wolne miejsce");
+        }
+
+        private void WaitingQueue_CloseTavern(object sender, System.EventArgs e)
+        {
+            Debug.Log("Zamykamy tawerne");
+            foreach (Guests.Seat seat in placesToSit)
             {
-                return seat;
+                seat.Close();
+            }
+
+        }
+
+        private Guests.Seat GetEmptySeat()
+        {
+            foreach (Guests.Seat seat in placesToSit)
+            {
+                if (seat.IsEmpty())
+                {
+                    return seat;
+                }
+            }
+            return null;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Guests.Seat point in placesToSit)
+            {
+                Gizmos.DrawWireSphere(point.seatPosition, 1);
             }
         }
-        return null;
-    }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        foreach (Seat point in placesToSit)
+        public void OnDestroy()
         {
-            Gizmos.DrawWireSphere(point.seatPosition, 1);
+            // waitingQueue.OnGuestArrive -= WaitingQueue_OnGuestArrive;
+            //  waitingQueue.CloseTavern -= WaitingQueue_CloseTavern;
         }
-    }
-
-    public void OnDestroy()
-    {
-      // waitingQueue.OnGuestArrive -= WaitingQueue_OnGuestArrive;
-      //  waitingQueue.CloseTavern -= WaitingQueue_CloseTavern;
     }
 }

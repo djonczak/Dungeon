@@ -10,6 +10,17 @@ public class OgreCombat : StateMachineBehaviour
 
     private bool _canAttack = true;
 
+    private const string SwingAttack = "SwingAttack";
+    private const string Punch1 = "Punch1";
+    private const string Punch2 = "Punch2";
+    private const string OgreHorizontal = "OgreHorizontal";
+    private const string OgrePunch = "OgrePunch";
+    private const string OgreSwipe = "OgreSwipe";
+    private const string IsCombat = "IsCombat";
+    private const string IsRun = "IsRun";
+    private const string IsFollow = "IsFollow";
+    
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
@@ -34,19 +45,19 @@ public class OgreCombat : StateMachineBehaviour
                     _canAttack = false;
                     if (_randomAttack == 1)
                     {
-                        animator.SetTrigger("SwingAttack");
+                        animator.SetTrigger(SwingAttack);
                     }
                     if (_randomAttack == 2)
                     {
-                        animator.SetTrigger("Punch1");
+                        animator.SetTrigger(Punch1);
                     }
                     if (_randomAttack == 3)
                     {
-                        animator.SetTrigger("Punch2");
+                        animator.SetTrigger(Punch2);
                     }
                 }
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("OgreHorizontal") || animator.GetCurrentAnimatorStateInfo(0).IsName("OgrePunch") || animator.GetCurrentAnimatorStateInfo(0).IsName("OgreSwipe")) // check if "attack" is playing...
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName(OgreHorizontal) || animator.GetCurrentAnimatorStateInfo(0).IsName(OgrePunch) || animator.GetCurrentAnimatorStateInfo(0).IsName(OgreSwipe)) // check if "attack" is playing...
                 {
 
                 }
@@ -57,17 +68,17 @@ public class OgreCombat : StateMachineBehaviour
             }
             else
             {
-                animator.SetBool("IsCombat", false);
+                animator.SetBool(IsCombat, false);
                 if (animator.GetComponent<OgreHealth>().phase == OgreHealth.HPState.Full)
                 {
-                    animator.SetBool("IsRun", false);
-                    animator.SetBool("IsFollow", true);
+                    animator.SetBool(IsRun, false);
+                    animator.SetBool(IsFollow, true);
 
                 }
                 else
                 {
-                    animator.SetBool("IsFollow", false);
-                    animator.SetBool("IsRun", true);
+                    animator.SetBool(IsFollow, false);
+                    animator.SetBool(IsRun, true);
                 }
             }
         }
@@ -83,8 +94,8 @@ public class OgreCombat : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("Punch1");
-        animator.ResetTrigger("Punch2");
-        animator.ResetTrigger("SwingAttack");
+        animator.ResetTrigger(Punch1);
+        animator.ResetTrigger(Punch2);
+        animator.ResetTrigger(SwingAttack);
     }
 }

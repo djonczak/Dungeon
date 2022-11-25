@@ -5,9 +5,9 @@ public class AIIdle : StateMachineBehaviour
     [SerializeField] private float _visionRange = 5f;
     [SerializeField] private Transform _target;
 
-    private const string _playerMask = "Player";
-    private const string _follow = "IsFollow";
-    private const string _idle = "IsIdle";
+    private const string PlayerMask = "Player";
+    private const string Follow = "IsFollow";
+    private const string Idle = "IsIdle";
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -18,7 +18,7 @@ public class AIIdle : StateMachineBehaviour
     {
         if (_target == null)
         {
-            var sphereVision = Physics.OverlapSphere(animator.gameObject.transform.position, _visionRange, LayerMask.GetMask(_playerMask));
+            var sphereVision = Physics.OverlapSphere(animator.gameObject.transform.position, _visionRange, LayerMask.GetMask(PlayerMask));
             if (sphereVision.Length > 0)
             {
                 _target = sphereVision[0].transform;
@@ -26,13 +26,13 @@ public class AIIdle : StateMachineBehaviour
         }
         else
         {
-            animator.SetBool(_follow, true);
+            animator.SetBool(Follow, true);
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool(_idle, false);
+        animator.SetBool(Idle, false);
     }
 
     public Transform GetTarget()

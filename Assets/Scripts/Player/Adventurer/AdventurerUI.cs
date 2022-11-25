@@ -19,8 +19,8 @@ namespace Adventurer.Player
         private void OnEnable()
         {
             AdventurerEvent.OnPlayerHurt += GotHurt;
-            HUDEvent.OnShowMessage += ShowInfoMessage;
-            HUDEvent.OnCloseMessage += CloseInfoMessage;
+            GameUI.HUDEvent.OnShowMessage += ShowInfoMessage;
+            GameUI.HUDEvent.OnCloseMessage += CloseInfoMessage;
         }
 
         private void Start()
@@ -69,8 +69,8 @@ namespace Adventurer.Player
         private void OnDestroy()
         {
             AdventurerEvent.OnPlayerHurt -= GotHurt;
-            HUDEvent.OnShowMessage -= ShowInfoMessage;
-            HUDEvent.OnCloseMessage -= CloseInfoMessage;
+            GameUI.HUDEvent.OnShowMessage -= ShowInfoMessage;
+            GameUI.HUDEvent.OnCloseMessage -= CloseInfoMessage;
         }
     }
 }

@@ -4,6 +4,7 @@ public class MobAttackCollider : MonoBehaviour
 {
     [SerializeField] private float _damage;
 
+    private const string Player = "Player";
     private void Start()
     {
         _damage = GetComponentInParent<LivingCreature>().attackDamage;
@@ -11,7 +12,7 @@ public class MobAttackCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(Player))
         {
             other.GetComponent<IDamage>().TakeDamage(_damage, transform.position);
         }

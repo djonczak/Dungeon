@@ -1,34 +1,38 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
-public class Quest : ScriptableObject
+namespace QuestSystem
 {
-    public bool IsUnlocked;
-    [Range(0, 1)] public float UnlockAmount;
+    [CreateAssetMenu]
 
-    public string Title;
-    public string Description;
-    public int GoldAmount;
-    public MissionType MissionType;
-    public Location Location;
-
-    public MissionsState MissionState;
-
-    public int GetReward()
+    public class Quest : ScriptableObject
     {
-        return GoldAmount;
+        public bool IsUnlocked;
+        [Range(0, 1)] public float UnlockAmount;
+
+        public string Title;
+        public string Description;
+        public int GoldAmount;
+        public MissionType MissionType;
+        public Location Location;
+
+        public MissionsState MissionState;
+
+        public int GetReward()
+        {
+            return GoldAmount;
+        }
     }
+
+    public enum Location
+    {
+        Dungeon,
+        Swamp,
+        DustyRoad
+    };
+
+    public enum MissionType
+    {
+        Kill,
+        Gather
+    };
 }
-
-public enum Location
-{
-    Dungeon,
-    Swamp,
-    DustyRoad
-};
-
-public enum MissionType
-{
-    Kill,
-    Gather
-};

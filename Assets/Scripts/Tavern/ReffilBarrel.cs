@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReffilBarrel : MonoBehaviour
+namespace Tavern.Interactable 
 {
-    public float maxAmount;
-    private float minAmount;
-
-    void Start()
+    public class ReffilBarrel : MonoBehaviour
     {
-        minAmount = maxAmount;
-    }
+        public float maxAmount;
+        private float minAmount;
 
-    public void RefillKeg(float amount)
-    {
-        if (minAmount < maxAmount)
+        void Start()
         {
-            minAmount += amount;
+            minAmount = maxAmount;
+        }
+
+        public void RefillKeg(float amount)
+        {
+            if (minAmount < maxAmount)
+            {
+                minAmount += amount;
+            }
         }
     }
 }

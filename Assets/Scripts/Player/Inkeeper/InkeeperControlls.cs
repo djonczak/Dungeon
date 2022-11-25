@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Adventurer.Player
+namespace Tavern.Player
 {
     public class InkeeperControlls : MonoBehaviour
     {
@@ -10,9 +10,9 @@ namespace Adventurer.Player
 
         private void Awake()
         {
-            var pickingObject = GetComponent<InkeeperPickObject>();
-            var interact = GetComponent<PlayerInteract>();
-            var adventurer = GetComponent<AdventurerState>();
+            var pickingObject = GetComponent<Interactor.InkeeperPickObject>();
+            var interact = GetComponent<Adventurer.Player.PlayerInteract>();
+            var adventurer = GetComponent<Adventurer.Player.AdventurerState>();
 
             _controls = new InputController();
             // TODO: Getting vector2 from left stick to move player
@@ -91,7 +91,7 @@ namespace Adventurer.Player
         {
             if (other.tag == "Keg")
             {
-                if (other.GetComponent<BeerKeg>().minAmount > 0)
+                if (other.GetComponent<Interactable.BeerKeg>().minAmount > 0)
                 {
                     beerKeg = other.transform;
                     canFill = true;

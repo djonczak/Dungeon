@@ -2,54 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InkeeperPickObject : MonoBehaviour
-{
-    [SerializeField] private Transform _itemToPick;
-    private InkeeperInventory _inventory;
-
-    private void Awake()
+namespace Tavern.Interactor {
+    public class InkeeperPickObject : MonoBehaviour
     {
-        _inventory = GetComponent<InkeeperInventory>();
-    }
+        [SerializeField] private Transform _itemToPick;
+        private InkeeperInventory _inventory;
 
-    public void PickItem()
-    {
-        if (_itemToPick != null)
+        private const string Trey = "Trey";
+        private const string Mug = "Mug";
+
+        private void Awake()
         {
-            _inventory.PickItem(_itemToPick);
-            _itemToPick = null;
-            HUDEvent.CloseMessage();
+            _inventory = GetComponent<InkeeperInventory>();
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Mug"))
+        public void PickItem()
         {
-            if (_itemToPick == null && _inventory.ReturnIfCanCarry())
+            if (_itemToPick != null)
             {
-                _itemToPick = other.transform;
-                other.GetComponent<InteractableItem>().ShowInfo();
+                _inventory.PickItem(_itemToPick);
+                _itemToPick = null;
+                GameUI.HUDEvent.CloseMessage();
             }
         }
 
-        if (other.CompareTag("Trey"))
+        private void OnTriggerEnter(Collider other)
         {
-            if (_itemToPick == null)
+            if (other.CompareTag(Mug))
             {
-                _itemToPick = other.transform;
-                other.GetComponent<InteractableItem>().ShowInfo();
+                if (_itemToPick == null && _inventory.ReturnIfCanCarry())
+                {
+                    _itemToPick = other.transform;
+                    other.GetComponent<InteractableItem>().ShowInfo();
+                }
+            }
+
+            if (other.CompareTag(Trey))
+            {
+                if (_itemToPick == null)
+                {
+                    _itemToPick = other.transform;
+                    other.GetComponent<InteractableItem>().ShowInfo();
+                }
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (_itemToPick != null && _itemToPick.name == other.name)
+            {
+                _itemToPick = null;
+                GameUI.HUDEvent.CloseMessage();
             }
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (_itemToPick != null && _itemToPick.name == other.name)
-        {
-            _itemToPick = null;
-            HUDEvent.CloseMessage();
-        }
-    }
-
 }

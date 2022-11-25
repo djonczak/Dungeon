@@ -5,6 +5,8 @@ public class EnemyDoll : MonoBehaviour, IDamage
     [SerializeField] private float currentHP;
     [SerializeField] private float maxHP = 100f;
 
+    private const string DamageText = "DamageText";
+
     private void Start()
     {
         currentHP = maxHP;
@@ -18,7 +20,7 @@ public class EnemyDoll : MonoBehaviour, IDamage
 
     private void ShowDamageText(float amount)
     {
-        GameObject damageText = ObjectPooler.instance.GetPooledObject("DamageText");
+        GameObject damageText = ObjectPooler.instance.GetPooledObject(DamageText);
         damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 4f,transform.position.z);
         damageText.transform.rotation = Camera.main.transform.rotation;
         damageText.SetActive(true);

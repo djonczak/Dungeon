@@ -1,26 +1,28 @@
 ﻿using UnityEngine;
 
-public class PlayerCamera : MonoBehaviour
+namespace CameraManager 
 {
-    [Header("Camera options")]
-    [SerializeField] private float _smoothMovement = 15f;
-    [SerializeField] private float _cameraDistance = 31f;
-    [SerializeField] GameObject _target;
-
-    private void Start()
+    public class PlayerCamera : MonoBehaviour
     {
-        _target = PlayerExtension.GetPlayerObject();
-    }
+        [Header("Camera options")]
+        [SerializeField] private float _smoothMovement = 15f;
+        [SerializeField] private float _cameraDistance = 31f;
+        [SerializeField] GameObject _target;
 
-    private void FixedUpdate()
-    {
-        CameraFollow();
-    }
+        private void Start()
+        {
+            _target = PlayerExtension.GetPlayerObject();
+        }
 
-    private void CameraFollow()
-    {
-        Vector3 cameraHeight = _target.transform.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, _cameraDistance));
-        transform.position = Vector3.Lerp(transform.position, _target.transform.position + cameraHeight, _smoothMovement * Time.fixedDeltaTime);
-    }
+        private void FixedUpdate()
+        {
+            CameraFollow();
+        }
 
+        private void CameraFollow()
+        {
+            Vector3 cameraHeight = _target.transform.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, _cameraDistance));
+            transform.position = Vector3.Lerp(transform.position, _target.transform.position + cameraHeight, _smoothMovement * Time.fixedDeltaTime);
+        }
+    }
 }

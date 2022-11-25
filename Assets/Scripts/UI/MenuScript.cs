@@ -7,6 +7,8 @@ public class MenuScript : MonoBehaviour
 {
     private InputController controls;
 
+    private const string CombatTest = "CombatTest";
+
     private void Awake()
     {
         controls = new InputController();
@@ -16,7 +18,7 @@ public class MenuScript : MonoBehaviour
 
     public void LoadSceneMode()
     {
-        SceneManager.LoadScene("CombatTest");
+        SceneManager.LoadScene(CombatTest);
     }
 
     private void OnEnable()

@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Player Data")]
-public class AdventurerData : ScriptableObject
+namespace Adventurer.Player
 {
-    public MeleeWeaponData MeleeWeapon;
-    public RangeWeaponData RangeWeapon;
-    public float GoldAmount;
-    public int SmallPotion;
-    public int MediumPotion;
-    public int BigPotion;
+    [CreateAssetMenu(menuName = "Player Data")]
+    public class AdventurerData : ScriptableObject
+    {
+        public Weapon.MeleeWeaponData MeleeWeapon;
+        public Weapon.RangeWeaponData RangeWeapon;
+        public float GoldAmount;
+        public int SmallPotion;
+        public int MediumPotion;
+        public int BigPotion;
 
-    public List<Quest> Mission = new List<Quest>();
+        public List<QuestSystem.Quest> Mission = new List<QuestSystem.Quest>();
+    }
 }

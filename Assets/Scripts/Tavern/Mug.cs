@@ -2,70 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mug : InteractableItem
+namespace Tavern.Interactable
 {
-    public float amountToFill;
-    public bool isDirty;
-    public bool isFull;
-
-    public Canvas canvas;
-    public Transform emptyMug;
-    public Transform fullMug;
-
-    private Transform parent;
-    private string _interactText;
-
-    private void Awake()
+    public class Mug : InteractableItem
     {
-        SetTexts();
-    }
+        public float amountToFill;
+        public bool isDirty;
+        public bool isFull;
 
-    private void Start()
-    {
-        parent = transform.parent;
-        emptyMug.gameObject.SetActive(true);
-        fullMug.gameObject.SetActive(false);
-    }
+        public Canvas canvas;
+        public Transform emptyMug;
+        public Transform fullMug;
 
-    public override void SetTexts()
-    {
-        if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+        private Transform parent;
+        private string _interactText;
+
+        private void Awake()
         {
-            _interactText = LanguageText.Polish;
+            SetTexts();
         }
-        else
+
+        private void Start()
         {
-            _interactText = LanguageText.English;
+            parent = transform.parent;
+            emptyMug.gameObject.SetActive(true);
+            fullMug.gameObject.SetActive(false);
         }
-    }
 
-    public override void ShowInfo()
-    {
-        HUDEvent.ShowMessage(_interactText);
-    }
-
-    private void LateUpdate()
-    {
-       canvas.transform.rotation = Camera.main.transform.rotation;
-    }
-
-    public void FillMug(BeerKeg keg)
-    {
-        if (isFull == false)
+        public override void SetTexts()
         {
-            keg.FillMug(amountToFill);
-            isFull = true;
-            fullMug.gameObject.SetActive(true);
-            emptyMug.gameObject.SetActive(false);
+            if (GameManager.Language.Polish == GameManager.Instance.ReturnLanguage())
+            {
+                _interactText = LanguageText.Polish;
+            }
+            else
+            {
+                _interactText = LanguageText.English;
+            }
         }
-    }
 
-    public void DirtyMug()
-    {
-        transform.parent = parent;
-        isFull = false;
-        isDirty = true;
-        fullMug.gameObject.SetActive(false);
-        emptyMug.gameObject.SetActive(true);
+        public override void ShowInfo()
+        {
+            GameUI.HUDEvent.ShowMessage(_interactText);
+        }
+
+        private void LateUpdate()
+        {
+            canvas.transform.rotation = Camera.main.transform.rotation;
+        }
+
+        public void FillMug(BeerKeg keg)
+        {
+            if (isFull == false)
+            {
+                keg.FillMug(amountToFill);
+                isFull = true;
+                fullMug.gameObject.SetActive(true);
+                emptyMug.gameObject.SetActive(false);
+            }
+        }
+
+        public void DirtyMug()
+        {
+            transform.parent = parent;
+            isFull = false;
+            isDirty = true;
+            fullMug.gameObject.SetActive(false);
+            emptyMug.gameObject.SetActive(true);
+        }
     }
 }

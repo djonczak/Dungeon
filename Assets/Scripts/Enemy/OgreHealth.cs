@@ -22,6 +22,12 @@ public class OgreHealth : LivingCreature, IDamage
     private bool isInvincible;
     private bool isDamaged;
 
+    private const string IsDead = "IsDead";
+    private const string IsRun = "IsRun";
+    private const string IsSecondPhase = "IsSecondPhase";
+    private const string IsFollow = "IsFollow";
+    private const string IsCombat = "IsCombat";
+    private const string DamageText = "DamageText";
     private void Start()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -62,7 +68,7 @@ public class OgreHealth : LivingCreature, IDamage
     {
         isAlive = false;
         GetComponent<Collider>().enabled = false;
-        _anim.SetTrigger("IsDead");
+        _anim.SetTrigger(IsDead);
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
         HPDisplay.SetActive(false);
@@ -78,7 +84,7 @@ public class OgreHealth : LivingCreature, IDamage
 
     public void EndRoar()
     {
-        _anim.SetBool("IsRun",true);
+        _anim.SetBool(IsRun, true);
         isInvincible = false;
         _doneRoar = true;
     }
@@ -96,16 +102,16 @@ public class OgreHealth : LivingCreature, IDamage
             if(_doneRoar == false)
             {
                 isInvincible = true;
-                _anim.SetTrigger("IsSecondPhase");
-                _anim.SetBool("IsFollow", false);
-                _anim.SetBool("IsCombat", false);
+                _anim.SetTrigger(IsSecondPhase);
+                _anim.SetBool(IsFollow, false);
+                _anim.SetBool(IsCombat, false);
             }
         }
     }
 
     private void ShowDamageText(float amount)
     {
-        GameObject damageText = ObjectPooler.instance.GetPooledObject("DamageText");
+        GameObject damageText = ObjectPooler.instance.GetPooledObject(DamageText);
         damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 4f, transform.position.z);
         damageText.transform.rotation = Camera.main.transform.rotation;
         damageText.SetActive(true);

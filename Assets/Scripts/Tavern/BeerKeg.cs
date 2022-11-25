@@ -1,33 +1,36 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class BeerKeg : MonoBehaviour
-{
-    public Image beerAmount;
+namespace Tavern.Interactable {
 
-    public float minAmount = 0f;
-    [SerializeField] private float maxAmount = 400f;
-
-    private void Start()
+    public class BeerKeg : MonoBehaviour
     {
-        minAmount = maxAmount;
-    }
+        public Image beerAmount;
 
-    public void FillMug(float amount)
-    {
-        if (minAmount > 0)
+        public float minAmount = 0f;
+        [SerializeField] private float maxAmount = 400f;
+
+        private void Start()
         {
-            minAmount -= amount;
-            beerAmount.fillAmount = minAmount / maxAmount;
+            minAmount = maxAmount;
         }
-    }
 
-    public void FillKeg(float amount)
-    {
-        if(minAmount < maxAmount)
+        public void FillMug(float amount)
         {
-            minAmount += amount;
-            beerAmount.fillAmount = minAmount / maxAmount;
+            if (minAmount > 0)
+            {
+                minAmount -= amount;
+                beerAmount.fillAmount = minAmount / maxAmount;
+            }
+        }
+
+        public void FillKeg(float amount)
+        {
+            if (minAmount < maxAmount)
+            {
+                minAmount += amount;
+                beerAmount.fillAmount = minAmount / maxAmount;
+            }
         }
     }
 }

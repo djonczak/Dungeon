@@ -6,6 +6,10 @@ public class SkeletonCombat : StateMachineBehaviour
     private bool _canAttack = true;
     private float _meleeRange;
 
+    private const string Melee = "Melee";
+    private const string Attack = "Attack";
+    private const string IsFollow = "IsFollow";
+    private const string IsCombat = "IsFollow";
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _meleeRange = animator.GetBehaviour<AIFollow>().meleeRange;
@@ -21,11 +25,11 @@ public class SkeletonCombat : StateMachineBehaviour
                 RotateTowards(animator);
                 if (_canAttack == true)
                 {
-                    animator.SetTrigger("Melee");
+                    animator.SetTrigger(Melee);
                     _canAttack = false;
                 }
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) 
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName(Attack)) 
                 {
 
                 }
@@ -36,7 +40,7 @@ public class SkeletonCombat : StateMachineBehaviour
             }
             else
             {
-                animator.SetBool("IsFollow", true);
+                animator.SetBool(IsFollow, true);
             }
         }
     }
@@ -51,7 +55,7 @@ public class SkeletonCombat : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool("IsCombat", false);
+        animator.SetBool(IsCombat, false);
     }
 }
 

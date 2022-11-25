@@ -8,6 +8,8 @@ namespace Adventurer.Player
         public float holdButton;
         private float _holdTime = 0f;
 
+        private const string Interactable = "Interactable";
+
         private void Update()
         {
             InteractHoldInput();
@@ -48,7 +50,7 @@ namespace Adventurer.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Interactable"))
+            if (other.CompareTag(Interactable))
             {
                 var interact = other.GetComponent<InteractableItem>();
                 if (interact != null)
@@ -61,10 +63,10 @@ namespace Adventurer.Player
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Interactable"))
+            if (other.CompareTag(Interactable))
             {
                 _itemInteract = null;
-                HUDEvent.CloseMessage();
+                GameUI.HUDEvent.CloseMessage();
             }
         }
     }

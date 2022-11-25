@@ -9,8 +9,8 @@ public class AIFollow : StateMachineBehaviour
     [SerializeField] private Transform _target;
 
     private NavMeshAgent _agent;
-    private const string _combat = "IsCombat";
-    private const string _follow = "IsFollow";
+    private const string Combat = "IsCombat";
+    private const string Follow = "IsFollow";
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -28,13 +28,13 @@ public class AIFollow : StateMachineBehaviour
             _agent.SetDestination(_target.position);
             if (meleeRange >= TransformExtension.DistanceBetween(animator.transform.position, _target.transform.position))
             {
-                animator.SetBool(_combat, true);
+                animator.SetBool(Combat, true);
             }
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       animator.SetBool(_follow, false);
+       animator.SetBool(Follow, false);
     }
 }

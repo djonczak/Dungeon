@@ -6,6 +6,9 @@ public class MobHealth : LivingCreature, IDamage
 {
     private bool _isDamaged = false;
 
+    private const string IsDead = "IsDead";
+    private const string DamageText = "DamageText";
+
     private void Start()
     {
         currentHP = maxHP;
@@ -26,7 +29,7 @@ public class MobHealth : LivingCreature, IDamage
             else
             {
                 GetComponent<KnockBack>().KnockBackEffect(position);
-                StartCoroutine("Damaged");
+                StartCoroutine(Damaged());
             }
         }
     }
@@ -41,7 +44,7 @@ public class MobHealth : LivingCreature, IDamage
         DeathEvent.EnemyDied(id);
         isAlive = false;
         GetComponent<Collider>().enabled = false;
-        GetComponent<Animator>().SetTrigger("IsDead");
+        GetComponent<Animator>().SetTrigger(IsDead);
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
         enabled = false;
@@ -49,7 +52,7 @@ public class MobHealth : LivingCreature, IDamage
 
     private void ShowDamageText(float amount)
     {
-        GameObject damageText = ObjectPooler.instance.GetPooledObject("DamageText");
+        GameObject damageText = ObjectPooler.instance.GetPooledObject(DamageText);
         if (damageText != null)
         {
             damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 4f, transform.position.z);

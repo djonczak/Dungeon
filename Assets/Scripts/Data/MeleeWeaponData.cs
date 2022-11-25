@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Melee Weapon Data")]
-public class MeleeWeaponData : Item
+namespace Weapon 
 {
-    public enum WeaponType
+    [CreateAssetMenu(menuName = "Item/Melee Weapon Data")]
+    public class MeleeWeaponData : Shop.Item
     {
-        Sword,
-        Axe,
-        Mace,
-    };
+        public enum WeaponType
+        {
+            Sword,
+            Axe,
+            Mace,
+        };
 
-    public WeaponType Type;
-    public GameObject WeaponModel;
-    public float WeaponDamage { get;}
-    public float WeaponCriticalChance  { get;}
-    public float WeaponAttackSpeed { get; }
-    public bool CanKnockBack { get; }
+        public WeaponType Type;
+        public GameObject WeaponModel;
+        public float WeaponDamage { get; }
+        public float WeaponCriticalChance { get; }
+        public float WeaponAttackSpeed { get; }
+        public bool CanKnockBack { get; }
+    }
 }

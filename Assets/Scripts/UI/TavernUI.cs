@@ -3,88 +3,91 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TavernUI : MonoBehaviour
-{
-    //public enum Controller
-    //{
-    //    KEYBOARD,
-    //    DUALSHOCK,
-    //    XBOX,
-    //    PROCONTROLLER,
-    //};
 
-    public GameObject itemMessagePanel;
-    public GameObject fillCirclePanel;
-    public Image fillCircle;
-    public bool canFill;
-    private float timeToFill = 3.1f;
-    private float time = 0;
-    // private List<string> names = new List<string>();
-
-    private void OnEnable()
+namespace Tavern.UI {
+    public class TavernUI : MonoBehaviour
     {
-        HUDEvent.OnShowMessage += ShowMessage;
-        HUDEvent.OnCloseMessage += CloseMessage;
-    }
-
-    public void Start()
-    {
-        CloseMessage();
-        CloseFillCircle();
-        
-        //foreach(string con in Input.GetJoystickNames())
+        //public enum Controller
         //{
-        //    names.Add(con);
-        //}
+        //    KEYBOARD,
+        //    DUALSHOCK,
+        //    XBOX,
+        //    PROCONTROLLER,
+        //};
 
-        //if(names.Contains("Wireless Controller"))
-        //{
-        //    Debug.Log("Dualshock");
+        public GameObject itemMessagePanel;
+        public GameObject fillCirclePanel;
+        public Image fillCircle;
+        public bool canFill;
+        private float timeToFill = 3.1f;
+        private float time = 0;
+        // private List<string> names = new List<string>();
 
-        //}
-    }
-
-    public void ShowMessage(string text)
-    {
-        itemMessagePanel.SetActive(true);
-        itemMessagePanel.GetComponentInChildren<Text>().text = text;
-    }
-
-    public void CloseMessage()
-    {
-        itemMessagePanel.SetActive(false);
-    }
-
-    public void ShowFillCircle()
-    {
-        if (canFill)
+        private void OnEnable()
         {
-            fillCirclePanel.SetActive(true);
+            GameUI.HUDEvent.OnShowMessage += ShowMessage;
+            GameUI.HUDEvent.OnCloseMessage += CloseMessage;
         }
-    }
 
-    public void CloseFillCircle()
-    {
-        time = 0;
-        fillCirclePanel.SetActive(false);
-        canFill = false;
-    }
-
-    private void Update()
-    {
-        if (canFill)
+        public void Start()
         {
-            if (time < timeToFill)
+            CloseMessage();
+            CloseFillCircle();
+
+            //foreach(string con in Input.GetJoystickNames())
+            //{
+            //    names.Add(con);
+            //}
+
+            //if(names.Contains("Wireless Controller"))
+            //{
+            //    Debug.Log("Dualshock");
+
+            //}
+        }
+
+        public void ShowMessage(string text)
+        {
+            itemMessagePanel.SetActive(true);
+            itemMessagePanel.GetComponentInChildren<Text>().text = text;
+        }
+
+        public void CloseMessage()
+        {
+            itemMessagePanel.SetActive(false);
+        }
+
+        public void ShowFillCircle()
+        {
+            if (canFill)
             {
-                time += Time.deltaTime;
-                fillCircle.fillAmount = time / timeToFill;
+                fillCirclePanel.SetActive(true);
             }
         }
-    }
 
-    private void OnDestroy()
-    {
-        HUDEvent.OnShowMessage -= ShowMessage;
-        HUDEvent.OnCloseMessage -= CloseMessage;
+        public void CloseFillCircle()
+        {
+            time = 0;
+            fillCirclePanel.SetActive(false);
+            canFill = false;
+        }
+
+        private void Update()
+        {
+            if (canFill)
+            {
+                if (time < timeToFill)
+                {
+                    time += Time.deltaTime;
+                    fillCircle.fillAmount = time / timeToFill;
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            GameUI.HUDEvent.OnShowMessage -= ShowMessage;
+            GameUI.HUDEvent.OnCloseMessage -= CloseMessage;
+        }
     }
 }
